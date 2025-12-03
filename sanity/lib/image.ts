@@ -1,30 +1,34 @@
-import imageUrlBuilder from '@sanity/image-url'
+import imageUrlBuilder from '@sanity/image-url/lib/types/builder'
+import { createImageUrlBuilder } from '@sanity/image-url'
 import { client } from './client'
 import type { SanityImageSource } from '@sanity/image-url/lib/types/types'
 
-// Safely create builder only if client is configured
-let builder: ReturnType<typeof imageUrlBuilder> | null = null
-
-try {
-  if (client && typeof client.config === 'function') {
-    const config = client.config()
-    if (config?.projectId) {
-      builder = imageUrlBuilder(client)
-    }
-  }
-} catch (error) {
-  console.warn('Failed to initialize image builder:', error)
-}
-
 export function urlFor(source: SanityImageSource) {
-  if (!builder) {
-    // Return a dummy builder that returns placeholder
+  try {
+    // Check if client is properly configured
+    if (!client || typeof client.config !== 'function') {
+      return {
+        url: () => '/placeholder.svg',
+      } as any
+    }
+    
+    const config = client.config()
+    if (!config?.projectId) {
+      return {
+        url: () => '/placeholder.svg',
+      } as any
+    }
+    
+    const builder = createImageUrlBuilder({ 
+      projectId: config.projectId, 
+      dataset: config.dataset 
+    })
+    return builder.image(source)
+  } catch (error) {
+    console.warn('Image builder error:', error)
     return {
       url: () => '/placeholder.svg',
-      width: () => ({ url: () => '/placeholder.svg' }),
-      height: () => ({ url: () => '/placeholder.svg' }),
     } as any
   }
-  return builder.image(source)
 }
 
