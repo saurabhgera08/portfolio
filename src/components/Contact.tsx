@@ -20,7 +20,15 @@ const fallbackContact = {
 export const Contact = () => {
   const { data: contactData = fallbackContact } = useQuery({
     queryKey: ['contact'],
-    queryFn: getContactInfo,
+    queryFn: async () => {
+      try {
+        const data = await getContactInfo()
+        return data || fallbackContact
+      } catch (error) {
+        console.warn('Failed to fetch contact data from Sanity, using fallback:', error)
+        return fallbackContact
+      }
+    },
     retry: false,
     refetchOnWindowFocus: false,
   });

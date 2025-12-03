@@ -28,7 +28,15 @@ export const Hero = () => {
   // Fetch data from Sanity, fallback to hardcoded data
   const { data: heroData = fallbackData } = useQuery({
     queryKey: ['hero'],
-    queryFn: getHeroData,
+    queryFn: async () => {
+      try {
+        const data = await getHeroData()
+        return data || fallbackData
+      } catch (error) {
+        console.warn('Failed to fetch hero data from Sanity, using fallback:', error)
+        return fallbackData
+      }
+    },
     retry: false,
     refetchOnWindowFocus: false,
   });
