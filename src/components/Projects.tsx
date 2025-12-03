@@ -2,8 +2,17 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Badge } from "@/components/ui/badge";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Lightbulb, Target, TrendingUp, Package, Users, Zap, ShoppingCart, Smartphone, Heart, Plane, Megaphone, LineChart } from "lucide-react";
+import { useQuery } from "@tanstack/react-query";
+import { getProjects } from "@/lib/sanity-queries";
+import * as LucideIcons from "lucide-react";
 
-const projects = [
+// Icon mapping helper
+const getIcon = (iconName: string) => {
+  const IconComponent = (LucideIcons as any)[iconName];
+  return IconComponent || Package;
+};
+
+const fallbackProjects = [
   // BUILT & LAUNCHED
   {
     id: "zipowatt",
@@ -285,6 +294,21 @@ const projects = [
 ];
 
 export const Projects = () => {
+  const { data: projects = fallbackProjects } = useQuery({
+    queryKey: ['projects'],
+    queryFn: async () => {
+      try {
+        const data = await getProjects()
+        return data || fallbackProjects
+      } catch (error) {
+        console.warn('Failed to fetch projects from Sanity, using fallback:', error)
+        return fallbackProjects
+      }
+    },
+    retry: false,
+    refetchOnWindowFocus: false,
+  });
+
   return (
     <section id="projects" className="py-24 sm:py-36 md:py-48 px-4 sm:px-6 lg:px-8 bg-gradient-to-b from-background via-muted/30 to-background">
       <div className="max-w-6xl mx-auto">
@@ -306,26 +330,26 @@ export const Projects = () => {
           </TabsList>
 
           <TabsContent value="all" className="space-y-12 sm:space-y-16">
-            {projects.map((project, index) => (
-              <ProjectCard key={project.id} project={project} index={index} />
+            {(projects || fallbackProjects).map((project: any, index: number) => (
+              <ProjectCard key={project._id || project.id || index} project={project} index={index} />
             ))}
           </TabsContent>
 
           <TabsContent value="built-launched" className="space-y-12 sm:space-y-16">
-            {projects.filter(p => p.category === "built-launched").map((project, index) => (
-              <ProjectCard key={project.id} project={project} index={index} />
+            {(projects || fallbackProjects).filter((p: any) => p.category === "built-launched").map((project: any, index: number) => (
+              <ProjectCard key={project._id || project.id || index} project={project} index={index} />
             ))}
           </TabsContent>
 
           <TabsContent value="strategic" className="space-y-12 sm:space-y-16">
-            {projects.filter(p => p.category === "strategic").map((project, index) => (
-              <ProjectCard key={project.id} project={project} index={index} />
+            {(projects || fallbackProjects).filter((p: any) => p.category === "strategic").map((project: any, index: number) => (
+              <ProjectCard key={project._id || project.id || index} project={project} index={index} />
             ))}
           </TabsContent>
 
           <TabsContent value="analysis" className="space-y-12 sm:space-y-16">
-            {projects.filter(p => p.category === "analysis").map((project, index) => (
-              <ProjectCard key={project.id} project={project} index={index} />
+            {(projects || fallbackProjects).filter((p: any) => p.category === "analysis").map((project: any, index: number) => (
+              <ProjectCard key={project._id || project.id || index} project={project} index={index} />
             ))}
           </TabsContent>
         </Tabs>
@@ -334,8 +358,8 @@ export const Projects = () => {
   );
 };
 
-const ProjectCard = ({ project, index }: { project: typeof projects[0]; index: number }) => {
-  const Icon = project.icon;
+const ProjectCard = ({ project, index }: { project: any; index: number }) => {
+  const Icon = getIcon(project.icon || "Package");
   const categoryLabels = {
     "built-launched": "Built & Launched",
     "strategic": "Strategic Project",
@@ -405,22 +429,24 @@ const ProjectCard = ({ project, index }: { project: typeof projects[0]; index: n
           </p>
         </div>
 
-        <div>
-          <h4 className="text-sm font-semibold text-primary mb-3 flex items-center gap-2">
-            <Lightbulb className="h-4 w-4" />
-            My Approach
-          </h4>
-          <div className="space-y-3">
-            {project.thinking.map((item, idx) => (
-              <div key={idx} className="border-l-2 border-primary/30 pl-4 hover:border-primary transition-colors">
-                <h5 className="text-sm font-semibold mb-1">{item.label}</h5>
-                <p className="text-xs text-muted-foreground leading-relaxed">
-                  {item.description}
-                </p>
-              </div>
-            ))}
+        {project.thinking && project.thinking.length > 0 && (
+          <div>
+            <h4 className="text-sm font-semibold text-primary mb-3 flex items-center gap-2">
+              <Lightbulb className="h-4 w-4" />
+              My Approach
+            </h4>
+            <div className="space-y-3">
+              {project.thinking.map((item: any, idx: number) => (
+                <div key={idx} className="border-l-2 border-primary/30 pl-4 hover:border-primary transition-colors">
+                  <h5 className="text-sm font-semibold mb-1">{item.label}</h5>
+                  <p className="text-xs text-muted-foreground leading-relaxed">
+                    {item.description}
+                  </p>
+                </div>
+              ))}
+            </div>
           </div>
-        </div>
+        )}
 
         <div>
           <h4 className="text-sm font-semibold text-primary mb-2 flex items-center gap-2">
@@ -441,13 +467,15 @@ const ProjectCard = ({ project, index }: { project: typeof projects[0]; index: n
           </p>
         </div>
 
-        <div className="flex flex-wrap gap-2 pt-2">
-          {project.tags.map((tag) => (
-            <Badge key={tag} variant="outline" className="text-xs">
-              {tag}
-            </Badge>
-          ))}
-        </div>
+        {project.tags && project.tags.length > 0 && (
+          <div className="flex flex-wrap gap-2 pt-2">
+            {project.tags.map((tag: string) => (
+              <Badge key={tag} variant="outline" className="text-xs">
+                {tag}
+              </Badge>
+            ))}
+          </div>
+        )}
 
         {project.link && (
           <div className="pt-4">

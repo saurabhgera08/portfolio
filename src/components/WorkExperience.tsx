@@ -1,6 +1,8 @@
 import { Card } from "@/components/ui/card";
+import { useQuery } from "@tanstack/react-query";
+import { getWorkExperience } from "@/lib/sanity-queries";
 
-const experiences = [
+const fallbackExperiences = [
   {
     role: "Freelance Consultant",
     company: "Strategic Advisory & Product Design",
@@ -91,6 +93,21 @@ const experiences = [
 ];
 
 export const WorkExperience = () => {
+  const { data: experiences = fallbackExperiences } = useQuery({
+    queryKey: ['workExperience'],
+    queryFn: async () => {
+      try {
+        const data = await getWorkExperience()
+        return data || fallbackExperiences
+      } catch (error) {
+        console.warn('Failed to fetch work experience from Sanity, using fallback:', error)
+        return fallbackExperiences
+      }
+    },
+    retry: false,
+    refetchOnWindowFocus: false,
+  });
+
   return (
     <section id="experience" className="py-24 sm:py-36 md:py-48 px-4 sm:px-6 lg:px-8 bg-background">
       <div className="max-w-6xl mx-auto">
@@ -110,7 +127,7 @@ export const WorkExperience = () => {
           
           {/* Timeline items */}
           <div className="space-y-16 sm:space-y-20">
-            {experiences.map((exp, index) => (
+            {(experiences || fallbackExperiences).map((exp: any, index: number) => (
               <div 
                 key={index}
                 className={`relative ${index % 2 === 0 ? 'lg:pr-[50%] lg:mr-8' : 'lg:pl-[50%] lg:ml-8'}`}
@@ -146,21 +163,23 @@ export const WorkExperience = () => {
                     </p>
                     
                     {/* Learnings/Achievements */}
-                    <div>
-                      <p className="text-sm font-semibold text-muted-foreground mb-3">
-                        What I discovered:
-                      </p>
-                      <ul className="space-y-3">
-                        {exp.learnings.map((learning, idx) => (
-                          <li key={idx} className="flex items-start space-x-3">
-                            <span className="flex-shrink-0 w-1.5 h-1.5 rounded-full bg-accent mt-2" />
-                            <span className="text-foreground/90 leading-relaxed text-sm">
-                              {learning}
-                            </span>
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
+                    {exp.learnings && exp.learnings.length > 0 && (
+                      <div>
+                        <p className="text-sm font-semibold text-muted-foreground mb-3">
+                          What I discovered:
+                        </p>
+                        <ul className="space-y-3">
+                          {exp.learnings.map((learning: string, idx: number) => (
+                            <li key={idx} className="flex items-start space-x-3">
+                              <span className="flex-shrink-0 w-1.5 h-1.5 rounded-full bg-accent mt-2" />
+                              <span className="text-foreground/90 leading-relaxed text-sm">
+                                {learning}
+                              </span>
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+                    )}
                     
                     {/* The Clarity */}
                     <div className="pt-4 border-t border-border/50 bg-accent/5 -mx-6 sm:-mx-8 px-6 sm:px-8 py-4 -mb-6 sm:-mb-8">

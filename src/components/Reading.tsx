@@ -2,13 +2,16 @@ import { Card } from "@/components/ui/card";
 import { BookOpen, Mail, ChevronDown } from "lucide-react";
 import { useState } from "react";
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
-const currentlyReading = {
+import { useQuery } from "@tanstack/react-query";
+import { getCurrentlyReading, getBooksByCategory } from "@/lib/sanity-queries";
+
+const fallbackCurrentlyReading = {
   title: "The Book of Clarity",
   author: "Paras Chopra",
   image: "/placeholder.svg",
   reflection: "Clarity isn't about having all the answers. It's about asking the right questions. In a world where AI can generate solutions at the drop of a hat, what separates transformative builders from noise-makers is clarity about what you're trying to accomplish and why. I'm sitting with this while building, thinking about how to apply clarity at scale."
 };
-const shapingBooks = [{
+const fallbackShapingBooks = [{
   title: "Train to Pakistan",
   author: "Khushwant Singh",
   image: "/placeholder.svg",
@@ -44,7 +47,7 @@ const shapingBooks = [{
   why: "I wanted to understand how someone thinks when they're trying to solve problems at civilization scale. Musk doesn't think about quarterly earnings. He thinks about whether humanity becomes multiplanetary, whether we solve energy, whether we can enhance human cognition. His approach: First principles thinking. Ignore precedent. What are the physics? What are the constraints? How do we remove them? When Tesla was failing, he didn't ask \"How do I optimize a gas car?\" He asked \"What if we rethought the entire powertrain from physics first?\" That question changed everything.",
   impact: "Musk reminds me that constraints are often self-imposed. We say things are impossible because \"that's how it's always been done.\" First principles thinking means asking: Is that actually true? Or is it just convenient? At SWNCK, I was thinking within constraints I had accepted. The market for sustainable fashion at premium prices during early growth was constrained by assumptions about customer willingness to pay, channel economics, and supply chain complexity. Exiting wasn't failure. It was recognizing which constraints were physics and which were just business-as-usual thinking."
 }];
-const newWorldsBooks = {
+const fallbackNewWorldsBooks = {
   technology: [{
     title: "The Master Algorithm",
     author: "Pedro Domingos",
@@ -95,7 +98,7 @@ const BookCard = ({
             <div className="flex items-start gap-4">
               <div className="flex-shrink-0">
                 <img 
-                  src={book.image} 
+                  src={book.image || book.coverImage || '/placeholder.svg'} 
                   alt={book.title}
                   className="w-16 h-24 object-cover rounded shadow-md"
                 />
@@ -145,6 +148,88 @@ export const Reading = () => {
       return next;
     });
   };
+
+  const { data: currentlyReading = fallbackCurrentlyReading } = useQuery({
+    queryKey: ['currentlyReading'],
+    queryFn: async () => {
+      try {
+        const data = await getCurrentlyReading()
+        return data || fallbackCurrentlyReading
+      } catch (error) {
+        console.warn('Failed to fetch currently reading from Sanity, using fallback:', error)
+        return fallbackCurrentlyReading
+      }
+    },
+    retry: false,
+    refetchOnWindowFocus: false,
+  });
+
+  const { data: shapingBooks = fallbackShapingBooks } = useQuery({
+    queryKey: ['shapingBooks'],
+    queryFn: async () => {
+      try {
+        const data = await getBooksByCategory('shaping')
+        return data || fallbackShapingBooks
+      } catch (error) {
+        console.warn('Failed to fetch shaping books from Sanity, using fallback:', error)
+        return fallbackShapingBooks
+      }
+    },
+    retry: false,
+    refetchOnWindowFocus: false,
+  });
+
+  const { data: techBooks = fallbackNewWorldsBooks.technology } = useQuery({
+    queryKey: ['techBooks'],
+    queryFn: async () => {
+      try {
+        const data = await getBooksByCategory('technology')
+        return data || fallbackNewWorldsBooks.technology
+      } catch (error) {
+        console.warn('Failed to fetch tech books from Sanity, using fallback:', error)
+        return fallbackNewWorldsBooks.technology
+      }
+    },
+    retry: false,
+    refetchOnWindowFocus: false,
+  });
+
+  const { data: historyBooks = fallbackNewWorldsBooks.history } = useQuery({
+    queryKey: ['historyBooks'],
+    queryFn: async () => {
+      try {
+        const data = await getBooksByCategory('history')
+        return data || fallbackNewWorldsBooks.history
+      } catch (error) {
+        console.warn('Failed to fetch history books from Sanity, using fallback:', error)
+        return fallbackNewWorldsBooks.history
+      }
+    },
+    retry: false,
+    refetchOnWindowFocus: false,
+  });
+
+  const { data: fictionBooks = fallbackNewWorldsBooks.fiction } = useQuery({
+    queryKey: ['fictionBooks'],
+    queryFn: async () => {
+      try {
+        const data = await getBooksByCategory('fiction')
+        return data || fallbackNewWorldsBooks.fiction
+      } catch (error) {
+        console.warn('Failed to fetch fiction books from Sanity, using fallback:', error)
+        return fallbackNewWorldsBooks.fiction
+      }
+    },
+    retry: false,
+    refetchOnWindowFocus: false,
+  });
+
+  const current = { ...fallbackCurrentlyReading, ...currentlyReading };
+  const shaping = shapingBooks || fallbackShapingBooks;
+  const tech = techBooks || fallbackNewWorldsBooks.technology;
+  const history = historyBooks || fallbackNewWorldsBooks.history;
+  const fiction = fictionBooks || fallbackNewWorldsBooks.fiction;
+
   return <section id="reading" className="py-24 sm:py-36 md:py-48 px-4 sm:px-6 lg:px-8 bg-background">
       <div className="max-w-7xl mx-auto">
         {/* Header */}
@@ -161,16 +246,16 @@ export const Reading = () => {
           <div className="flex items-start gap-6">
               <div className="flex-shrink-0">
                 <img 
-                  src={currentlyReading.image} 
-                  alt={currentlyReading.title}
+                  src={current.image || current.coverImage || '/placeholder.svg'} 
+                  alt={current.title}
                   className="w-32 h-48 object-cover rounded-lg shadow-lg"
                 />
               </div>
               <div className="flex-1">
                 <p className="text-sm font-semibold text-accent mb-3">What I'm Reading Now</p>
-                <h3 className="text-2xl font-bold text-foreground mb-1">{currentlyReading.title}</h3>
-                <p className="text-sm font-medium text-muted-foreground mb-4">{currentlyReading.author}</p>
-                <p className="text-base text-foreground/80 leading-relaxed">{currentlyReading.reflection}</p>
+                <h3 className="text-2xl font-bold text-foreground mb-1">{current.title}</h3>
+                <p className="text-sm font-medium text-muted-foreground mb-4">{current.author}</p>
+                <p className="text-base text-foreground/80 leading-relaxed">{current.reflection || current.why}</p>
               </div>
             </div>
           </Card>
@@ -209,7 +294,7 @@ export const Reading = () => {
             Books That Shaped Me
           </h3>
           <div className="space-y-6">
-            {shapingBooks.map(book => <BookCard key={book.title} book={book} isExpanded={expandedBooks.has(book.title)} onToggle={() => toggleBook(book.title)} />)}
+            {shaping.map((book: any) => <BookCard key={book._id || book.title} book={book} isExpanded={expandedBooks.has(book.title)} onToggle={() => toggleBook(book.title)} />)}
           </div>
         </div>
 
@@ -224,11 +309,11 @@ export const Reading = () => {
             <div>
               <h4 className="text-2xl sm:text-3xl font-bold text-foreground mb-8 pl-5">Technology & Innovation</h4>
               <div className="space-y-6">
-                {newWorldsBooks.technology.map(book => <Card key={book.title} className="p-6 border-0 shadow-card hover:shadow-premium transition-all duration-300">
+                {tech.map((book: any) => <Card key={book._id || book.title} className="p-6 border-0 shadow-card hover:shadow-premium transition-all duration-300">
                     <div className="flex items-start gap-4">
                       <div className="flex-shrink-0">
                         <img 
-                          src={book.image} 
+                          src={book.image || book.coverImage || '/placeholder.svg'} 
                           alt={book.title}
                           className="w-12 h-18 object-cover rounded shadow-sm"
                         />
@@ -246,11 +331,11 @@ export const Reading = () => {
             <div>
               <h4 className="text-2xl sm:text-3xl font-bold text-foreground mb-8 pl-5">History & Humanity</h4>
               <div className="space-y-6">
-                {newWorldsBooks.history.map(book => <Card key={book.title} className="p-6 border-0 shadow-card hover:shadow-premium transition-all duration-300">
+                {history.map((book: any) => <Card key={book._id || book.title} className="p-6 border-0 shadow-card hover:shadow-premium transition-all duration-300">
                     <div className="flex items-start gap-4">
                       <div className="flex-shrink-0">
                         <img 
-                          src={book.image} 
+                          src={book.image || book.coverImage || '/placeholder.svg'} 
                           alt={book.title}
                           className="w-12 h-18 object-cover rounded shadow-sm"
                         />
@@ -268,11 +353,11 @@ export const Reading = () => {
             <div>
               <h4 className="text-2xl sm:text-3xl font-bold text-foreground mb-8 pl-5">Fiction & Story</h4>
               <div className="space-y-6">
-                {newWorldsBooks.fiction.map(book => <Card key={book.title} className="p-6 border-0 shadow-card hover:shadow-premium transition-all duration-300">
+                {fiction.map((book: any) => <Card key={book._id || book.title} className="p-6 border-0 shadow-card hover:shadow-premium transition-all duration-300">
                     <div className="flex items-start gap-4">
                       <div className="flex-shrink-0">
                         <img 
-                          src={book.image} 
+                          src={book.image || book.coverImage || '/placeholder.svg'} 
                           alt={book.title}
                           className="w-12 h-18 object-cover rounded shadow-sm"
                         />
