@@ -7,7 +7,8 @@ import { client } from '../../sanity/lib/client'
 async function safeFetch(query: string, params?: Record<string, any>) {
   try {
     // Check if client is configured
-    if (!client.config().projectId) {
+    const config = client.config?.() || {}
+    if (!config.projectId || !import.meta.env.VITE_SANITY_PROJECT_ID) {
       return null
     }
     return await client.fetch(query, params || {})

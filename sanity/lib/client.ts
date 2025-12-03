@@ -1,12 +1,22 @@
 import { createClient } from '@sanity/client'
 
-export const client = createClient({
-  projectId: import.meta.env.VITE_SANITY_PROJECT_ID || '',
-  dataset: import.meta.env.VITE_SANITY_DATASET || 'production',
-  useCdn: true,
-  apiVersion: '2024-01-01',
-  // Token is optional - if provided, adds extra security
-  // For public portfolios, not required but doesn't hurt
-  token: import.meta.env.VITE_SANITY_TOKEN || undefined,
-})
+// Safely create client only if projectId is available
+const projectId = import.meta.env.VITE_SANITY_PROJECT_ID
+const dataset = import.meta.env.VITE_SANITY_DATASET || 'production'
+const token = import.meta.env.VITE_SANITY_TOKEN
+
+// Create a dummy client if projectId is missing (prevents crashes)
+export const client = projectId 
+  ? createClient({
+      projectId,
+      dataset,
+      useCdn: true,
+      apiVersion: '2024-01-01',
+      token: token || undefined,
+    })
+  : {
+      // Dummy client that returns null for all queries
+      fetch: async () => null,
+      config: () => ({ projectId: '', dataset }),
+    } as any
 
