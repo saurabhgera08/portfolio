@@ -9,7 +9,7 @@
     "build:dev": "vite build --mode development",
     "lint": "eslint .",
     "preview": "vite preview",
-    "studio": "sanity dev --port 3333",
+    "studio": "sanity dev --port 3333 --host localhost",
     "studio:build": "sanity build"
   },
   "dependencies": {

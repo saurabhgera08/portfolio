@@ -3,8 +3,6 @@
   "api": {
     "projectId": "dju5bkf8",
     "dataset": "production"
-  },
-  "project": {
-    "name": "Portfolio CMS"
   }
 }
+
