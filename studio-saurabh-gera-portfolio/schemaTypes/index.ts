@@ -1,1 +1,17 @@
-export const schemaTypes = []
+import hero from './hero'
+import about from './about'
+import workExperience from './workExperience'
+import project from './project'
+import reading from './reading'
+import skills from './skills'
+import contact from './contact'
+
+export const schemaTypes = [
+  hero,
+  about,
+  workExperience,
+  project,
+  reading,
+  skills,
+  contact,
+]
