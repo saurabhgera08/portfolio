@@ -17,42 +17,62 @@ const fallbackData = {
   personalStatement: [
     {
       _type: 'block',
-      children: [{ _type: 'span', text: "I'm a ", marks: [] }, { _type: 'span', text: "business problem-solver", marks: ['strong'] }, { _type: 'span', text: ". I don't fit neatly into one box—and that's by design.", marks: [] }]
+      children: [{ _type: 'span', text: "I'm a ", marks: [] }, { _type: 'span', text: "business problem-solver", marks: ['strong'] }, { _type: 'span', text: ". I don't fit neatly into one box, and I've learned that's an advantage.", marks: [] }]
     },
     {
       _type: 'block',
-      children: [{ _type: 'span', text: "Most roles are either strategy (all thinking, no execution) or operations (all execution, no strategy). ", marks: [] }, { _type: 'span', text: "I do both.", marks: ['strong'] }, { _type: 'span', text: " I think clearly about complex business problems, then I execute relentlessly to build solutions that scale.", marks: [] }]
+      children: [{ _type: 'span', text: "Most roles are either strategy (thinking but no execution) or operations (execution without thinking). ", marks: [] }, { _type: 'span', text: "I do both.", marks: ['strong'] }, { _type: 'span', text: " I think clearly about problems, first principles, user obsession, financial discipline, then I execute to build solutions that actually work.", marks: [] }]
     }
   ],
   thinkingPrinciples: [
     { title: "First Principles", description: "Don't accept the problem as stated. Dig into root causes. What are we really trying to solve?", icon: "Brain" },
     { title: "User-First", description: "The best solutions solve real problems for real people. I obsess over understanding what users actually need, not what we assume they want.", icon: "Users" },
-    { title: "Business Discipline", description: "Impact isn't just about growth—it's about sustainable unit economics. I think about P&L, sustainability, and scalability.", icon: "TrendingUp" },
+    { title: "Business Discipline", description: "Impact isn't just about growth, it's about sustainable unit economics. I think about P&L, sustainability, and scalability.", icon: "TrendingUp" },
     { title: "Clarity Over Complexity", description: "Complex ideas are often poorly understood ideas. I distill complex problems into clear frameworks that teams can act on.", icon: "Target" },
     { title: "Execution Mindset", description: "Strategy without execution is hallucination. I build things. I ship. I iterate based on real feedback.", icon: "Zap" }
   ],
   achievements: [
     {
       _type: 'block',
-      children: [{ _type: 'span', text: "Scaled a marketplace category from zero to 50% MoM growth by combining user research, vendor strategy, and relentless optimization. Improved unit economics in the process.", marks: [] }]
+      children: [{ _type: 'span', text: "Scaled a marketplace category 50% month-over-month by staying obsessed with what customers actually needed and what vendors actually struggled with. Improved profitability simultaneously.", marks: [] }]
     },
     {
       _type: 'block',
-      children: [{ _type: 'span', text: "Turned around unit economics across hardware, wholesale, and retail by rethinking operations, building scalable systems, and making hard tradeoff decisions.", marks: [] }]
+      children: [{ _type: 'span', text: "Improved cash flow and unit economics across hardware, wholesale, and retail businesses by fixing unsexy operational problems (payback cycles, supply chains, customer fit).", marks: [] }]
     },
     {
       _type: 'block',
-      children: [{ _type: 'span', text: "Built and scaled a sustainable fashion brand from scratch—navigating supply chains, multi-channel launches, and complex operations. Learned hard lessons about product-market fit when the unit economics don't work.", marks: [] }]
+      children: [{ _type: 'span', text: "Built a sustainable fashion brand from scratch across multiple channels and supply chains. Learned when to persist and when to exit. Exiting isn't failure, it's clarity.", marks: [] }]
     },
     {
       _type: 'block',
-      children: [{ _type: 'span', text: "Executed high-stakes negotiations ($860K competitive wins, global pricing strategy) by understanding what customers actually needed and positioning accordingly.", marks: [] }]
+      children: [{ _type: 'span', text: "Executed high-stakes sales ($860K wins, global contracts) by understanding customer strategy better than the customer did. Turned sales into problem-solving.", marks: [] }]
     }
   ],
   valueProposition: [
     {
       _type: 'block',
-      children: [{ _type: 'span', text: "I'm best suited for organizations in growth mode that need someone who can:", marks: [] }]
+      children: [{ _type: 'span', text: "I'm best suited for:", marks: [] }]
+    },
+    {
+      _type: 'block',
+      children: [{ _type: 'span', text: "• Founders who want thinking + execution (not just one or the other)", marks: [] }]
+    },
+    {
+      _type: 'block',
+      children: [{ _type: 'span', text: "• Scaling businesses hitting specific problems (unit economics, market fit, go-to-market)", marks: [] }]
+    },
+    {
+      _type: 'block',
+      children: [{ _type: 'span', text: "• Leaders who value clarity over polish", marks: [] }]
+    },
+    {
+      _type: 'block',
+      children: [{ _type: 'span', text: "", marks: [] }]
+    },
+    {
+      _type: 'block',
+      children: [{ _type: 'span', text: "I'm energized by problems where user needs and business metrics must be aligned. Fintech, marketplaces, consumer brands, operations-heavy businesses, the specific domain matters less than whether the problem is real and the team is ready to solve it.", marks: [] }]
     }
   ],
   interests: ['📚 Reading', '🧬 Bio-hacking', '💪 Fitness', '⚽ Football']
@@ -145,9 +165,6 @@ export const About = () => {
               </h3>
               <Card className="p-10 sm:p-12 shadow-card border-0">
                 <PortableTextBlock content={about.valueProposition || fallbackData.valueProposition} />
-                <p className="text-lg text-foreground/90 leading-relaxed mt-6">
-                  I'm energized by founders and scaling businesses—especially in <span className="font-semibold text-accent">fintech, marketplaces, and B2B platforms</span>—where solving user problems and driving business impact must be tightly aligned.
-                </p>
               </Card>
             </div>
           )}

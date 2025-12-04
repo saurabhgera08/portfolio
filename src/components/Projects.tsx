@@ -20,13 +20,10 @@ const fallbackProjects = [
     icon: Zap,
     title: "Zipowatt",
     subtitle: "Building a Platform for Power Backup Solutions",
-    tagline: "From brand identity to product wizards—creating user-friendly solutions for complex technical products",
+    tagline: "From brand identity to product wizards, creating user-friendly solutions for complex technical products",
     problem: "How do you help customers navigate complex power backup decisions (inverters, UPS systems, automotive batteries) without technical expertise? The challenge: translating technical specs into user-friendly experiences, building discovery tools, and creating scalable operations across multiple product categories.",
     images: [
-      "/placeholder.svg",
-      "/placeholder.svg",
-      "/placeholder.svg",
-      "/placeholder.svg"
+      "/images/projects/zipowatt-banner.jpg"
     ],
     thinking: [
       {
@@ -51,7 +48,7 @@ const fallbackProjects = [
       }
     ],
     outcome: "Complete brand identity for energy/tech solutions space. Functional e-commerce platform with payment integration. Scalable cataloguing system across 3+ product categories. Two smart product finders that translate technical decisions into user-friendly experiences. Platform architecture ready for expansion.",
-    learning: "Building for technical products to non-technical users taught me something crucial: complexity isn't solved by adding more information—it's solved by asking the right questions. The Automotive Battery Finder and Power Backup Wizard aren't just pretty interfaces. They're opinionated about HOW customers should think about their problem. Good UX for complex products isn't removing information—it's sequencing information in the right order, at the right time.",
+    learning: "Building for technical products to non-technical users taught me something crucial: complexity isn't solved by adding more information, it's solved by asking the right questions. The Automotive Battery Finder and Power Backup Wizard aren't just pretty interfaces. They're opinionated about HOW customers should think about their problem. Good UX for complex products isn't removing information, it's sequencing information in the right order, at the right time.",
     tags: ["E-Commerce", "UX Design", "Product Wizards", "Brand Identity", "Technical Products"],
     gradient: "from-yellow-500/20 to-orange-500/20",
     timeline: "Ongoing",
@@ -63,13 +60,10 @@ const fallbackProjects = [
     icon: Package,
     title: "SWNCK",
     subtitle: "Building a Sustainable Fashion Brand from Zero",
-    tagline: "From supplier partnerships to multi-channel launches—learning what it takes to build a scalable business",
+    tagline: "From supplier partnerships to multi-channel launches, learning what it takes to build a scalable business",
     problem: "How do you build a sustainable fashion brand that's both environmentally responsible and financially viable? The challenge: sourcing ethical materials, managing complex supply chains, scaling across multiple channels (DTC, Amazon, Flipkart), and achieving product-market fit in a competitive market.",
     images: [
-      "/placeholder.svg",
-      "/placeholder.svg",
-      "/placeholder.svg",
-      "/placeholder.svg"
+      "/images/projects/swnck-banner.jpg"
     ],
     thinking: [
       {
@@ -94,7 +88,7 @@ const fallbackProjects = [
       }
     ],
     outcome: "Launched 7 SKUs across 4 channels. Built sustainable supply chain from zero. Learned critical lessons about product-market fit and business sustainability. Decision to exit showed judgment and financial discipline.",
-    learning: "Product-market fit isn't about building the perfect product. At SWNCK, we had great products, strong supply chains, and clean operations. But the unit economics didn't work at scale for our target customer. The hard lesson: Sometimes the most important decision is recognizing when NOT to continue. I could have chased this for 2 more years. Instead, I made the judgment call to exit and preserve capital. That clarity—knowing when to pivot vs. persist—is more valuable than any single metric.",
+    learning: "Product-market fit isn't about building the perfect product. At SWNCK, we had great products, strong supply chains, and clean operations. But the unit economics didn't work at scale for our target customer. The hard lesson: Sometimes the most important decision is recognizing when NOT to continue. I could have chased this for 2 more years. Instead, I made the judgment call to exit and preserve capital. That clarity, knowing when to pivot vs. persist, is more valuable than any single metric.",
     tags: ["E-Commerce", "Sustainability", "Supply Chain", "Multi-Channel", "Brand Building"],
     gradient: "from-green-500/20 to-emerald-500/20",
     timeline: "Jun 2023 - Sep 2025"
@@ -108,7 +102,10 @@ const fallbackProjects = [
     title: "Eatsure",
     subtitle: "Positioning Party & Group Food Orders",
     tagline: "Strategic product design to capture the underserved group ordering segment",
-    problem: "Eatsure operates a unique food court model with on-site dining. But online, it's indistinguishable from other food delivery apps. How do you leverage the food court advantage to dominate group and party orders—where most delivery platforms fail?",
+    problem: "Eatsure operates a unique food court model with on-site dining. But online, it's indistinguishable from other food delivery apps. How do you leverage the food court advantage to dominate group and party orders, where most delivery platforms fail?",
+    images: [
+      "/images/projects/eatsure-banner.jpg"
+    ],
     thinking: [
       {
         label: "Core Innovation",
@@ -124,7 +121,7 @@ const fallbackProjects = [
       }
     ],
     outcome: "Designed group-first ordering experience leveraging food court model. Created operational framework for bulk order fulfillment. Built payment splitting system for complex group dynamics.",
-    learning: "Group ordering is fundamentally different from individual orders. The pain point isn't just coordinating preferences—it's about social dynamics and financial coordination. Most platforms optimize for individual speed. The real opportunity is optimizing for group harmony. That requires different thinking about the entire flow, from invitation to checkout to bill splitting.",
+    learning: "Group ordering is fundamentally different from individual orders. The pain point isn't just coordinating preferences, it's about social dynamics and financial coordination. Most platforms optimize for individual speed. The real opportunity is optimizing for group harmony. That requires different thinking about the entire flow, from invitation to checkout to bill splitting.",
     tags: ["Food Delivery", "Group Orders", "UX Strategy", "Marketplace"],
     gradient: "from-red-500/20 to-pink-500/20",
     timeline: "Professional Assessment"
@@ -137,6 +134,9 @@ const fallbackProjects = [
     subtitle: "Mobile-First Strategy for Music Streaming",
     tagline: "Reorienting a web-first platform to capture mobile engagement and emerging revenue streams",
     problem: "Musi.Fy built for web, but 85%+ of music streaming happens on mobile. Web-first architecture = lower engagement, lost market share, missed monetization opportunities (mobile-first content creation, in-app advertising).",
+    images: [
+      "/images/projects/musify-banner.jpg"
+    ],
     thinking: [
       {
         label: "Mobile-First Architecture",
@@ -165,6 +165,9 @@ const fallbackProjects = [
     subtitle: "Solving Medicine Hoarding During Crisis",
     tagline: "System design for equitable distribution of essential medicines during supply shocks",
     problem: "During the pandemic, hoarding of essential medicines created artificial scarcity. People with money bought surplus; people without money got nothing. How do you prevent hoarding while ensuring equitable access to life-saving medications?",
+    images: [
+      "/images/projects/medequity-banner.jpg"
+    ],
     thinking: [
       {
         label: "Demand Aggregation",
@@ -184,7 +187,7 @@ const fallbackProjects = [
       }
     ],
     outcome: "Designed framework for crisis distribution addressing equity and efficiency simultaneously. Created system applicable beyond medicine to any essential goods during supply shocks.",
-    learning: "This isn't just a tech problem—it's a system design problem. The solution requires aligning incentives across manufacturers, distributors, healthcare providers, and government. The hardest part isn't building the platform—it's designing the governance model that ensures fairness without killing efficiency. Technology enables transparency, but policy ensures equity.",
+    learning: "This isn't just a tech problem, it's a system design problem. The solution requires aligning incentives across manufacturers, distributors, healthcare providers, and government. The hardest part isn't building the platform, it's designing the governance model that ensures fairness without killing efficiency. Technology enables transparency, but policy ensures equity.",
     tags: ["Healthcare", "Crisis Management", "System Design", "Social Impact"],
     gradient: "from-blue-500/20 to-cyan-500/20",
     timeline: "Professional Assessment"
@@ -197,6 +200,9 @@ const fallbackProjects = [
     subtitle: "Modernizing Airline Services",
     tagline: "Transforming a captive audience into engaged customers through seamless in-flight ordering",
     problem: "Onboard Wi-Fi is becoming standard. But in-flight food service remains outdated: limited menu, long waits, inefficient ordering. How do you modernize the experience and turn a captive audience into a revenue opportunity?",
+    images: [
+      "/images/projects/inflight-banner.jpg"
+    ],
     thinking: [
       {
         label: "User Experience Innovation",
@@ -216,7 +222,7 @@ const fallbackProjects = [
       }
     ],
     outcome: "Designed end-to-end in-flight ordering experience. Created operational playbook for airline partnerships. Built monetization strategy aligned with customer willingness to pay.",
-    learning: "Airlines have a captive audience with time to spend. Most miss this as a service opportunity. In-flight ordering isn't about maximizing revenue per meal—it's about creating a premium experience that justifies premium pricing. The insight: captive doesn't mean trapped. It means undivided attention. Use that wisely.",
+    learning: "Airlines have a captive audience with time to spend. Most miss this as a service opportunity. In-flight ordering isn't about maximizing revenue per meal, it's about creating a premium experience that justifies premium pricing. The insight: captive doesn't mean trapped. It means undivided attention. Use that wisely.",
     tags: ["Aviation", "Service Design", "Monetization", "Mobile App"],
     gradient: "from-sky-500/20 to-blue-500/20",
     timeline: "Professional Assessment"
@@ -229,6 +235,9 @@ const fallbackProjects = [
     subtitle: "360° Brand Campaign for Medicine Cost Reduction",
     tagline: "Multi-channel campaign strategy around the core value prop: Reduce medicine bills by up to 72%",
     problem: "Truemeds has a powerful value prop (reduce medicine bills by 72%), but it's buried in a crowded healthcare market. How do you build a campaign that breaks through, reaches the right customers, and communicates the value clearly?",
+    images: [
+      "/images/projects/truemeds-banner.jpg"
+    ],
     thinking: [
       {
         label: "Customer Segmentation",
@@ -248,7 +257,7 @@ const fallbackProjects = [
       }
     ],
     outcome: "Comprehensive 360° campaign strategy. Segmented messaging for higher conversion. Multi-channel execution plan with budget allocation and ROI tracking framework.",
-    learning: "The best campaigns don't just communicate value—they help customers discover it themselves. Calculator tools, real stories, and doctor testimonials aren't marketing fluff. They're educational tools that build trust. In healthcare, trust beats hype every time. The strategy: make the savings tangible and the trust visible.",
+    learning: "The best campaigns don't just communicate value, they help customers discover it themselves. Calculator tools, real stories, and doctor testimonials aren't marketing fluff. They're educational tools that build trust. In healthcare, trust beats hype every time. The strategy: make the savings tangible and the trust visible.",
     tags: ["Marketing Strategy", "Healthcare", "Campaign Design", "Multi-Channel"],
     gradient: "from-teal-500/20 to-green-500/20",
     timeline: "Professional Assessment"
@@ -263,6 +272,9 @@ const fallbackProjects = [
     subtitle: "Strategic Analysis of GameFi Market Leadership",
     tagline: "Deep-dive analysis of token economics, community, and competitive positioning in web3 gaming",
     problem: "How can Immutable maintain market leadership in the rapidly evolving GameFi space while ensuring long-term sustainability? What are the core strengths, vulnerabilities, and growth levers?",
+    images: [
+      "/images/projects/immutable-banner.jpg"
+    ],
     thinking: [
       {
         label: "Token Economics",
@@ -286,7 +298,7 @@ const fallbackProjects = [
       }
     ],
     outcome: "Comprehensive strategic assessment identifying core levers for market leadership. Created decision-making framework for long-term sustainability in cyclical GameFi market.",
-    learning: "GameFi is cyclical. Success isn't about riding the hype—it's about building sustained developer and player ecosystems that survive market downturns. The companies that win aren't the ones with the best token pump—they're the ones that build real developer tools, real games, and real communities that stick around when the market crashes. Infrastructure beats speculation.",
+    learning: "GameFi is cyclical. Success isn't about riding the hype, it's about building sustained developer and player ecosystems that survive market downturns. The companies that win aren't the ones with the best token pump, they're the ones that build real developer tools, real games, and real communities that stick around when the market crashes. Infrastructure beats speculation.",
     tags: ["Web3", "GameFi", "Token Economics", "Strategic Analysis", "Market Research"],
     gradient: "from-indigo-500/20 to-purple-500/20",
     timeline: "Market Research Project"
@@ -314,19 +326,19 @@ export const Projects = () => {
       <div className="max-w-6xl mx-auto">
         <div className="text-center mb-20 sm:mb-24 animate-fade-in">
           <h2 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold mb-6 bg-gradient-to-r from-primary via-primary/80 to-primary/60 bg-clip-text text-transparent">
-            Projects & Strategic Work
+            Work & Thinking
           </h2>
           <p className="text-xl sm:text-2xl text-muted-foreground max-w-3xl mx-auto leading-relaxed">
-            Beyond building products, I solve problems. Here's how I think and what I've built.
+            Some of this work shipped. Some of it helped founders think through complex decisions. Some of it is how I'd approach a problem if I were building it. All of it shows how I think.
           </p>
         </div>
 
         <Tabs defaultValue="all" className="w-full">
           <TabsList className="grid w-full grid-cols-4 mb-12">
-            <TabsTrigger value="all">All Projects</TabsTrigger>
-            <TabsTrigger value="built-launched">Built & Launched</TabsTrigger>
-            <TabsTrigger value="strategic">Strategic Projects</TabsTrigger>
-            <TabsTrigger value="analysis">Market Analysis</TabsTrigger>
+            <TabsTrigger value="all">All</TabsTrigger>
+            <TabsTrigger value="built-launched">Built</TabsTrigger>
+            <TabsTrigger value="strategic">Explored</TabsTrigger>
+            <TabsTrigger value="analysis">Analyzed</TabsTrigger>
           </TabsList>
 
           <TabsContent value="all" className="space-y-12 sm:space-y-16">
@@ -361,9 +373,9 @@ export const Projects = () => {
 const ProjectCard = ({ project, index }: { project: any; index: number }) => {
   const Icon = getIcon(project.icon || "Package");
   const categoryLabels = {
-    "built-launched": "Built & Launched",
-    "strategic": "Strategic Project",
-    "analysis": "Market Analysis"
+    "built-launched": "Built",
+    "strategic": "Explored",
+    "analysis": "Analyzed"
   };
 
   return (
@@ -376,18 +388,21 @@ const ProjectCard = ({ project, index }: { project: any; index: number }) => {
     >
       <div className={`absolute inset-0 bg-gradient-to-br ${project.gradient} opacity-0 group-hover:opacity-100 transition-opacity duration-500`} />
       
-      {project.images && (
+      {project.images && project.images.length > 0 && (
         <div className="relative w-full overflow-hidden">
-          <div className="grid grid-cols-2 gap-0.5 bg-muted/30">
-            {project.images.map((img, idx) => (
-              <div key={idx} className="aspect-video bg-muted/50 overflow-hidden">
-                <img 
-                  src={img} 
-                  alt={`${project.title} screenshot ${idx + 1}`}
-                  className="w-full h-full object-cover hover:scale-105 transition-transform duration-500"
-                />
-              </div>
-            ))}
+          <div className="aspect-video bg-muted/50 overflow-hidden">
+            <img 
+              src={project.images[0] || '/placeholder.svg'} 
+              alt={`${project.title} banner`}
+              className="w-full h-full object-cover hover:scale-105 transition-transform duration-500"
+              onError={(e) => {
+                // Fallback to placeholder if image doesn't exist
+                const target = e.target as HTMLImageElement;
+                if (target.src !== '/placeholder.svg') {
+                  target.src = '/placeholder.svg';
+                }
+              }}
+            />
           </div>
         </div>
       )}

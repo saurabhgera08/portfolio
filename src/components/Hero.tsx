@@ -5,8 +5,8 @@ import { getHeroData } from "@/lib/sanity-queries";
 
 // Fallback data if Sanity isn't configured
 const fallbackData = {
-  headline: "Scaling Businesses Through\nClear Thinking &\nRelentless Execution",
-  headlineHighlight: "Relentless Execution",
+  headline: "Building Clarity.\nExecuting Relentlessly.",
+  headlineHighlight: "Executing Relentlessly",
   subheadline: "I've driven 50%+ MoM growth, built profitable unit economics, and led cross-functional teams to win in competitive markets. I think clearly about complex problems and execute relentlessly on what matters.",
   ctaPrimary: "Explore My Work",
   ctaSecondary: "Get in Touch",
@@ -15,8 +15,8 @@ const fallbackData = {
     { value: "$860K", label: "Competitive Wins", highlight: false },
     { value: "50%+", label: "MoM Growth Driven", highlight: true },
     { value: "$1.2M+", label: "Market Share Leader", highlight: false },
-    { value: "3%", label: "QoQ Share Gains", highlight: false },
-    { value: "Profitable", label: "Unit Economics", highlight: true },
+    { value: "3%", label: "QoQ Share Gains (market leader in strategic whitespace categories)", highlight: false },
+    { value: "6pps", label: "CM1 Improvement", highlight: true },
   ],
 };
 

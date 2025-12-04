@@ -1,41 +1,6 @@
 import { Card } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useQuery } from "@tanstack/react-query";
 import { getSkills } from "@/lib/sanity-queries";
-
-const fallbackSkillCategories = {
-  product: [
-    "Product Strategy & Roadmapping",
-    "User Research & Data Analysis",
-    "Wireframing & Prototyping",
-    "A/B Testing & Growth Experiments",
-    "Agile/Scrum Methodologies",
-    "Product-Market Fit Validation",
-    "Feature Prioritization",
-    "User Journey Mapping"
-  ],
-  technical: [
-    "SQL & Data Analysis",
-    "HTML, CSS, JavaScript",
-    "Java & Verilog HDL",
-    "Shopify & E-commerce Platforms",
-    "Amazon Seller Central",
-    "Google Analytics & Mixpanel",
-    "Figma & Adobe XD",
-    "Git & Version Control"
-  ],
-  business: [
-    "P&L Management",
-    "Digital Marketing (Meta Ads, Google Ads)",
-    "Vendor/Partner Management",
-    "Sales Strategy & Execution",
-    "Financial Modeling & Valuation",
-    "Go-to-Market Strategy",
-    "Competitive Analysis",
-    "Stakeholder Management"
-  ]
-};
 
 const fallbackCertifications = [
   "Private Equity & Venture Capital - Bocconi University",
@@ -61,12 +26,6 @@ export const Skills = () => {
     refetchOnWindowFocus: false,
   });
 
-  const skillCategories = {
-    product: skillsData?.productSkills || fallbackSkillCategories.product,
-    technical: skillsData?.technicalSkills || fallbackSkillCategories.technical,
-    business: skillsData?.businessSkills || fallbackSkillCategories.business,
-  };
-
   const certifications = skillsData?.certifications || fallbackCertifications;
 
   return (
@@ -74,69 +33,97 @@ export const Skills = () => {
       <div className="max-w-6xl mx-auto">
         <div className="text-center mb-20 sm:mb-24">
           <h2 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold text-foreground mb-6">
-            Skills & Capabilities
+            How I Approach Problems
           </h2>
           <div className="w-24 h-1.5 bg-accent mx-auto rounded-full" />
         </div>
         
-        <Tabs defaultValue="product" className="w-full">
-          <TabsList className="grid w-full grid-cols-3 mb-8 bg-card shadow-card">
-            <TabsTrigger value="product" className="text-sm sm:text-base data-[state=active]:bg-accent data-[state=active]:text-accent-foreground">
-              Product Management
-            </TabsTrigger>
-            <TabsTrigger value="technical" className="text-sm sm:text-base data-[state=active]:bg-accent data-[state=active]:text-accent-foreground">
-              Technical
-            </TabsTrigger>
-            <TabsTrigger value="business" className="text-sm sm:text-base data-[state=active]:bg-accent data-[state=active]:text-accent-foreground">
-              Business & Growth
-            </TabsTrigger>
-          </TabsList>
-          
-          <TabsContent value="product" className="space-y-4">
-            <Card className="p-10 sm:p-12 shadow-card border-0">
-              <div className="flex flex-wrap gap-4">
-                {skillCategories.product.map((skill: string, index: number) => (
-                  <Badge 
-                    key={index}
-                    className="px-4 py-2 text-sm bg-accent/10 text-accent hover:bg-accent/20 transition-colors"
-                  >
-                    {skill}
-                  </Badge>
-                ))}
-              </div>
-            </Card>
-          </TabsContent>
-          
-          <TabsContent value="technical" className="space-y-4">
-            <Card className="p-10 sm:p-12 shadow-card border-0">
-              <div className="flex flex-wrap gap-4">
-                {skillCategories.technical.map((skill: string, index: number) => (
-                  <Badge 
-                    key={index}
-                    className="px-4 py-2 text-sm bg-accent/10 text-accent hover:bg-accent/20 transition-colors"
-                  >
-                    {skill}
-                  </Badge>
-                ))}
-              </div>
-            </Card>
-          </TabsContent>
-          
-          <TabsContent value="business" className="space-y-4">
-            <Card className="p-10 sm:p-12 shadow-card border-0">
-              <div className="flex flex-wrap gap-4">
-                {skillCategories.business.map((skill: string, index: number) => (
-                  <Badge 
-                    key={index}
-                    className="px-4 py-2 text-sm bg-accent/10 text-accent hover:bg-accent/20 transition-colors"
-                  >
-                    {skill}
-                  </Badge>
-                ))}
-              </div>
-            </Card>
-          </TabsContent>
-        </Tabs>
+        <div className="space-y-12">
+          {/* Product & Business */}
+          <Card className="p-10 sm:p-12 shadow-card border-0">
+            <h3 className="text-2xl sm:text-3xl font-bold text-foreground mb-6">Product & Business</h3>
+            <ul className="space-y-3 text-foreground/90">
+              <li className="flex items-start space-x-3">
+                <span className="flex-shrink-0 w-1.5 h-1.5 rounded-full bg-accent mt-2" />
+                <span>First principles thinking</span>
+              </li>
+              <li className="flex items-start space-x-3">
+                <span className="flex-shrink-0 w-1.5 h-1.5 rounded-full bg-accent mt-2" />
+                <span>User research and insight extraction</span>
+              </li>
+              <li className="flex items-start space-x-3">
+                <span className="flex-shrink-0 w-1.5 h-1.5 rounded-full bg-accent mt-2" />
+                <span>Unit economics analysis</span>
+              </li>
+              <li className="flex items-start space-x-3">
+                <span className="flex-shrink-0 w-1.5 h-1.5 rounded-full bg-accent mt-2" />
+                <span>Go-to-market strategy</span>
+              </li>
+              <li className="flex items-start space-x-3">
+                <span className="flex-shrink-0 w-1.5 h-1.5 rounded-full bg-accent mt-2" />
+                <span>Vendor and partnership strategy</span>
+              </li>
+              <li className="flex items-start space-x-3">
+                <span className="flex-shrink-0 w-1.5 h-1.5 rounded-full bg-accent mt-2" />
+                <span>P&L optimization</span>
+              </li>
+            </ul>
+          </Card>
+
+          {/* Execution */}
+          <Card className="p-10 sm:p-12 shadow-card border-0">
+            <h3 className="text-2xl sm:text-3xl font-bold text-foreground mb-6">Execution</h3>
+            <ul className="space-y-3 text-foreground/90">
+              <li className="flex items-start space-x-3">
+                <span className="flex-shrink-0 w-1.5 h-1.5 rounded-full bg-accent mt-2" />
+                <span>Building and shipping</span>
+              </li>
+              <li className="flex items-start space-x-3">
+                <span className="flex-shrink-0 w-1.5 h-1.5 rounded-full bg-accent mt-2" />
+                <span>Cross-functional team leadership</span>
+              </li>
+              <li className="flex items-start space-x-3">
+                <span className="flex-shrink-0 w-1.5 h-1.5 rounded-full bg-accent mt-2" />
+                <span>Operations scaling</span>
+              </li>
+              <li className="flex items-start space-x-3">
+                <span className="flex-shrink-0 w-1.5 h-1.5 rounded-full bg-accent mt-2" />
+                <span>Process documentation and playbooks</span>
+              </li>
+              <li className="flex items-start space-x-3">
+                <span className="flex-shrink-0 w-1.5 h-1.5 rounded-full bg-accent mt-2" />
+                <span>Financial modeling</span>
+              </li>
+            </ul>
+          </Card>
+
+          {/* Tools I Use */}
+          <Card className="p-10 sm:p-12 shadow-card border-0">
+            <h3 className="text-2xl sm:text-3xl font-bold text-foreground mb-6">Tools I Use</h3>
+            <ul className="space-y-3 text-foreground/90">
+              <li className="flex items-start space-x-3">
+                <span className="flex-shrink-0 w-1.5 h-1.5 rounded-full bg-accent mt-2" />
+                <span>Figma (product design)</span>
+              </li>
+              <li className="flex items-start space-x-3">
+                <span className="flex-shrink-0 w-1.5 h-1.5 rounded-full bg-accent mt-2" />
+                <span>Google Sheets / Excel (modeling, analysis)</span>
+              </li>
+              <li className="flex items-start space-x-3">
+                <span className="flex-shrink-0 w-1.5 h-1.5 rounded-full bg-accent mt-2" />
+                <span>SQL (data analysis)</span>
+              </li>
+              <li className="flex items-start space-x-3">
+                <span className="flex-shrink-0 w-1.5 h-1.5 rounded-full bg-accent mt-2" />
+                <span>App Scripts (automation)</span>
+              </li>
+              <li className="flex items-start space-x-3">
+                <span className="flex-shrink-0 w-1.5 h-1.5 rounded-full bg-accent mt-2" />
+                <span>Shopify, Amazon Seller Central, payment integrations</span>
+              </li>
+            </ul>
+          </Card>
+        </div>
         
         {/* Certifications */}
         {certifications && certifications.length > 0 && (

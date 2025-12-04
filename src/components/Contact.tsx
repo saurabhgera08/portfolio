@@ -7,7 +7,7 @@ import { getContactInfo } from "@/lib/sanity-queries";
 const fallbackContact = {
   email: "saurabhgera08@gmail.com",
   phone: "+91 8341064488",
-  linkedin: "https://www.linkedin.com/in/saurabh-gera-b8a14b147/",
+  linkedin: "https://www.linkedin.com/in/saurabhgera/",
   location: "Hyderabad, India",
   interestedIn: [
     "Founders and scaling businesses solving complex problems",
@@ -40,29 +40,32 @@ export const Contact = () => {
       <div className="max-w-4xl mx-auto">
         <div className="text-center mb-20 sm:mb-24">
           <h2 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold text-foreground mb-6">
-            Let's Talk
+            Let's Connect
           </h2>
           <div className="w-24 h-1.5 bg-accent mx-auto rounded-full mb-8" />
           <div className="mt-8 max-w-3xl mx-auto space-y-6 text-left">
             <div>
               <p className="text-lg font-semibold text-foreground mb-3">
-                I'm interested in talking with:
+                Reach out if you're:
               </p>
               <ul className="space-y-2">
-                {(contact.interestedIn || fallbackContact.interestedIn).map((item: string, index: number) => (
-                  <li key={index} className="flex items-start space-x-3">
-                    <span className="flex-shrink-0 w-1.5 h-1.5 rounded-full bg-accent mt-2" />
-                    <span className="text-foreground/90">{item}</span>
-                  </li>
-                ))}
+                <li className="flex items-start space-x-3">
+                  <span className="flex-shrink-0 w-1.5 h-1.5 rounded-full bg-accent mt-2" />
+                  <span className="text-foreground/90">A founder working through a specific problem (market fit, unit economics, go-to-market)</span>
+                </li>
+                <li className="flex items-start space-x-3">
+                  <span className="flex-shrink-0 w-1.5 h-1.5 rounded-full bg-accent mt-2" />
+                  <span className="text-foreground/90">Building something in fintech, marketplaces, or consumer brands</span>
+                </li>
+                <li className="flex items-start space-x-3">
+                  <span className="flex-shrink-0 w-1.5 h-1.5 rounded-full bg-accent mt-2" />
+                  <span className="text-foreground/90">Looking for someone who thinks first, then executes</span>
+                </li>
               </ul>
             </div>
             <div className="pt-4">
-              <p className="text-lg font-semibold text-foreground mb-2">
-                Let's talk if:
-              </p>
               <p className="text-foreground/90 leading-relaxed">
-                {contact.letsTalkIf || fallbackContact.letsTalkIf}
+                Or if you just want to chat about books, business, or how to build something that matters.
               </p>
             </div>
           </div>

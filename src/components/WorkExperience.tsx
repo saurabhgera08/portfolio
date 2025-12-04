@@ -4,19 +4,17 @@ import { getWorkExperience } from "@/lib/sanity-queries";
 
 const fallbackExperiences = [
   {
-    role: "Freelance Consultant",
-    company: "Strategic Advisory & Product Design",
+    role: "Freelance Advisor",
+    company: "",
     duration: "Sep 2025 - Present",
-    headline: "Helping businesses solve strategic problems through clarity and execution",
-    story: "I advise early-stage fintech and marketplace founders on product-market fit, unit economics, and go-to-market strategy. I design product strategies, validate concepts, and optimize operations for profitability. Recent work includes designing marketplace go-to-market strategies, optimizing lending product unit economics, and building B2B SaaS roadmaps based on financial impact.",
+    headline: "",
+    story: "I help early-stage founders and consumer brands solve specific problems: validating product-market fit, improving unit economics, designing go-to-market strategies, and scaling operations efficiently.",
     learnings: [
-      "Strategic advisory for product-market fit and validation",
-      "Unit economics analysis and P&L optimization",
-      "Go-to-market strategy and customer acquisition planning",
-      "Operations scaling and financial modeling",
-      "Product design for marketplaces, fintech, and B2B SaaS"
+      "Recent work spans cloud kitchens (supply chain optimization, customer retention), consumer brands (product positioning, channel strategy), fintech startups (unit economics, lending product design), and marketplace platforms (vendor acquisition, growth mechanics).",
+      "I also take on pro bono work for problems I find interesting, whether it's helping a founder think through a pivot or advising a nonprofit on operational efficiency.",
+      "How I work: I don't give answers. I ask questions that help you see your business clearly. We work together to validate assumptions, stress-test strategies, and build frameworks you can execute on independently."
     ],
-    clarity: "The best consulting isn't about giving answers—it's about asking the right questions that help founders see their business clearly.",
+    clarity: "The best consulting isn't about giving answers, it's about asking the right questions that help founders see their business clearly.",
     color: "from-blue-500/20 to-purple-500/20"
   },
   {
@@ -30,7 +28,7 @@ const fallbackExperiences = [
       "I successfully navigated complex problems: built relationships with 40+ suppliers across 5 cities, negotiated terms for favorable pricing and quality, scaled across 4 channels (Shopify + Amazon + Flipkart + affiliates), and optimized operations to reduce CAC.",
       "But I made a strategic decision: the unit economics for our target customer (eco-conscious fashion buyers) didn't work at scale. The right call was to exit and preserve capital, not waste resources chasing a broken model."
     ],
-    clarity: "I learned that desirability requires craftsmanship, but sustainability requires unit economics. You can build the most beautiful product, execute flawlessly, and still fail because the customer's willingness to pay doesn't match your cost to serve. That's not a product failure—it's market clarity. And having that clarity early saves resources, capital, and heartbreak.",
+    clarity: "I learned that desirability requires craftsmanship, but sustainability requires unit economics. You can build the most beautiful product, execute flawlessly, and still fail because the customer's willingness to pay doesn't match your cost to serve. That's not a product failure, it's market clarity. And having that clarity early saves resources, capital, and heartbreak.",
     color: "accent"
   },
   {
@@ -42,7 +40,7 @@ const fallbackExperiences = [
     learnings: [
       "User insight: Why were customers not finding what they wanted? I dug into search behavior, discovered gaps between what customers looked for vs. what was available.",
       "Supply-side strategy: Why weren't vendors adopting the platform? I understood their pain (complex onboarding, unclear payouts) and fixed it. Result: 130+ quality vendors in months.",
-      "Demand-side optimization: I optimized search, collections, and product assortment based on what actually sold—not what I thought should sell. AOV improved 20%.",
+      "Demand-side optimization: I optimized search, collections, and product assortment based on what actually sold, not what I thought should sell. AOV improved 20%.",
       "Financial discipline: I improved CM1 from -11% to -5% by understanding that growth without sustainable unit economics is just noise."
     ],
     clarity: "Complex problems dissolve when you break them down to first principles and stay obsessed with understanding the actual user.",
@@ -56,7 +54,7 @@ const fallbackExperiences = [
     story: "I managed $1.2M+ in ad spends and led catalog quality initiatives for premium brands like Microsoft.",
     learnings: [
       "Data-driven decision making: Achieved 3% QoQ platform share gain by continuously analyzing conversion funnels, identifying friction points, and testing improvements.",
-      "Pre-purchase UX optimization: Led initiatives to improve product messaging and purchase journey—because clarity converts better than clever copy.",
+      "Pre-purchase UX optimization: Led initiatives to improve product messaging and purchase journey, because clarity converts better than clever copy.",
       "Ad spend optimization: Learned that throwing money at ads doesn't work. Understanding customer intent and optimizing for the right metrics does."
     ],
     clarity: "Performance marketing is about understanding what users need, not just bidding higher.",
@@ -69,7 +67,7 @@ const fallbackExperiences = [
     headline: "Operational Excellence + User-First Thinking = Sustainability",
     story: "I improved unit economics across hardware, wholesale, and retail by rethinking how the business operated.",
     learnings: [
-      "Cash flow was dying (payback period 40+ days). I analyzed the entire cycle—from ordering to fulfillment to payment collection. Result: 25-day payback. That's cash flow health.",
+      "Cash flow was dying (payback period 40+ days). I analyzed the entire cycle, from ordering to fulfillment to payment collection. Result: 25-day payback. That's cash flow health.",
       "Retail was broken: No scalable way to reach customers. I built an e-commerce store that let us reach beyond geographic limits and sell at better margins.",
       "Customer needs were being underserved: I sized and executed solar/power backup solutions based on what customers actually needed, not what we wanted to sell."
     ],
@@ -83,9 +81,9 @@ const fallbackExperiences = [
     headline: "Thinking Like a Strategist While Executing Like an Operator",
     story: "I didn't just 'make quota.' I learned to think strategically about customer needs while executing relentlessly on business outcomes.",
     learnings: [
-      "Pricing is strategy: Global contracts with Franklin Templeton and Facebook taught me that how you price signals your value. Pricing isn't a sales tactic—it's a product decision.",
+      "Pricing is strategy: Global contracts with Franklin Templeton and Facebook taught me that how you price signals your value. Pricing isn't a sales tactic, it's a product decision.",
       "Customer strategy matters more than closing speed: Instead of hunting quick wins, I planned deep customer strategies. I understood buying cycles, influencers, and actual pain points.",
-      "Competitive strategy + execution: I orchestrated $860K competitive wins by understanding our real advantage, the customer's actual needs, and how to position accordingly. It wasn't luck—it was strategic + relentless."
+      "Competitive strategy + execution: I orchestrated $860K competitive wins by understanding our real advantage, the customer's actual needs, and how to position accordingly. It wasn't luck, it was strategic + relentless."
     ],
     clarity: "The best sales come from solving real problems, not from better pitch decks.",
     color: "accent"
@@ -117,7 +115,7 @@ export const WorkExperience = () => {
           </h2>
           <div className="w-24 h-1.5 bg-accent mx-auto rounded-full mb-8" />
           <p className="text-xl sm:text-2xl text-muted-foreground max-w-3xl mx-auto leading-relaxed">
-            Not just what I did—how I thought about the problems and what it produced
+            Not just what I did, how I thought about the problems and what it produced
           </p>
         </div>
         
