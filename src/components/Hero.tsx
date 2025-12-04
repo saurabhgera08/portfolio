@@ -16,7 +16,7 @@ const fallbackData = {
     { value: "50%+", label: "MoM Growth Driven", highlight: true },
     { value: "$1.2M+", label: "Market Share Leader", highlight: false },
     { value: "3%", label: "QoQ Share Gains (market leader in strategic whitespace categories)", highlight: false },
-    { value: "6pps", label: "CM1 Improvement", highlight: true },
+    { value: "6pps", label: "CM1 Improvement (supply cluster optimization)", highlight: true },
   ],
 };
 
@@ -45,9 +45,18 @@ export const Hero = () => {
   const headlineText = heroData.headline || fallbackData.headline;
   const headlineParts = headlineText.split('\n').filter(p => p.trim());
   const highlightText = heroData.headlineHighlight || fallbackData.headlineHighlight;
+  
+  // Use fallback stats if Sanity has old data (checking for "Profitable" or old CM1 label without supply cluster optimization)
+  const stats = heroData.stats && heroData.stats.some((s: any) => 
+    s.label?.includes("Profitable") || 
+    s.value === "Profitable" ||
+    (s.value === "6pps" && !s.label?.includes("supply cluster optimization"))
+  )
+    ? fallbackData.stats
+    : (heroData.stats || fallbackData.stats);
 
   return (
-    <section className="relative min-h-screen flex items-center justify-center px-4 sm:px-6 lg:px-8 overflow-hidden">
+    <section id="hero" className="relative min-h-screen flex items-center justify-center px-4 sm:px-6 lg:px-8 overflow-hidden">
       {/* Animated Gradient Background */}
       <div className="absolute inset-0 bg-gradient-to-br from-[#0f172a] via-[#1e293b] to-[#0f172a] animate-gradient" />
       
@@ -99,19 +108,19 @@ export const Hero = () => {
               const parts = part.split(highlightText);
               return (
                 <span key={index}>
-                  {parts[0]}
+                  <span className="whitespace-nowrap">{parts[0]}</span>
                   <span className="relative inline-block mt-2">
                     <span className="relative z-10 text-transparent bg-clip-text bg-gradient-to-r from-[#F59E0B] via-[#FBBF24] to-[#F59E0B] animate-shimmer bg-[length:200%_auto]">
                       {highlightText}
                     </span>
                   </span>
-                  {parts[1]}
+                  {parts[1] && <span className="whitespace-nowrap">{parts[1]}</span>}
                   {index < headlineParts.length - 1 && <br />}
                 </span>
               );
             }
             return (
-              <span key={index}>
+              <span key={index} className="whitespace-nowrap">
                 {part}
                 {index < headlineParts.length - 1 && <br />}
               </span>
@@ -146,7 +155,7 @@ export const Hero = () => {
         
         {/* Stats Grid */}
         <div className="grid grid-cols-2 md:grid-cols-3 gap-6 lg:gap-8 pt-16 max-w-5xl mx-auto px-4">
-          {(heroData.stats || fallbackData.stats).map((stat: any, index: number) => (
+          {stats.map((stat: any, index: number) => (
             <div key={index} className="text-center p-6 lg:p-8 rounded-xl bg-white/5 backdrop-blur-md border border-white/10 hover:bg-white/10 hover:border-white/20 transition-all duration-300">
               <div className={`text-3xl sm:text-4xl lg:text-5xl font-bold mb-2 ${
                 stat.highlight 

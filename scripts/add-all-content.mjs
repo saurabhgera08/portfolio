@@ -30,23 +30,25 @@ async function createOrUpdate(type, data) {
   try {
     const existing = await checkExisting(type)
     if (existing) {
-      console.log(`⚠️  ${type} already exists, skipping...`)
-      return existing
+      // Update existing document instead of skipping
+      const result = await client.patch(existing._id).set(data).commit()
+      console.log(`✅ ${type} updated:`, result._id)
+      return result
     }
     
     const result = await client.create({ _type: type, ...data })
     console.log(`✅ ${type} created:`, result._id)
     return result
   } catch (error) {
-    console.error(`❌ Error creating ${type}:`, error.message)
+    console.error(`❌ Error creating/updating ${type}:`, error.message)
     throw error
   }
 }
 
 async function addHero() {
   return await createOrUpdate('hero', {
-    headline: "Scaling Businesses Through\nClear Thinking &\nRelentless Execution",
-    headlineHighlight: "Relentless Execution",
+    headline: "Building Clarity.\nExecuting Relentlessly.",
+    headlineHighlight: "Executing Relentlessly",
     subheadline: "I've driven 50%+ MoM growth, built profitable unit economics, and led cross-functional teams to win in competitive markets. I think clearly about complex problems and execute relentlessly on what matters.",
     ctaPrimary: "Explore My Work",
     ctaSecondary: "Get in Touch",
@@ -55,8 +57,8 @@ async function addHero() {
       { value: "$860K", label: "Competitive Wins", highlight: false },
       { value: "50%+", label: "MoM Growth Driven", highlight: true },
       { value: "$1.2M+", label: "Market Share Leader", highlight: false },
-      { value: "3%", label: "QoQ Share Gains", highlight: false },
-      { value: "Profitable", label: "Unit Economics", highlight: true },
+      { value: "3%", label: "QoQ Share Gains (market leader in strategic whitespace categories)", highlight: false },
+      { value: "6pps", label: "CM1 Improvement (supply cluster optimization)", highlight: true },
     ],
   })
 }

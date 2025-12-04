@@ -17,11 +17,15 @@ const fallbackData = {
   personalStatement: [
     {
       _type: 'block',
-      children: [{ _type: 'span', text: "I'm a ", marks: [] }, { _type: 'span', text: "business problem-solver", marks: ['strong'] }, { _type: 'span', text: ". I don't fit neatly into one box, and I've learned that's an advantage.", marks: [] }]
+      children: [{ _type: 'span', text: "I've worked across sales, operations, product, and strategy. Each role taught me something different, but the real value came from how they compound.", marks: [] }]
     },
     {
       _type: 'block',
-      children: [{ _type: 'span', text: "Most roles are either strategy (thinking but no execution) or operations (execution without thinking). ", marks: [] }, { _type: 'span', text: "I do both.", marks: ['strong'] }, { _type: 'span', text: " I think clearly about problems, first principles, user obsession, financial discipline, then I execute to build solutions that actually work.", marks: [] }]
+      children: [{ _type: 'span', text: "Sales taught me to understand customer needs deeply. Operations showed me how to build systems that scale. Product work taught me to think from first principles. Strategy work taught me to see the bigger picture. ", marks: [] }, { _type: 'span', text: "Together, they compound.", marks: ['strong'] }, { _type: 'span', text: " When I'm solving a problem, I can think strategically about what matters, understand the operational constraints, design the solution, and execute it. That combination is rare, and it's what drives real value.", marks: [] }]
+    },
+    {
+      _type: 'block',
+      children: [{ _type: 'span', text: "I don't fit neatly into one box. That used to feel like a disadvantage. Now I see it's the advantage.", marks: [] }]
     }
   ],
   thinkingPrinciples: [
@@ -94,7 +98,10 @@ export const About = () => {
     refetchOnWindowFocus: false,
   });
 
-  const about = { ...fallbackData, ...aboutData };
+  // Prefer fallback if Sanity data is incomplete or missing personalStatement
+  const about = (aboutData && aboutData.personalStatement && Array.isArray(aboutData.personalStatement) && aboutData.personalStatement.length > 0)
+    ? { ...fallbackData, ...aboutData }
+    : fallbackData;
   return <section id="about" className="py-24 sm:py-36 md:py-48 px-4 sm:px-6 lg:px-8 bg-secondary/30">
       <div className="max-w-6xl mx-auto">
         <div className="text-center mb-20 sm:mb-24">
@@ -170,20 +177,28 @@ export const About = () => {
           )}
           
           {/* Personal Interests */}
-          {about.interests && about.interests.length > 0 && (
-            <div className="text-center mt-20 sm:mt-24">
-              <h3 className="text-2xl sm:text-3xl md:text-4xl font-semibold text-foreground mb-8">
-                When I'm Not Solving Problems
-              </h3>
-              <div className="flex flex-wrap justify-center gap-4">
-                {(about.interests || fallbackData.interests).map((interest: string, index: number) => (
-                  <div key={index} className="px-6 py-3 bg-card rounded-full shadow-card text-foreground font-medium hover:shadow-premium transition-all hover:scale-105">
-                    {interest}
-                  </div>
-                ))}
-              </div>
+          <div className="text-center mt-20 sm:mt-24 max-w-3xl mx-auto">
+            <h3 className="text-2xl sm:text-3xl md:text-4xl font-semibold text-foreground mb-8">
+              When I'm Not Solving Problems
+            </h3>
+            <div className="space-y-6 text-foreground/80 leading-relaxed text-lg sm:text-xl">
+              <p>
+                I read obsessively, biographies to understand decision-making, history to understand consequence, science to marvel at progress, and fiction to understand what it means to be human. When a book changes how I see the world, I sit with it, make margin notes, and think about it for months.
+              </p>
+              <p>
+                Beyond reading, I experiment with bio-hacking, optimizing sleep, nutrition, and cognitive performance. I stay disciplined about fitness and find joy in football, both watching and playing. These aren't hobbies. They're ways I stay curious, maintain energy, and think clearly.
+              </p>
             </div>
-          )}
+            <div className="mt-10">
+              <button
+                onClick={() => document.getElementById('reading')?.scrollIntoView({ behavior: 'smooth' })}
+                className="inline-flex items-center gap-2 px-8 py-4 bg-accent text-accent-foreground rounded-full font-semibold hover:bg-accent/90 shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105"
+              >
+                <BookOpen className="w-5 h-5" />
+                Explore My Reading List
+              </button>
+            </div>
+          </div>
         </div>
       </div>
     </section>;

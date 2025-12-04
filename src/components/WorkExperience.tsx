@@ -14,7 +14,7 @@ const fallbackExperiences = [
       "I also take on pro bono work for problems I find interesting, whether it's helping a founder think through a pivot or advising a nonprofit on operational efficiency.",
       "How I work: I don't give answers. I ask questions that help you see your business clearly. We work together to validate assumptions, stress-test strategies, and build frameworks you can execute on independently."
     ],
-    clarity: "The best consulting isn't about giving answers, it's about asking the right questions that help founders see their business clearly.",
+    clarity: "The best consulting asks the right questions. It helps founders see their business clearly, not just gives them answers.",
     color: "from-blue-500/20 to-purple-500/20"
   },
   {
@@ -24,11 +24,11 @@ const fallbackExperiences = [
     headline: "Building a Business Taught Me What Real Problems Look Like",
     story: "I founded SWNCK to test whether I could build a scalable business by combining operational rigor with user-first thinking.",
     learnings: [
-      "Product-market fit isn't about building the perfect product. It's about finding a customer segment + channel + positioning where unit economics work sustainably.",
+      "Product-market fit means finding a customer segment, channel, and positioning where unit economics work sustainably. It's not about building the perfect product.",
       "I successfully navigated complex problems: built relationships with 40+ suppliers across 5 cities, negotiated terms for favorable pricing and quality, scaled across 4 channels (Shopify + Amazon + Flipkart + affiliates), and optimized operations to reduce CAC.",
       "But I made a strategic decision: the unit economics for our target customer (eco-conscious fashion buyers) didn't work at scale. The right call was to exit and preserve capital, not waste resources chasing a broken model."
     ],
-    clarity: "I learned that desirability requires craftsmanship, but sustainability requires unit economics. You can build the most beautiful product, execute flawlessly, and still fail because the customer's willingness to pay doesn't match your cost to serve. That's not a product failure, it's market clarity. And having that clarity early saves resources, capital, and heartbreak.",
+    clarity: "Desirability requires craftsmanship. Sustainability requires unit economics. You can build the most beautiful product, execute flawlessly, and still fail because the customer's willingness to pay doesn't match your cost to serve. That's not a product failure, it's market clarity. Having that clarity early saves resources, capital, and heartbreak.",
     color: "accent"
   },
   {
@@ -71,7 +71,7 @@ const fallbackExperiences = [
       "Retail was broken: No scalable way to reach customers. I built an e-commerce store that let us reach beyond geographic limits and sell at better margins.",
       "Customer needs were being underserved: I sized and executed solar/power backup solutions based on what customers actually needed, not what we wanted to sell."
     ],
-    clarity: "I learned that the distance between insight and impact is execution. At Amazon, I realized that the difference between good and great companies isn't analysis, it's operationalization. You can have perfect insights, but if you can't turn them into structured processes, documented playbooks, and team behaviors, they disappear when you move on. I became obsessed with this: How do I extract a behavioral insight from data? How do I test it? How do I make it permanent so it compounds? This is how you scale impact beyond your own effort.",
+    clarity: "The distance between insight and impact is execution. At Amazon, I saw that the difference between good and great companies is operationalization, not analysis. You can have perfect insights, but if you can't turn them into structured processes, documented playbooks, and team behaviors, they disappear when you move on. I became obsessed with this: How do I extract a behavioral insight from data? How do I test it? How do I make it permanent so it compounds? This is how you scale impact beyond your own effort.",
     color: "primary"
   },
   {
@@ -140,20 +140,24 @@ export const WorkExperience = () => {
                       <h3 className="text-xl sm:text-2xl font-bold text-foreground">
                         {exp.role}
                       </h3>
-                      <p className="text-lg font-semibold text-accent mt-1">
-                        {exp.company}
-                      </p>
+                      {exp.company && (
+                        <p className="text-lg font-semibold text-accent mt-1">
+                          {exp.company}
+                        </p>
+                      )}
                       <p className="text-sm text-muted-foreground mt-1">
                         {exp.duration}
                       </p>
                     </div>
                     
                     {/* Headline */}
-                    <div className="pt-4 border-t border-border/50">
-                      <h4 className="text-lg font-bold text-foreground/90 italic">
-                        {exp.headline}
-                      </h4>
-                    </div>
+                    {exp.headline && (
+                      <div className="pt-4 border-t border-border/50">
+                        <h4 className="text-lg font-bold text-foreground/90 italic">
+                          {exp.headline}
+                        </h4>
+                      </div>
+                    )}
                     
                     {/* Story */}
                     <p className="text-foreground/80 leading-relaxed">
