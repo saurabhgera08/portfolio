@@ -43,29 +43,13 @@ export const Contact = () => {
             Let's Connect
           </h2>
           <div className="w-24 h-1.5 bg-accent mx-auto rounded-full mb-8" />
-          <div className="mt-8 max-w-3xl mx-auto space-y-6 text-left">
-            <div>
-              <p className="text-lg font-semibold text-foreground mb-3">
-                Reach out if you're:
-              </p>
-              <ul className="space-y-2">
-                <li className="flex items-start space-x-3">
-                  <span className="flex-shrink-0 w-1.5 h-1.5 rounded-full bg-accent mt-2" />
-                  <span className="text-foreground/90">A founder working through a specific problem (market fit, unit economics, go-to-market)</span>
-                </li>
-                <li className="flex items-start space-x-3">
-                  <span className="flex-shrink-0 w-1.5 h-1.5 rounded-full bg-accent mt-2" />
-                  <span className="text-foreground/90">Building something in fintech, marketplaces, or consumer brands</span>
-                </li>
-                <li className="flex items-start space-x-3">
-                  <span className="flex-shrink-0 w-1.5 h-1.5 rounded-full bg-accent mt-2" />
-                  <span className="text-foreground/90">Looking for someone who thinks first, then executes</span>
-                </li>
-              </ul>
-            </div>
-            <div className="pt-4">
-              <p className="text-foreground/90 leading-relaxed">
-                Or if you just want to chat about books, business, or how to build something that matters.
+          <div className="mt-8 max-w-3xl mx-auto space-y-8">
+            <div className="text-left">
+              <h3 className="text-2xl sm:text-3xl font-bold text-foreground mb-4">
+                What I Am Looking For
+              </h3>
+              <p className="text-lg text-foreground/90 leading-relaxed">
+                Roles that combine ownership with business outcomes. I am best suited to category leadership, business strategy, growth or founder's office roles — places where ambiguous problems must be broken down, prioritised and executed.
               </p>
             </div>
           </div>

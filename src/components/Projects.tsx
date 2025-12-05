@@ -19,34 +19,13 @@ const fallbackProjects = [
     category: "built-launched",
     icon: Zap,
     title: "Zipowatt",
-    subtitle: "Building a Platform for Power Backup Solutions",
-    tagline: "From brand identity to product wizards, creating user-friendly solutions for complex technical products",
+    subtitle: "Platform for Battery and Solar Solutions",
+    tagline: "Fully Customized Live Shopify store built end to end, with full payment integration, catalog architecture, and two decision tools (Battery Finder and Power Backup Wizard).",
     problem: "How do you help customers navigate complex power backup decisions (inverters, UPS systems, automotive batteries) without technical expertise? The challenge: translating technical specs into user-friendly experiences, building discovery tools, and creating scalable operations across multiple product categories.",
     images: [
       "/images/projects/zipowatt-banner.jpg"
     ],
-    thinking: [
-      {
-        label: "Brand & Platform Identity",
-        description: "Designed brand identity for tech-forward energy solutions. Created brand guidelines and visual system. Established brand voice for tech + consumer audiences."
-      },
-      {
-        label: "E-Commerce Platform",
-        description: "Designed and implemented store interface. Built product catalog architecture. Integrated payment systems. Optimized for both desktop and mobile."
-      },
-      {
-        label: "Cataloguing Playbook",
-        description: "Created comprehensive cataloguing system for Automotive Batteries, Inverters, and UPS Systems. Standardized data structure for product information. Built templates for rapid catalog expansion. Enables scale without sacrificing data quality."
-      },
-      {
-        label: "Automotive Battery Finder",
-        description: "Designed functional flows for vehicle-to-battery matching. Built interaction model that guides users through selection. Created data flow: vehicle info → compatible batteries → recommended solution. Progressive disclosure prevents overwhelming users."
-      },
-      {
-        label: "Power Backup Solution Wizard",
-        description: "Designed multi-step wizard for solution selection. Functional design: Energy needs → Usage patterns → Recommended system. Makes complex decisions accessible to non-technical users."
-      }
-    ],
+    thinking: [],
     outcome: "Complete brand identity for energy/tech solutions space. Functional e-commerce platform with payment integration. Scalable cataloguing system across 3+ product categories. Two smart product finders that translate technical decisions into user-friendly experiences. Platform architecture ready for expansion.",
     learning: "Technical products confuse people. Instead of dumping more specs, I asked better questions. The Battery Finder and Power Backup Wizard guide customers through decisions step by step. They're opinionated about how people should think about power needs. The trick: sequence information, don't remove it. Show what matters when it matters.",
     tags: ["E-Commerce", "UX Design", "Product Wizards", "Brand Identity", "Technical Products"],

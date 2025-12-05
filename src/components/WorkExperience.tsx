@@ -10,84 +10,91 @@ const fallbackExperiences = [
     company: "",
     duration: "Sep 2025 - Present",
     headline: "",
-    story: "I help early-stage founders and consumer brands solve specific problems: validating product-market fit, improving unit economics, designing go-to-market strategies, and scaling operations efficiently.",
-    learnings: [
-      "Recent work spans cloud kitchens (supply chain optimization, customer retention), consumer brands (product positioning, channel strategy), fintech startups (unit economics, lending product design), and marketplace platforms (vendor acquisition, growth mechanics).",
-      "I also take on pro bono work for problems I find interesting, whether it's helping a founder think through a pivot or advising a nonprofit on operational efficiency.",
-      "How I work: I don't give answers. I ask questions that help you see your business clearly. We work together to validate assumptions, stress-test strategies, and build frameworks you can execute on independently."
+    storyBullets: [
+      "Help small businesses and early-stage founders diagnose growth problems, fix the root cause, and build actionable playbooks",
+      "Work spans cloud kitchens, consumer products and service businesses",
+      "Value delivered: clarity on what to stop, what to prioritise, and how to test assumptions with minimal spend"
     ],
-    clarity: "The best consulting asks the right questions. It helps founders see their business clearly, not just gives them answers.",
+    learnings: ["Founders rarely need more ideas — they need clarity. The most valuable work wasn't handing them solutions, but helping them see the real constraint in their business so they could solve it themselves."],
+    clarity: "",
     color: "from-blue-500/20 to-purple-500/20"
   },
   {
     role: "Founder",
     company: "SWNCK",
     duration: "Jun 2023 - Sep 2025",
-    headline: "Building a Business Taught Me What Real Problems Look Like",
-    story: "I founded SWNCK to test whether I could build a scalable business by combining operational rigor with user-first thinking.",
-    learnings: [
-      "Product-market fit means finding a customer segment, channel, and positioning where unit economics work sustainably. It's not about building the perfect product.",
-      "I successfully navigated complex problems: built relationships with 40+ suppliers across 5 cities, negotiated terms for favorable pricing and quality, scaled across 4 channels (Shopify + Amazon + Flipkart + affiliates), and optimized operations to reduce CAC.",
-      "But I made a strategic decision: the unit economics for our target customer (eco-conscious fashion buyers) didn't work at scale. The right call was to exit and preserve capital, not waste resources chasing a broken model."
+    headline: "",
+    storyBullets: [
+      "Launched sustainable apparel brand using bamboo and organic cotton across Shopify, Amazon, and Flipkart",
+      "Sold ~150 units at ₹999 ASP with 48–55% margins",
+      "Built supplier relationships across five cities and created multichannel fulfilment processes",
+      "Meta CAC ~₹500–₹700 and Amazon CAC ~₹350–₹450 made unit economics unviable at scale",
+      "Exited instead of chasing growth at a loss"
     ],
-    clarity: "Desirability requires craftsmanship. Sustainability requires unit economics. You can build the most beautiful product, execute flawlessly, and still fail because the customer's willingness to pay doesn't match your cost to serve. That's not a product failure, it's market clarity. Having that clarity early saves resources, capital, and heartbreak.",
+    learnings: ["A great product and tight operations do not guarantee scalability. The business model only works when customer willingness to pay exceeds the cost to serve, and it is better to stop early than scale a losing model."],
+    clarity: "",
     color: "accent"
   },
   {
     role: "Category Head",
     company: "CityMall",
     duration: "Feb 2023 - Jun 2023",
-    headline: "How Clarity of Thought Compounds Into Growth",
-    story: "I took over a struggling Men's Fashion category and grew it 50% MoM by combining user research, vendor strategy, and financial discipline.",
-    learnings: [
-      "User insight: Why were customers not finding what they wanted? I dug into search behavior, discovered gaps between what customers looked for vs. what was available.",
-      "Supply-side strategy: Why weren't vendors adopting the platform? I understood their pain (complex onboarding, unclear payouts) and fixed it. Result: 130+ quality vendors in months.",
-      "Demand-side optimization: I optimized search, collections, and product assortment based on what actually sold, not what I thought should sell. AOV improved 20%.",
-      "Financial discipline: I improved CM1 from -11% to -5% by understanding that growth without sustainable unit economics is just noise."
+    headline: "",
+    storyBullets: [
+      "Owned Men's Fashion category and turned around performance",
+      "Achieved 50%+ MoM growth for two consecutive months, reaching ~₹4 crore GMV",
+      "AOV increased from ₹150 to ₹380 by closing assortment gaps",
+      "Onboarded 130+ vendors in two months and redesigned search, collections and category UX",
+      "CM1 improved from –11% to –5% within eight weeks by shutting down high-cost supply clusters and rationalising discounts",
+      "Led three-member team with daily and weekly operating rhythms"
     ],
-    clarity: "Complex problems dissolve when you break them down to first principles and stay obsessed with understanding the actual user.",
+    learnings: ["Growth and profitability don't need to be trade-offs. When you understand what users truly want and what it costs to serve them, the same levers can move both topline and contribution margin."],
+    clarity: "",
     color: "primary"
   },
   {
     role: "Brand Specialist",
     company: "Amazon",
     duration: "Oct 2021 - Jan 2023",
-    headline: "Learning to Optimize for What Actually Matters",
-    story: "I managed $1.2M+ in ad spends and led catalog quality initiatives for premium brands like Microsoft.",
-    learnings: [
-      "Data-driven decision making: Achieved 3% QoQ platform share gain by continuously analyzing conversion funnels, identifying friction points, and testing improvements.",
-      "Pre-purchase UX optimization: Led initiatives to improve product messaging and purchase journey, because clarity converts better than clever copy.",
-      "Ad spend optimization: Learned that throwing money at ads doesn't work. Understanding customer intent and optimizing for the right metrics does."
+    headline: "",
+    storyBullets: [
+      "Managed $1.2M annual advertising portfolio for Microsoft laptops",
+      "Delivered 3% QoQ share gain for Windows devices during M1-driven competitive cycle",
+      "Drove improvements in pre-purchase clarity through catalog optimisation, reference grids, and targeted content",
+      "Co-initiated Comic Con activation, driving clear bump in conversions and wishlist activity in gaming SKUs"
     ],
-    clarity: "Performance marketing is about understanding what users need, not just bidding higher.",
+    learnings: ["Market share isn't won through promotion alone. Clear and complete pre-purchase information converts better than spending more on ads, especially in technical product categories."],
+    clarity: "",
     color: "accent"
   },
   {
     role: "General Manager",
     company: "Universal Batteries",
     duration: "Feb 2021 - Oct 2021",
-    headline: "Operational Excellence + User-First Thinking = Sustainability",
-    story: "I improved unit economics across hardware, wholesale, and retail by rethinking how the business operated.",
-    learnings: [
-      "Cash flow was dying (payback period 40+ days). I analyzed the entire cycle, from ordering to fulfillment to payment collection. Result: 25-day payback. That's cash flow health.",
-      "Retail was broken: No scalable way to reach customers. I built an e-commerce store that let us reach beyond geographic limits and sell at better margins.",
-      "Customer needs were being underserved: I sized and executed solar/power backup solutions based on what customers actually needed, not what we wanted to sell."
+    headline: "",
+    storyBullets: [
+      "Worked across sales, service, finance, operations and fulfilment",
+      "Revenue grew from ~₹2 crore to ₹2.5 crore",
+      "Shortened collection cycle from 40+ days to ~25 days through disciplined weekly processes and customer mix optimisation",
+      "Launched WooCommerce store",
+      "Executed eight solar/backup projects up to 40 KW"
     ],
-    clarity: "The distance between insight and impact is execution. At Amazon, I saw that the difference between good and great companies is operationalization, not analysis. You can have perfect insights, but if you can't turn them into structured processes, documented playbooks, and team behaviors, they disappear when you move on. I became obsessed with this: How do I extract a behavioral insight from data? How do I test it? How do I make it permanent so it compounds? This is how you scale impact beyond your own effort.",
+    learnings: ["Most small businesses don't fail due to lack of customers; they fail due to lack of cash flow discipline. Fixing the cash cycle matters more than chasing revenue."],
+    clarity: "",
     color: "primary"
   },
   {
     role: "Account Executive",
     company: "Dell Technologies",
     duration: "Mar 2019 - Feb 2021",
-    headline: "Thinking Like a Strategist While Executing Like an Operator",
-    story: "I didn't just 'make quota.' I learned to think strategically about customer needs while executing relentlessly on business outcomes.",
-    learnings: [
-      "Pricing is strategy: Global contracts with Franklin Templeton and Facebook taught me that how you price signals your value. Pricing isn't a sales tactic, it's a product decision.",
-      "Customer strategy matters more than closing speed: Instead of hunting quick wins, I planned deep customer strategies. I understood buying cycles, influencers, and actual pain points.",
-      "Competitive strategy + execution: I orchestrated $860K competitive wins by understanding our real advantage, the customer's actual needs, and how to position accordingly. It wasn't luck, it was strategic + relentless."
+    headline: "",
+    storyBullets: [
+      "Owned $2M quota and closed $3M within the year, with total revenue influence exceeding $5M across the full period",
+      "Closed $860K competitive deal within one quarter by aligning solution fit, lifecycle management and pricing speed",
+      "Recovered distressed and lapsed accounts, contributing roughly 30% of total revenue"
     ],
-    clarity: "The best sales come from solving real problems, not from better pitch decks.",
+    learnings: ["Large deals are rarely won on price or features. They are won by understanding how the customer buys, navigating internal politics, and reducing perceived risk for every stakeholder in the decision chain."],
+    clarity: "",
     color: "accent"
   }
 ];
@@ -158,14 +165,23 @@ const ExperienceFlipCard = ({
                   </div>
                 )}
                 
-                <p className="text-sm text-foreground/70 leading-relaxed line-clamp-3">
-                  {exp.story}
-                </p>
+                {(exp.storyBullets || exp.story) && (
+                  <div className="space-y-1">
+                    {(exp.storyBullets || [exp.story]).slice(0, 2).map((item: string, idx: number) => (
+                      <p key={idx} className="text-sm text-foreground/70 leading-relaxed line-clamp-1">
+                        • {item}
+                      </p>
+                    ))}
+                    {(exp.storyBullets?.length || 0) > 2 && (
+                      <p className="text-xs text-muted-foreground">+{(exp.storyBullets?.length || 0) - 2} more</p>
+                    )}
+                  </div>
+                )}
               </div>
               
               <div className="pt-4 border-t border-border/30 flex items-center justify-between">
                 <p className="text-xs text-muted-foreground font-medium">
-                  Tap to explore details
+                  Tap to expand
                 </p>
                 <ChevronDown className="w-5 h-5 text-accent group-hover:translate-y-1 transition-transform" />
               </div>
@@ -177,12 +193,14 @@ const ExperienceFlipCard = ({
         <div 
           className="absolute inset-0 backface-hidden rounded-2xl overflow-hidden"
           style={{ transform: 'rotateY(180deg)' }}
-          onClick={(e) => e.stopPropagation()}
         >
           <Card className={`h-full border-2 bg-gradient-to-br ${gradient} border-border/30 shadow-xl overflow-y-auto`}>
             <div className="p-6 h-full flex flex-col">
-              {/* Header with close button */}
-              <div className="flex items-start justify-between mb-4 sticky top-0 bg-background/80 backdrop-blur-sm py-2 -mx-2 px-2 rounded-lg z-10">
+              {/* Header - Clickable to collapse */}
+              <div 
+                className="flex items-start justify-between mb-4 sticky top-0 bg-background/80 backdrop-blur-sm py-2 -mx-2 px-2 rounded-lg z-10 cursor-pointer"
+                onClick={onFlip}
+              >
                 <div className="flex-1">
                   <h3 className="text-xl font-bold text-foreground">
                     {exp.role}
@@ -196,19 +214,13 @@ const ExperienceFlipCard = ({
                     {exp.duration}
                   </p>
                 </div>
-                <button
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    onFlip();
-                  }}
-                  className="flex-shrink-0 ml-4 text-foreground/60 hover:text-foreground transition-colors p-1 hover:bg-background/50 rounded"
-                  aria-label="Close"
-                >
-                  ✕
-                </button>
+                <div className="flex-shrink-0 ml-4 flex items-center gap-1 text-accent">
+                  <ChevronUp className="w-5 h-5" />
+                  <span className="text-xs font-medium">Tap to collapse</span>
+                </div>
               </div>
               
-              {/* Expanded content */}
+              {/* Expanded content - Scrollable, not clickable */}
               <div className="flex-1 space-y-6 overflow-y-auto">
                 {exp.headline && (
                   <div className="pt-2 border-t border-border/30">
@@ -218,23 +230,14 @@ const ExperienceFlipCard = ({
                   </div>
                 )}
                 
-                <div>
-                  <p className="text-sm text-foreground/80 leading-relaxed">
-                    {exp.story}
-                  </p>
-                </div>
-                
-                {exp.learnings && exp.learnings.length > 0 && (
+                {(exp.storyBullets || exp.story) && (
                   <div>
-                    <p className="text-xs font-semibold text-accent mb-3 uppercase tracking-wide">
-                      What I Discovered
-                    </p>
-                    <ul className="space-y-3">
-                      {exp.learnings.map((learning: string, idx: number) => (
+                    <ul className="space-y-2">
+                      {(exp.storyBullets || [exp.story]).map((item: string, idx: number) => (
                         <li key={idx} className="flex items-start space-x-3">
                           <span className="flex-shrink-0 w-1.5 h-1.5 rounded-full bg-accent mt-2" />
                           <span className="text-sm text-foreground/90 leading-relaxed">
-                            {learning}
+                            {item}
                           </span>
                         </li>
                       ))}
@@ -242,25 +245,27 @@ const ExperienceFlipCard = ({
                   </div>
                 )}
                 
-                <div className="pt-4 border-t border-border/30 bg-accent/5 -mx-2 px-4 py-4 rounded-lg">
-                  <p className="text-xs font-semibold text-accent mb-2 uppercase tracking-wide">
-                    The Clarity
-                  </p>
-                  <p className="text-sm text-foreground/90 leading-relaxed italic">
-                    {exp.clarity}
-                  </p>
-                </div>
+                {exp.learnings && exp.learnings.length > 0 && (
+                  <div className="pt-4 border-t border-border/30">
+                    <p className="text-xs font-semibold text-accent mb-2 uppercase tracking-wide">
+                      Learning
+                    </p>
+                    <p className="text-sm text-foreground/80 leading-relaxed italic">
+                      {exp.learnings[0]}
+                    </p>
+                  </div>
+                )}
                 
-                <button
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    onFlip();
-                  }}
-                  className="w-full flex items-center justify-center gap-2 text-sm text-accent hover:text-accent/80 font-medium transition-colors py-2"
-                >
-                  <ChevronUp className="w-4 h-4" />
-                  Collapse
-                </button>
+                {exp.clarity && (
+                  <div className="pt-4 border-t border-border/30 bg-accent/5 -mx-2 px-4 py-4 rounded-lg">
+                    <p className="text-xs font-semibold text-accent mb-2 uppercase tracking-wide">
+                      The Clarity
+                    </p>
+                    <p className="text-sm text-foreground/90 leading-relaxed italic">
+                      {exp.clarity}
+                    </p>
+                  </div>
+                )}
               </div>
             </div>
           </Card>

@@ -5,18 +5,18 @@ import { getHeroData } from "@/lib/sanity-queries";
 
 // Fallback data if Sanity isn't configured
 const fallbackData = {
-  headline: "Building Clarity.\nExecuting Relentlessly.",
-  headlineHighlight: "Executing Relentlessly",
-  subheadline: "I've driven 50%+ MoM growth, built profitable unit economics, and led cross-functional teams to win in competitive markets. I think clearly about complex problems and execute relentlessly on what matters.",
+  headline: "Building clarity.\nExecuting with discipline.",
+  headlineHighlight: "Executing with discipline",
+  subheadline: "I have scaled marketplace categories, improved unit economics across retail and hardware, and managed high-stakes portfolios across enterprise sales and e-commerce. The common thread in my work is finding the real constraint in a business and acting precisely on it.",
   ctaPrimary: "Explore My Work",
   ctaSecondary: "Get in Touch",
   stats: [
-    { value: "$5M+", label: "Annual Revenue Managed", highlight: false },
-    { value: "$860K", label: "Competitive Wins", highlight: false },
-    { value: "50%+", label: "MoM Growth Driven", highlight: true },
-    { value: "$1.2M+", label: "Market Share Leader", highlight: false },
-    { value: "3%", label: "QoQ Share Gains (market leader in strategic whitespace categories)", highlight: false },
-    { value: "6pps", label: "CM1 Improvement (supply cluster optimization)", highlight: true },
+    { value: "$5M+", label: "Annual revenue managed at Dell", highlight: false },
+    { value: "$860K", label: "Competitive takeout in a single quarter", highlight: false },
+    { value: "50%+", label: "MoM growth for two months at CityMall", highlight: true },
+    { value: "$1.2M", label: "Annual ad portfolio for Microsoft on Amazon", highlight: false },
+    { value: "3%", label: "QoQ share gain in laptops category", highlight: false },
+    { value: "6pps", label: "CM1 improvement from –11% to –5% within two months", highlight: true },
   ],
 };
 

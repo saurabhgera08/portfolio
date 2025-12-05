@@ -1,4 +1,5 @@
-import { Brain, Users, TrendingUp, Target, Zap, BookOpen } from "lucide-react";
+import { useState } from "react";
+import { Brain, Users, TrendingUp, Target, Zap, BookOpen, ChevronDown, ChevronUp } from "lucide-react";
 import { Card } from "@/components/ui/card";
 import { useQuery } from "@tanstack/react-query";
 import { getAboutData } from "@/lib/sanity-queries";
@@ -17,27 +18,48 @@ const fallbackData = {
   personalStatement: [
     {
       _type: 'block',
-      children: [{ _type: 'span', text: "I am a builder who thinks in three languages: business, human behavior, and systems.", marks: [] }]
+      children: [{ _type: 'span', text: "I operate at the intersection of business, human behaviour, and systems.", marks: [] }]
     },
     {
       _type: 'block',
-      children: [{ _type: 'span', text: "I start with numbers—P&L, conversion funnels, unit economics—because the math tells you what is actually happening. But numbers alone are not enough. I then sit with the human side: what people are trying to accomplish, what frustrates them, what they are willing to pay for, and what they are not. Finally, I translate both into something that can be built, scaled, and operated.", marks: [] }]
+      children: [{ _type: 'span', text: "I break problems down to what the numbers say, what users are actually trying to do, and what the business can sustainably support. The result is a solution that solves for all three.", marks: [] }]
     },
     {
       _type: 'block',
-      children: [{ _type: 'span', text: "I do not begin with tools. Every skill I have—product strategy, SQL, AppsScript, financial modelling, vendor negotiation, wireframing, process design—has been a byproduct of needing to solve a specific problem. When the situation demanded it, I learned it. When the problem changed, I unlearned what no longer applied. When the problem became clear, I executed.", marks: [] }]
-    },
-    {
-      _type: 'block',
-      children: [{ _type: 'span', text: "I am comfortable moving between insight and execution, between spreadsheets and user interviews, between high-level strategy and the unglamorous work of making operations run. I adapt quickly because I am not attached to a single method—I am attached to solving the problem in front of me.", marks: [] }]
+      children: [{ _type: 'span', text: "I move comfortably between strategic thinking and hands-on execution. All of my skills—financial modelling, SQL, negotiation, wireframing, and process design—have been learned only when a real problem required them.", marks: [] }]
     }
   ],
   thinkingPrinciples: [
-    { title: "First Principles", description: "I rarely accept the first version of a problem. I keep asking why until the real constraint shows up, then solve for that instead of the surface symptom.", icon: "Brain" },
-    { title: "User First", description: "Good ideas do not matter if they do not solve anything for real people. I spend time understanding what users are trying to get done, what they are afraid of, and what they are willing to trade.", icon: "Users" },
-    { title: "Business Discipline", description: "Growth is useful only if the unit economics make sense. I think in terms of P&L, cash flow, payback periods, and whether a model can survive outside a spreadsheet.", icon: "TrendingUp" },
-    { title: "Clarity Over Complexity", description: "If something sounds complicated, it usually means it is not understood well enough. I try to reduce problems to simple, shared language and frameworks so that teams know exactly what to do next.", icon: "Target" },
-    { title: "Execution Mindset", description: "Ideas are cheap. I care about what ships, what changes in the numbers, and what we learn. I prefer short feedback loops, small experiments, and steady iteration over big promises.", icon: "Zap" }
+    { 
+      title: "First principles", 
+      summary: "I ignore symptoms and rebuild problems from scratch to find the real constraint.",
+      description: "At CityMall, the Men's Fashion business was underperforming and most teams assumed it was a marketing issue. I ignored the symptoms and rebuilt the problem from scratch: what people searched, what they found, and what it cost to deliver it. The real constraint was assortment gaps and logistics inefficiency, not marketing. Fixing those moved both GMV and CM1, not one at the expense of the other.", 
+      icon: "Brain" 
+    },
+    { 
+      title: "User first", 
+      summary: "I focus on reducing friction in user behaviour, not just better messaging.",
+      description: "During my time driving Microsoft laptops on Amazon, gaming users were highly motivated but poorly converted because they couldn't \"experience\" the product. Instead of more ads, we worked with Comic Con to let intent buyers try the devices live and order on the spot. The conversion uplift didn't come from better messaging but from reducing friction in the behaviour itself.", 
+      icon: "Users" 
+    },
+    { 
+      title: "Business discipline", 
+      summary: "I map the full cycle to find bottlenecks, not just push for more sales.",
+      description: "At Universal Batteries, revenue was steady but cash flow kept tightening. Instead of pushing for more sales, I mapped the full cash cycle and saw that slow collections, not demand, were the bottleneck. Weekly review and customer mix changes reduced the payback cycle from 40+ days to roughly 25, which did more for sustainability than any sales boost would have.", 
+      icon: "TrendingUp" 
+    },
+    { 
+      title: "Clarity over complexity", 
+      summary: "I replace complex systems with simple drivers that lead to action.",
+      description: "At CityMall, multiple reports, filters and dashboards were used to rank products. None of them led to action because they were too complex. We replaced them with two simple ranking drivers — CM1 per view and orders per day — and the team instantly knew what to promote, what to discount, and what to remove.", 
+      icon: "Target" 
+    },
+    { 
+      title: "Execution mindset", 
+      summary: "Execution means knowing when continued effort is no longer creating value.",
+      description: "At SWNCK, the product quality, supply chain and operations all worked, but the CAC never reached sustainable payback. Instead of scaling for vanity metrics, I exited early and took the lesson forward. Execution is not only about building fast; it's about knowing when continued effort is no longer creating value.", 
+      icon: "Zap" 
+    }
   ],
   achievements: [
     {
@@ -54,13 +76,13 @@ const fallbackData = {
     },
     {
       _type: 'block',
-      children: [{ _type: 'span', text: "Closed high stakes deals, including 860K dollars in competitive wins and global pricing contracts, by understanding how customers made decisions and positioning around their real constraints rather than around generic pitches.", marks: [] }]
+      children: [{ _type: 'span', text: "Closed high-stakes deals, including $860K in competitive wins and global pricing contracts, by understanding how customers made decisions and positioning around their real constraints rather than around generic pitches.", marks: [] }]
     }
   ],
   valueProposition: [
     {
       _type: 'block',
-      children: [{ _type: 'span', text: "I am at my best with teams that want someone to take a problem end to end, not just own a narrow slice of it.", marks: [] }]
+      children: [{ _type: 'span', text: "I create the most impact where clarity and execution need to live in the same person.", marks: [] }]
     },
     {
       _type: 'block',
@@ -68,7 +90,7 @@ const fallbackData = {
     },
     {
       _type: 'block',
-      children: [{ _type: 'span', text: "I add the most value when:", marks: [] }]
+      children: [{ _type: 'span', text: "• When a business needs to grow without breaking unit economics", marks: [] }]
     },
     {
       _type: 'block',
@@ -76,7 +98,7 @@ const fallbackData = {
     },
     {
       _type: 'block',
-      children: [{ _type: 'span', text: "There is noise and you need clarity on what actually matters", marks: [] }]
+      children: [{ _type: 'span', text: "• When the real problem is unclear and needs to be discovered", marks: [] }]
     },
     {
       _type: 'block',
@@ -84,7 +106,7 @@ const fallbackData = {
     },
     {
       _type: 'block',
-      children: [{ _type: 'span', text: "Strategy and execution need to live in the same person for a while", marks: [] }]
+      children: [{ _type: 'span', text: "• When a model needs to be built, tested, and iterated quickly", marks: [] }]
     },
     {
       _type: 'block',
@@ -92,29 +114,15 @@ const fallbackData = {
     },
     {
       _type: 'block',
-      children: [{ _type: 'span', text: "The goal is to grow, but not at the cost of broken unit economics", marks: [] }]
-    },
-    {
-      _type: 'block',
-      children: [{ _type: 'span', text: "", marks: [] }]
-    },
-    {
-      _type: 'block',
-      children: [{ _type: 'span', text: "The team is facing ambiguity and hard tradeoffs with incomplete information", marks: [] }]
-    },
-    {
-      _type: 'block',
-      children: [{ _type: 'span', text: "", marks: [] }]
-    },
-    {
-      _type: 'block',
-      children: [{ _type: 'span', text: "There is a gap between insight and operational reality, and you need someone to close it", marks: [] }]
+      children: [{ _type: 'span', text: "• When systems must scale beyond individual effort", marks: [] }]
     }
   ],
   interests: ['📚 Reading', '🧬 Bio-hacking', '💪 Fitness', '⚽ Football']
 };
 
 export const About = () => {
+  const [expandedPrinciples, setExpandedPrinciples] = useState<Set<number>>(new Set());
+
   const { data: aboutData = fallbackData } = useQuery({
     queryKey: ['about'],
     queryFn: async () => {
@@ -132,6 +140,18 @@ export const About = () => {
 
   // Always use fallback data to ensure latest content is displayed
   const about = fallbackData;
+
+  const togglePrinciple = (index: number) => {
+    setExpandedPrinciples(prev => {
+      const next = new Set(prev);
+      if (next.has(index)) {
+        next.delete(index);
+      } else {
+        next.add(index);
+      }
+      return next;
+    });
+  };
   return <section id="about" className="py-24 sm:py-36 md:py-48 px-4 sm:px-6 lg:px-8 bg-secondary/30">
       <div className="max-w-6xl mx-auto">
         <div className="text-center mb-20 sm:mb-24">
@@ -160,8 +180,13 @@ export const About = () => {
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 lg:gap-10">
                 {(about.thinkingPrinciples || fallbackData.thinkingPrinciples).map((principle: any, index: number) => {
                   const Icon = getIcon(principle.icon || principle.iconName || "Brain");
+                  const isExpanded = expandedPrinciples.has(index);
                   return (
-                    <Card key={index} className="p-6 shadow-card hover:shadow-premium transition-all duration-300 border-0 hover:scale-105 group">
+                    <Card 
+                      key={index} 
+                      className="p-6 shadow-card hover:shadow-premium transition-all duration-300 border-0 hover:scale-105 group cursor-pointer"
+                      onClick={() => togglePrinciple(index)}
+                    >
                       <div className="space-y-4">
                         <div className="w-12 h-12 rounded-full bg-accent/10 flex items-center justify-center group-hover:bg-accent/20 transition-colors">
                           <Icon className="w-6 h-6 text-accent" />
@@ -171,8 +196,23 @@ export const About = () => {
                             {principle.title}
                           </h4>
                           <p className="text-sm text-foreground/80 leading-relaxed">
-                            {principle.description || principle.text}
+                            {isExpanded ? (principle.description || principle.text) : (principle.summary || principle.description || principle.text)}
                           </p>
+                          {principle.description && (
+                            <div className="mt-3 flex items-center gap-1 text-accent text-xs font-medium">
+                              {isExpanded ? (
+                                <>
+                                  <ChevronUp className="w-4 h-4" />
+                                  <span>Tap to collapse</span>
+                                </>
+                              ) : (
+                                <>
+                                  <ChevronDown className="w-4 h-4" />
+                                  <span>Tap to expand</span>
+                                </>
+                              )}
+                            </div>
+                          )}
                         </div>
                       </div>
                     </Card>
@@ -209,14 +249,11 @@ export const About = () => {
           {/* Personal Interests */}
           <div className="text-center mt-20 sm:mt-24 max-w-3xl mx-auto">
             <h3 className="text-2xl sm:text-3xl md:text-4xl font-semibold text-foreground mb-8">
-              When I Am Not Solving Problems
+              Outside of Work
             </h3>
             <div className="space-y-6 text-foreground/80 leading-relaxed text-lg sm:text-xl">
               <p>
-                I read a lot. Biographies to understand how people make decisions under pressure. History to understand the cost of choices and the weight of consequence. Science to see how long term effort compounds into breakthroughs. Fiction to keep contact with what it feels like to be human. When a book changes how I see the world, I sit with it, fill the margins, and return to it until the ideas sink in.
-              </p>
-              <p>
-                Outside of work and reading, I like experimenting with how I live. I track sleep, nutrition, and focus to see what actually improves performance rather than what just sounds good. I lift, run, and play football because they clear my head and remind me what it feels like to compete and to be part of a team. These are not side hobbies for me. They are part of how I stay curious, keep my energy high, and show up with a clear mind.
+                I read widely across history, science, biographies and fiction to sharpen judgement and understand how people make decisions under pressure. I also train and play football regularly to stay mentally sharp and competitive.
               </p>
             </div>
             <div className="mt-10">
