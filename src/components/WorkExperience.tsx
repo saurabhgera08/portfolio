@@ -1,6 +1,8 @@
+import { useState } from "react";
 import { Card } from "@/components/ui/card";
 import { useQuery } from "@tanstack/react-query";
 import { getWorkExperience } from "@/lib/sanity-queries";
+import { ChevronDown, ChevronUp, Briefcase } from "lucide-react";
 
 const fallbackExperiences = [
   {
@@ -90,7 +92,187 @@ const fallbackExperiences = [
   }
 ];
 
+// Flip Card Component for Work Experience
+const ExperienceFlipCard = ({ 
+  exp, 
+  index,
+  isFlipped, 
+  onFlip 
+}: { 
+  exp: any; 
+  index: number;
+  isFlipped: boolean; 
+  onFlip: () => void;
+}) => {
+  const getGradient = (color: string) => {
+    if (color === 'accent') return 'from-accent/20 to-accent/40';
+    if (color === 'primary') return 'from-blue-500/20 to-purple-500/20';
+    return color || 'from-gray-500/20 to-gray-600/20';
+  };
+
+  const gradient = getGradient(exp.color);
+
+  return (
+    <div 
+      className="relative h-[340px] sm:h-[380px] lg:h-[400px] perspective-1000 cursor-pointer group"
+      onClick={onFlip}
+    >
+      <div
+        className={`relative w-full h-full preserve-3d transition-transform duration-700 ${
+          isFlipped ? 'rotate-y-180' : ''
+        }`}
+        style={{
+          transformStyle: 'preserve-3d',
+          transform: isFlipped ? 'rotateY(180deg)' : 'rotateY(0deg)',
+        }}
+      >
+        {/* Front of card - Compact view */}
+        <div className="absolute inset-0 backface-hidden rounded-2xl overflow-hidden">
+          <Card className={`h-full border-2 bg-gradient-to-br ${gradient} border-border/30 hover:border-accent/50 transition-all duration-300 shadow-lg hover:shadow-xl`}>
+            <div className="h-full flex flex-col justify-between p-6">
+              <div className="space-y-4">
+                <div className="flex items-start justify-between gap-3">
+                  <div className="flex-1">
+                    <h3 className="text-xl sm:text-2xl font-bold text-foreground mb-1">
+                      {exp.role}
+                    </h3>
+                    {exp.company && (
+                      <p className="text-lg font-semibold text-accent mb-2">
+                        {exp.company}
+                      </p>
+                    )}
+                    <p className="text-sm text-muted-foreground">
+                      {exp.duration}
+                    </p>
+                  </div>
+                  <div className="flex-shrink-0 w-12 h-12 rounded-full bg-accent/10 flex items-center justify-center group-hover:bg-accent/20 transition-colors">
+                    <Briefcase className="w-6 h-6 text-accent" />
+                  </div>
+                </div>
+                
+                {exp.headline && (
+                  <div className="pt-3 border-t border-border/30">
+                    <p className="text-sm font-semibold text-foreground/90 italic leading-relaxed line-clamp-2">
+                      {exp.headline}
+                    </p>
+                  </div>
+                )}
+                
+                <p className="text-sm text-foreground/70 leading-relaxed line-clamp-3">
+                  {exp.story}
+                </p>
+              </div>
+              
+              <div className="pt-4 border-t border-border/30 flex items-center justify-between">
+                <p className="text-xs text-muted-foreground font-medium">
+                  Tap to explore details
+                </p>
+                <ChevronDown className="w-5 h-5 text-accent group-hover:translate-y-1 transition-transform" />
+              </div>
+            </div>
+          </Card>
+        </div>
+
+        {/* Back of card - Expanded view */}
+        <div 
+          className="absolute inset-0 backface-hidden rounded-2xl overflow-hidden"
+          style={{ transform: 'rotateY(180deg)' }}
+          onClick={(e) => e.stopPropagation()}
+        >
+          <Card className={`h-full border-2 bg-gradient-to-br ${gradient} border-border/30 shadow-xl overflow-y-auto`}>
+            <div className="p-6 h-full flex flex-col">
+              {/* Header with close button */}
+              <div className="flex items-start justify-between mb-4 sticky top-0 bg-background/80 backdrop-blur-sm py-2 -mx-2 px-2 rounded-lg z-10">
+                <div className="flex-1">
+                  <h3 className="text-xl font-bold text-foreground">
+                    {exp.role}
+                  </h3>
+                  {exp.company && (
+                    <p className="text-base font-semibold text-accent mt-1">
+                      {exp.company}
+                    </p>
+                  )}
+                  <p className="text-xs text-muted-foreground mt-1">
+                    {exp.duration}
+                  </p>
+                </div>
+                <button
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    onFlip();
+                  }}
+                  className="flex-shrink-0 ml-4 text-foreground/60 hover:text-foreground transition-colors p-1 hover:bg-background/50 rounded"
+                  aria-label="Close"
+                >
+                  ✕
+                </button>
+              </div>
+              
+              {/* Expanded content */}
+              <div className="flex-1 space-y-6 overflow-y-auto">
+                {exp.headline && (
+                  <div className="pt-2 border-t border-border/30">
+                    <h4 className="text-base font-bold text-foreground/90 italic">
+                      {exp.headline}
+                    </h4>
+                  </div>
+                )}
+                
+                <div>
+                  <p className="text-sm text-foreground/80 leading-relaxed">
+                    {exp.story}
+                  </p>
+                </div>
+                
+                {exp.learnings && exp.learnings.length > 0 && (
+                  <div>
+                    <p className="text-xs font-semibold text-accent mb-3 uppercase tracking-wide">
+                      What I Discovered
+                    </p>
+                    <ul className="space-y-3">
+                      {exp.learnings.map((learning: string, idx: number) => (
+                        <li key={idx} className="flex items-start space-x-3">
+                          <span className="flex-shrink-0 w-1.5 h-1.5 rounded-full bg-accent mt-2" />
+                          <span className="text-sm text-foreground/90 leading-relaxed">
+                            {learning}
+                          </span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                )}
+                
+                <div className="pt-4 border-t border-border/30 bg-accent/5 -mx-2 px-4 py-4 rounded-lg">
+                  <p className="text-xs font-semibold text-accent mb-2 uppercase tracking-wide">
+                    The Clarity
+                  </p>
+                  <p className="text-sm text-foreground/90 leading-relaxed italic">
+                    {exp.clarity}
+                  </p>
+                </div>
+                
+                <button
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    onFlip();
+                  }}
+                  className="w-full flex items-center justify-center gap-2 text-sm text-accent hover:text-accent/80 font-medium transition-colors py-2"
+                >
+                  <ChevronUp className="w-4 h-4" />
+                  Collapse
+                </button>
+              </div>
+            </div>
+          </Card>
+        </div>
+      </div>
+    </div>
+  );
+};
+
 export const WorkExperience = () => {
+  const [flippedCards, setFlippedCards] = useState<Set<number>>(new Set());
+
   const { data: experiences = fallbackExperiences } = useQuery({
     queryKey: ['workExperience'],
     queryFn: async () => {
@@ -106,10 +288,25 @@ export const WorkExperience = () => {
     refetchOnWindowFocus: false,
   });
 
+  // Always use fallback data to ensure all experiences are displayed
+  const displayExperiences = fallbackExperiences;
+
+  const toggleFlip = (index: number) => {
+    setFlippedCards(prev => {
+      const next = new Set(prev);
+      if (next.has(index)) {
+        next.delete(index);
+      } else {
+        next.add(index);
+      }
+      return next;
+    });
+  };
+
   return (
     <section id="experience" className="py-24 sm:py-36 md:py-48 px-4 sm:px-6 lg:px-8 bg-background">
       <div className="max-w-6xl mx-auto">
-        <div className="text-center mb-20 sm:mb-24">
+        <div className="text-center mb-16 sm:mb-20">
           <h2 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold text-foreground mb-6">
             How I've Solved Problems
           </h2>
@@ -117,83 +314,45 @@ export const WorkExperience = () => {
           <p className="text-xl sm:text-2xl text-muted-foreground max-w-3xl mx-auto leading-relaxed">
             Not just what I did, how I thought about the problems and what it produced
           </p>
+          <p className="text-sm text-muted-foreground/70 mt-4 italic">
+            Tap any card to explore deeper
+          </p>
         </div>
         
+        {/* Timeline layout */}
         <div className="relative">
-          {/* Timeline line - hidden on mobile, visible on desktop */}
-          <div className="hidden lg:block absolute left-1/2 transform -translate-x-1/2 w-0.5 h-full bg-border" />
+          {/* Timeline line - visible on larger screens */}
+          <div className="hidden lg:block absolute left-1/2 transform -translate-x-1/2 w-0.5 h-full bg-gradient-to-b from-accent via-border to-accent" 
+               style={{ top: '40px', bottom: '40px' }} />
           
           {/* Timeline items */}
-          <div className="space-y-16 sm:space-y-20">
-            {(experiences || fallbackExperiences).map((exp: any, index: number) => (
+          <div className="space-y-8 sm:space-y-12">
+            {displayExperiences.map((exp: any, index: number) => (
               <div 
                 key={index}
-                className={`relative ${index % 2 === 0 ? 'lg:pr-[50%] lg:mr-8' : 'lg:pl-[50%] lg:ml-8'}`}
+                className={`relative flex items-center ${
+                  index % 2 === 0 
+                    ? 'lg:flex-row' 
+                    : 'lg:flex-row-reverse'
+                }`}
               >
-                {/* Timeline dot - hidden on mobile */}
-                <div className="hidden lg:block absolute top-8 left-1/2 transform -translate-x-1/2 w-4 h-4 rounded-full bg-accent border-4 border-background shadow-lg" />
+                {/* Timeline dot - visible on larger screens */}
+                <div className="hidden lg:block absolute left-1/2 transform -translate-x-1/2 w-5 h-5 rounded-full bg-accent border-4 border-background shadow-lg z-10" />
                 
-                <Card className="p-8 sm:p-10 lg:p-12 shadow-card hover:shadow-premium transition-all duration-300 border-0 hover:scale-[1.01]">
-                  <div className="space-y-8">
-                    {/* Header */}
-                    <div>
-                      <h3 className="text-xl sm:text-2xl font-bold text-foreground">
-                        {exp.role}
-                      </h3>
-                      {exp.company && (
-                        <p className="text-lg font-semibold text-accent mt-1">
-                          {exp.company}
-                        </p>
-                      )}
-                      <p className="text-sm text-muted-foreground mt-1">
-                        {exp.duration}
-                      </p>
-                    </div>
-                    
-                    {/* Headline */}
-                    {exp.headline && (
-                      <div className="pt-4 border-t border-border/50">
-                        <h4 className="text-lg font-bold text-foreground/90 italic">
-                          {exp.headline}
-                        </h4>
-                      </div>
-                    )}
-                    
-                    {/* Story */}
-                    <p className="text-foreground/80 leading-relaxed">
-                      {exp.story}
-                    </p>
-                    
-                    {/* Learnings/Achievements */}
-                    {exp.learnings && exp.learnings.length > 0 && (
-                      <div>
-                        <p className="text-sm font-semibold text-muted-foreground mb-3">
-                          What I discovered:
-                        </p>
-                        <ul className="space-y-3">
-                          {exp.learnings.map((learning: string, idx: number) => (
-                            <li key={idx} className="flex items-start space-x-3">
-                              <span className="flex-shrink-0 w-1.5 h-1.5 rounded-full bg-accent mt-2" />
-                              <span className="text-foreground/90 leading-relaxed text-sm">
-                                {learning}
-                              </span>
-                            </li>
-                          ))}
-                        </ul>
-                      </div>
-                    )}
-                    
-                    {/* The Clarity */}
-                    <div className="pt-4 border-t border-border/50 bg-accent/5 -mx-6 sm:-mx-8 px-6 sm:px-8 py-4 -mb-6 sm:-mb-8">
-                      <p className="text-sm font-semibold text-accent mb-1">
-                        The Clarity:
-                      </p>
-                      <p className="text-foreground/90 leading-relaxed italic">
-                        {exp.clarity}
-                      </p>
-                    </div>
-                  </div>
-                </Card>
+                {/* Card container - takes up space on opposite side */}
+                <div className={`w-full lg:w-[calc(50%-40px)] ${
+                  index % 2 === 0 ? 'lg:pr-12' : 'lg:pl-12'
+                }`}>
+                  <ExperienceFlipCard
+                    exp={exp}
+                    index={index}
+                    isFlipped={flippedCards.has(index)}
+                    onFlip={() => toggleFlip(index)}
+                  />
+                </div>
+                
+                {/* Spacer for timeline dot on larger screens */}
+                <div className="hidden lg:block w-[80px] flex-shrink-0" />
               </div>
             ))}
           </div>

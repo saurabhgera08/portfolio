@@ -17,58 +17,50 @@ const fallbackData = {
   personalStatement: [
     {
       _type: 'block',
-      children: [{ _type: 'span', text: "I've worked across sales, operations, product, and strategy. Each role taught me something different, but the real value came from how they compound.", marks: [] }]
+      children: [{ _type: 'span', text: "I am a builder who thinks in three languages: business, human behavior, and systems.", marks: [] }]
     },
     {
       _type: 'block',
-      children: [{ _type: 'span', text: "Sales taught me to understand customer needs deeply. Operations showed me how to build systems that scale. Product work taught me to think from first principles. Strategy work taught me to see the bigger picture. ", marks: [] }, { _type: 'span', text: "Together, they compound.", marks: ['strong'] }, { _type: 'span', text: " When I'm solving a problem, I can think strategically about what matters, understand the operational constraints, design the solution, and execute it. That combination is rare, and it's what drives real value.", marks: [] }]
+      children: [{ _type: 'span', text: "I start with numbers—P&L, conversion funnels, unit economics—because the math tells you what is actually happening. But numbers alone are not enough. I then sit with the human side: what people are trying to accomplish, what frustrates them, what they are willing to pay for, and what they are not. Finally, I translate both into something that can be built, scaled, and operated.", marks: [] }]
     },
     {
       _type: 'block',
-      children: [{ _type: 'span', text: "I don't fit neatly into one box. That used to feel like a disadvantage. Now I see it's the advantage.", marks: [] }]
+      children: [{ _type: 'span', text: "I do not begin with tools. Every skill I have—product strategy, SQL, AppsScript, financial modelling, vendor negotiation, wireframing, process design—has been a byproduct of needing to solve a specific problem. When the situation demanded it, I learned it. When the problem changed, I unlearned what no longer applied. When the problem became clear, I executed.", marks: [] }]
+    },
+    {
+      _type: 'block',
+      children: [{ _type: 'span', text: "I am comfortable moving between insight and execution, between spreadsheets and user interviews, between high-level strategy and the unglamorous work of making operations run. I adapt quickly because I am not attached to a single method—I am attached to solving the problem in front of me.", marks: [] }]
     }
   ],
   thinkingPrinciples: [
-    { title: "First Principles", description: "Don't accept the problem as stated. Dig into root causes. What are we really trying to solve?", icon: "Brain" },
-    { title: "User-First", description: "The best solutions solve real problems for real people. I obsess over understanding what users actually need, not what we assume they want.", icon: "Users" },
-    { title: "Business Discipline", description: "Impact isn't just about growth, it's about sustainable unit economics. I think about P&L, sustainability, and scalability.", icon: "TrendingUp" },
-    { title: "Clarity Over Complexity", description: "Complex ideas are often poorly understood ideas. I distill complex problems into clear frameworks that teams can act on.", icon: "Target" },
-    { title: "Execution Mindset", description: "Strategy without execution is hallucination. I build things. I ship. I iterate based on real feedback.", icon: "Zap" }
+    { title: "First Principles", description: "I rarely accept the first version of a problem. I keep asking why until the real constraint shows up, then solve for that instead of the surface symptom.", icon: "Brain" },
+    { title: "User First", description: "Good ideas do not matter if they do not solve anything for real people. I spend time understanding what users are trying to get done, what they are afraid of, and what they are willing to trade.", icon: "Users" },
+    { title: "Business Discipline", description: "Growth is useful only if the unit economics make sense. I think in terms of P&L, cash flow, payback periods, and whether a model can survive outside a spreadsheet.", icon: "TrendingUp" },
+    { title: "Clarity Over Complexity", description: "If something sounds complicated, it usually means it is not understood well enough. I try to reduce problems to simple, shared language and frameworks so that teams know exactly what to do next.", icon: "Target" },
+    { title: "Execution Mindset", description: "Ideas are cheap. I care about what ships, what changes in the numbers, and what we learn. I prefer short feedback loops, small experiments, and steady iteration over big promises.", icon: "Zap" }
   ],
   achievements: [
     {
       _type: 'block',
-      children: [{ _type: 'span', text: "Scaled a marketplace category 50% month-over-month by staying obsessed with what customers actually needed and what vendors actually struggled with. Improved profitability simultaneously.", marks: [] }]
+      children: [{ _type: 'span', text: "Scaled a marketplace category from a struggling baseline to more than 50 percent month on month growth by staying close to users, fixing vendor friction, and tuning assortment and UX for what actually sold. Profitability moved in the right direction at the same time, not after.", marks: [] }]
     },
     {
       _type: 'block',
-      children: [{ _type: 'span', text: "Improved cash flow and unit economics across hardware, wholesale, and retail businesses by fixing unsexy operational problems (payback cycles, supply chains, customer fit).", marks: [] }]
+      children: [{ _type: 'span', text: "Improved unit economics across hardware, wholesale, and retail by doing unglamorous work on operations: shortening payback cycles, fixing leakage in processes, and designing systems that teams could run without heroics.", marks: [] }]
     },
     {
       _type: 'block',
-      children: [{ _type: 'span', text: "Built a sustainable fashion brand from scratch across multiple channels and supply chains. Learned when to persist and when to exit. Exiting isn't failure, it's clarity.", marks: [] }]
+      children: [{ _type: 'span', text: "Built a sustainable fashion brand from zero, across suppliers, materials, channels, and operations. Launched products, served real customers, and then made the hard call to exit when the unit economics did not work at scale. That experience sharpened my instinct for when a model is worth pushing and when it is wiser to stop.", marks: [] }]
     },
     {
       _type: 'block',
-      children: [{ _type: 'span', text: "Executed high-stakes sales ($860K wins, global contracts) by understanding customer strategy better than the customer did. Turned sales into problem-solving.", marks: [] }]
+      children: [{ _type: 'span', text: "Closed high stakes deals, including 860K dollars in competitive wins and global pricing contracts, by understanding how customers made decisions and positioning around their real constraints rather than around generic pitches.", marks: [] }]
     }
   ],
   valueProposition: [
     {
       _type: 'block',
-      children: [{ _type: 'span', text: "I'm best suited for:", marks: [] }]
-    },
-    {
-      _type: 'block',
-      children: [{ _type: 'span', text: "• Founders who want thinking + execution (not just one or the other)", marks: [] }]
-    },
-    {
-      _type: 'block',
-      children: [{ _type: 'span', text: "• Scaling businesses hitting specific problems (unit economics, market fit, go-to-market)", marks: [] }]
-    },
-    {
-      _type: 'block',
-      children: [{ _type: 'span', text: "• Leaders who value clarity over polish", marks: [] }]
+      children: [{ _type: 'span', text: "I am at my best with teams that want someone to take a problem end to end, not just own a narrow slice of it.", marks: [] }]
     },
     {
       _type: 'block',
@@ -76,7 +68,47 @@ const fallbackData = {
     },
     {
       _type: 'block',
-      children: [{ _type: 'span', text: "I'm energized by problems where user needs and business metrics must be aligned. Fintech, marketplaces, consumer brands, operations-heavy businesses, the specific domain matters less than whether the problem is real and the team is ready to solve it.", marks: [] }]
+      children: [{ _type: 'span', text: "I add the most value when:", marks: [] }]
+    },
+    {
+      _type: 'block',
+      children: [{ _type: 'span', text: "", marks: [] }]
+    },
+    {
+      _type: 'block',
+      children: [{ _type: 'span', text: "There is noise and you need clarity on what actually matters", marks: [] }]
+    },
+    {
+      _type: 'block',
+      children: [{ _type: 'span', text: "", marks: [] }]
+    },
+    {
+      _type: 'block',
+      children: [{ _type: 'span', text: "Strategy and execution need to live in the same person for a while", marks: [] }]
+    },
+    {
+      _type: 'block',
+      children: [{ _type: 'span', text: "", marks: [] }]
+    },
+    {
+      _type: 'block',
+      children: [{ _type: 'span', text: "The goal is to grow, but not at the cost of broken unit economics", marks: [] }]
+    },
+    {
+      _type: 'block',
+      children: [{ _type: 'span', text: "", marks: [] }]
+    },
+    {
+      _type: 'block',
+      children: [{ _type: 'span', text: "The team is facing ambiguity and hard tradeoffs with incomplete information", marks: [] }]
+    },
+    {
+      _type: 'block',
+      children: [{ _type: 'span', text: "", marks: [] }]
+    },
+    {
+      _type: 'block',
+      children: [{ _type: 'span', text: "There is a gap between insight and operational reality, and you need someone to close it", marks: [] }]
     }
   ],
   interests: ['📚 Reading', '🧬 Bio-hacking', '💪 Fitness', '⚽ Football']
@@ -98,10 +130,8 @@ export const About = () => {
     refetchOnWindowFocus: false,
   });
 
-  // Prefer fallback if Sanity data is incomplete or missing personalStatement
-  const about = (aboutData && aboutData.personalStatement && Array.isArray(aboutData.personalStatement) && aboutData.personalStatement.length > 0)
-    ? { ...fallbackData, ...aboutData }
-    : fallbackData;
+  // Always use fallback data to ensure latest content is displayed
+  const about = fallbackData;
   return <section id="about" className="py-24 sm:py-36 md:py-48 px-4 sm:px-6 lg:px-8 bg-secondary/30">
       <div className="max-w-6xl mx-auto">
         <div className="text-center mb-20 sm:mb-24">
@@ -152,11 +182,11 @@ export const About = () => {
             </div>
           )}
           
-          {/* What I've Done */}
+          {/* What I Have Done */}
           {about.achievements && (
             <div className="mt-20 sm:mt-24 max-w-4xl mx-auto">
               <h3 className="text-3xl sm:text-4xl md:text-5xl font-bold text-foreground text-center mb-12">
-                What I've Done
+                What I Have Done
               </h3>
               <Card className="p-10 sm:p-12 shadow-card border-0">
                 <PortableTextBlock content={about.achievements || fallbackData.achievements} />
@@ -164,11 +194,11 @@ export const About = () => {
             </div>
           )}
           
-          {/* Where I'm Valuable */}
+          {/* Where I Am Most Useful */}
           {about.valueProposition && (
             <div className="mt-20 sm:mt-24 max-w-4xl mx-auto">
               <h3 className="text-3xl sm:text-4xl md:text-5xl font-bold text-foreground text-center mb-12">
-                Where I'm Valuable
+                Where I Am Most Useful
               </h3>
               <Card className="p-10 sm:p-12 shadow-card border-0">
                 <PortableTextBlock content={about.valueProposition || fallbackData.valueProposition} />
@@ -179,14 +209,14 @@ export const About = () => {
           {/* Personal Interests */}
           <div className="text-center mt-20 sm:mt-24 max-w-3xl mx-auto">
             <h3 className="text-2xl sm:text-3xl md:text-4xl font-semibold text-foreground mb-8">
-              When I'm Not Solving Problems
+              When I Am Not Solving Problems
             </h3>
             <div className="space-y-6 text-foreground/80 leading-relaxed text-lg sm:text-xl">
               <p>
-                I read obsessively, biographies to understand decision-making, history to understand consequence, science to marvel at progress, and fiction to understand what it means to be human. When a book changes how I see the world, I sit with it, make margin notes, and think about it for months.
+                I read a lot. Biographies to understand how people make decisions under pressure. History to understand the cost of choices and the weight of consequence. Science to see how long term effort compounds into breakthroughs. Fiction to keep contact with what it feels like to be human. When a book changes how I see the world, I sit with it, fill the margins, and return to it until the ideas sink in.
               </p>
               <p>
-                Beyond reading, I experiment with bio-hacking, optimizing sleep, nutrition, and cognitive performance. I stay disciplined about fitness and find joy in football, both watching and playing. These aren't hobbies. They're ways I stay curious, maintain energy, and think clearly.
+                Outside of work and reading, I like experimenting with how I live. I track sleep, nutrition, and focus to see what actually improves performance rather than what just sounds good. I lift, run, and play football because they clear my head and remind me what it feels like to compete and to be part of a team. These are not side hobbies for me. They are part of how I stay curious, keep my energy high, and show up with a clear mind.
               </p>
             </div>
             <div className="mt-10">

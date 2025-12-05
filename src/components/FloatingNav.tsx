@@ -57,7 +57,7 @@ export const FloatingNav = () => {
       transform: 'translateY(-50%)',
       maxHeight: 'calc(100vh - 200px)', // Leave space for ScrollToTop button at bottom
     }}>
-      <div className="flex flex-col gap-1.5 sm:gap-2 p-1.5 sm:p-2 bg-background/90 backdrop-blur-md rounded-full shadow-xl border border-border/50" style={{
+      <div className="flex flex-col gap-1.5 sm:gap-2 p-1.5 sm:p-2 bg-background/40 backdrop-blur-sm rounded-full shadow-xl border border-border/30" style={{
         maxHeight: 'calc(100vh - 200px)',
         overflowY: 'auto',
       }}>

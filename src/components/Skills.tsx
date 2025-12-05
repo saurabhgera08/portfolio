@@ -150,70 +150,150 @@ const skillCategories = [
   }
 ];
 
-const SkillCard = ({ category, skill, isExpanded, onToggle }: { category: typeof skillCategories[0], skill: typeof skillCategories[0]['skills'][0], isExpanded: boolean, onToggle: () => void }) => {
+// Flip Card Component for Skills Categories
+const SkillFlipCard = ({
+  category,
+  skills,
+  isFlipped,
+  onFlip,
+  expandedSkill,
+  onSkillToggle
+}: {
+  category: typeof skillCategories[0];
+  skills: any[];
+  isFlipped: boolean;
+  onFlip: () => void;
+  expandedSkill: string | null;
+  onSkillToggle: (skillId: string) => void;
+}) => {
+  const Icon = category.icon;
+
   return (
-    <Card className="border-0 shadow-lg hover:shadow-xl transition-all duration-300 overflow-hidden">
-      <button
-        onClick={onToggle}
-        className="w-full text-left p-6 hover:bg-secondary/30 transition-colors"
+    <div
+      className="relative h-[400px] perspective-1000 cursor-pointer group"
+      onClick={onFlip}
+    >
+      <div
+        className={`relative w-full h-full preserve-3d transition-transform duration-700 ${
+          isFlipped ? 'rotate-y-180' : ''
+        }`}
+        style={{
+          transformStyle: 'preserve-3d',
+          transform: isFlipped ? 'rotateY(180deg)' : 'rotateY(0deg)',
+        }}
       >
-        <div className="flex items-start justify-between gap-4">
-          <div className="flex-1">
-            <h4 className="text-lg font-bold text-foreground mb-2">{skill.name}</h4>
-            <p className="text-sm text-foreground/70 leading-relaxed">{skill.description}</p>
-            {skill.subsumes && (
-              <p className="text-xs text-muted-foreground mt-2 italic">Includes: {skill.subsumes}</p>
-            )}
-            {!isExpanded && (
-              <p className="text-xs text-accent mt-3 font-medium flex items-center gap-1">
-                Click to see details
-                <ChevronDown className="w-3 h-3" />
-              </p>
-            )}
-          </div>
-          <ChevronDown className={`w-5 h-5 text-muted-foreground flex-shrink-0 transition-transform ${isExpanded ? 'rotate-180' : ''}`} />
-        </div>
-      </button>
-      
-      {isExpanded && (
-        <div className="px-6 pb-6 space-y-4 border-t border-border/50 pt-4 transition-all duration-300">
-          {'tools' in skill && skill.tools && (
-            <div>
-              <p className="text-xs font-semibold text-accent mb-2 flex items-center gap-2">
-                <Code className="w-3 h-3" />
-                Tools
-              </p>
-              <p className="text-sm text-foreground/80">{skill.tools}</p>
+        {/* Front of card */}
+        <div className="absolute inset-0 backface-hidden rounded-2xl overflow-hidden">
+          <Card className={`h-full border-2 bg-gradient-to-br ${category.gradient} border-transparent hover:border-opacity-50 transition-all duration-300 shadow-xl hover:shadow-2xl`}>
+            <div className="h-full flex flex-col items-center justify-center p-8 text-center space-y-6">
+              <div className={`w-20 h-20 rounded-full bg-gradient-to-br ${category.borderGradient} flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform duration-300`}>
+                <Icon className="w-10 h-10 text-white" />
+              </div>
+              <div>
+                <h3 className="text-2xl font-bold text-foreground mb-2">{category.title}</h3>
+                <p className="text-foreground/70 text-sm mb-4">{category.summary}</p>
+                <div className="inline-flex items-center gap-2 px-4 py-2 bg-background/50 rounded-full text-sm font-medium text-foreground/80">
+                  <Code className="w-4 h-4" />
+                  {skills.length} skills
+                </div>
+              </div>
+              <p className="text-xs text-foreground/60 italic">Tap to explore</p>
             </div>
-          )}
-          {skill.example && (
-            <div>
-              <p className="text-xs font-semibold text-accent mb-2 flex items-center gap-2">
-                <Sparkles className="w-3 h-3" />
-                Real Example
-              </p>
-              <p className="text-sm text-foreground/80 leading-relaxed">{skill.example}</p>
-            </div>
-          )}
-          <button
-            onClick={(e) => {
-              e.stopPropagation();
-              onToggle();
-            }}
-            className="text-xs text-accent hover:text-accent/80 font-medium flex items-center gap-1 mt-4 transition-colors"
-          >
-            <ChevronDown className="w-3 h-3 rotate-180" />
-            Collapse
-          </button>
+          </Card>
         </div>
-      )}
-    </Card>
+
+        {/* Back of card */}
+        <div
+          className="absolute inset-0 backface-hidden rounded-2xl overflow-hidden"
+          style={{ transform: 'rotateY(180deg)' }}
+          onClick={(e) => e.stopPropagation()}
+        >
+          <Card className={`h-full border-2 bg-gradient-to-br ${category.gradient} border-transparent shadow-xl`}>
+            <div className="p-6 h-full flex flex-col">
+              <div className="flex items-center justify-between mb-4">
+                <h4 className="text-xl font-bold text-foreground">{category.title}</h4>
+                <button
+                  onClick={onFlip}
+                  className="text-foreground/60 hover:text-foreground transition-colors"
+                >
+                  ✕
+                </button>
+              </div>
+              <div className="flex-1 overflow-y-auto space-y-4 pr-2 custom-scrollbar">
+                {skills.map((skill: any, idx: number) => {
+                  const skillId = `${category.id}-${idx}`;
+                  const isSkillExpanded = expandedSkill === skillId;
+                  return (
+                    <div
+                      key={idx}
+                      className="bg-background/50 rounded-lg p-4 hover:bg-background/70 transition-colors cursor-pointer"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        onSkillToggle(skillId);
+                      }}
+                    >
+                      <div className="flex flex-col gap-2">
+                        <div>
+                          <h4 className="font-semibold text-foreground text-sm mb-1">{skill.name}</h4>
+                          <p className="text-xs text-muted-foreground mb-2">{skill.description}</p>
+                          {!isSkillExpanded && (
+                            <p className="text-xs text-foreground/70 line-clamp-2 leading-relaxed">
+                              {skill.example || skill.description}
+                            </p>
+                          )}
+                          {!isSkillExpanded && (
+                            <p className="text-xs text-accent mt-2 font-medium">Tap to expand →</p>
+                          )}
+                        </div>
+                      </div>
+
+                      {/* Expanded content */}
+                      {isSkillExpanded && (
+                        <div className="px-2 pb-2 space-y-3 border-t border-foreground/10 pt-3 mt-2 transition-all duration-300">
+                          {skill.subsumes && (
+                            <div>
+                              <p className="text-xs font-semibold text-accent mb-1">Includes:</p>
+                              <p className="text-xs text-foreground/80 leading-relaxed">{skill.subsumes}</p>
+                            </div>
+                          )}
+                          {'tools' in skill && skill.tools && (
+                            <div>
+                              <p className="text-xs font-semibold text-accent mb-1">Tools:</p>
+                              <p className="text-xs text-foreground/80 leading-relaxed">{skill.tools}</p>
+                            </div>
+                          )}
+                          {skill.example && (
+                            <div>
+                              <p className="text-xs font-semibold text-accent mb-1">In Practice:</p>
+                              <p className="text-xs text-foreground/80 leading-relaxed">{skill.example}</p>
+                            </div>
+                          )}
+                          <button
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              onSkillToggle(skillId);
+                            }}
+                            className="text-xs text-accent font-medium flex items-center gap-1 hover:underline mt-2"
+                          >
+                            <ChevronDown className="w-3 h-3 rotate-180" /> Collapse
+                          </button>
+                        </div>
+                      )}
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
+          </Card>
+        </div>
+      </div>
+    </div>
   );
 };
 
 export const Skills = () => {
-  const [expandedSkills, setExpandedSkills] = useState<Set<string>>(new Set());
-  const [expandedCategories, setExpandedCategories] = useState<Set<string>>(new Set());
+  const [flippedCards, setFlippedCards] = useState<Set<string>>(new Set());
+  const [expandedSkill, setExpandedSkill] = useState<string | null>(null);
 
   const { data: skillsData } = useQuery({
     queryKey: ['skills'],
@@ -232,29 +312,21 @@ export const Skills = () => {
 
   const certifications = skillsData?.certifications || fallbackCertifications;
 
-  const toggleSkill = (categoryId: string, skillIndex: number) => {
-    const skillId = `${categoryId}-${skillIndex}`;
-    setExpandedSkills(prev => {
-      const next = new Set(prev);
-      if (next.has(skillId)) {
-        next.delete(skillId);
-      } else {
-        next.add(skillId);
-      }
-      return next;
-    });
-  };
-
-  const toggleCategory = (categoryId: string) => {
-    setExpandedCategories(prev => {
+  const toggleFlip = (categoryId: string) => {
+    setFlippedCards(prev => {
       const next = new Set(prev);
       if (next.has(categoryId)) {
         next.delete(categoryId);
+        setExpandedSkill(null); // Collapse any expanded skill when category flips back
       } else {
         next.add(categoryId);
       }
       return next;
     });
+  };
+
+  const toggleSkill = (skillId: string) => {
+    setExpandedSkill(prev => (prev === skillId ? null : skillId));
   };
 
   return (
@@ -273,77 +345,19 @@ export const Skills = () => {
           </p>
         </div>
 
-        {/* Quick Overview Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-16">
-          {skillCategories.map((category) => {
-            const Icon = category.icon;
-            const isExpanded = expandedCategories.has(category.id);
-            
-            return (
-              <Card
-                key={category.id}
-                onClick={() => toggleCategory(category.id)}
-                className={`p-6 border-2 bg-gradient-to-br ${category.gradient} border-transparent hover:border-opacity-50 shadow-xl hover:shadow-2xl transition-all duration-300 cursor-pointer group ${
-                  isExpanded ? 'ring-2 ring-accent' : ''
-                }`}
-              >
-                <div className="flex items-center gap-3 mb-4">
-                  <div className={`w-12 h-12 rounded-xl bg-gradient-to-br ${category.borderGradient} flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform duration-300`}>
-                    <Icon className="w-6 h-6 text-white" />
-                  </div>
-                  <h3 className="text-lg font-bold text-foreground">{category.title}</h3>
-                </div>
-                <p className="text-sm text-foreground/80 leading-relaxed mb-3">{category.summary}</p>
-                <div className="flex items-center gap-2 text-xs text-accent font-medium">
-                  <span>{category.skills.length} skills</span>
-                  <ChevronDown className={`w-3 h-3 transition-transform ${isExpanded ? 'rotate-180' : ''}`} />
-                </div>
-              </Card>
-            );
-          })}
-        </div>
-
-        {/* Detailed Skills - Progressive Disclosure */}
-        <div className="space-y-8">
-          {skillCategories.map((category) => {
-            const isCategoryExpanded = expandedCategories.has(category.id);
-            if (!isCategoryExpanded) return null;
-
-            return (
-              <div key={category.id} className="space-y-4">
-                <div className="flex items-center justify-between mb-6">
-                  <div className="flex items-center gap-3">
-                    <div className={`w-10 h-10 rounded-lg bg-gradient-to-br ${category.borderGradient} flex items-center justify-center`}>
-                      {(() => {
-                        const Icon = category.icon;
-                        return <Icon className="w-5 h-5 text-white" />;
-                      })()}
-                    </div>
-                    <h3 className="text-2xl sm:text-3xl font-bold text-foreground">{category.title}</h3>
-                  </div>
-                  <button
-                    onClick={() => toggleCategory(category.id)}
-                    className="text-sm text-accent hover:text-accent/80 font-medium flex items-center gap-1 transition-colors"
-                  >
-                    <ChevronDown className="w-4 h-4 rotate-180" />
-                    Collapse Category
-                  </button>
-                </div>
-                
-                <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
-                  {category.skills.map((skill, idx) => (
-                    <SkillCard
-                      key={idx}
-                      category={category}
-                      skill={skill}
-                      isExpanded={expandedSkills.has(`${category.id}-${idx}`)}
-                      onToggle={() => toggleSkill(category.id, idx)}
-                    />
-                  ))}
-                </div>
-              </div>
-            );
-          })}
+        {/* Category Flip Cards */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-16">
+          {skillCategories.map((category) => (
+            <SkillFlipCard
+              key={category.id}
+              category={category}
+              skills={category.skills}
+              isFlipped={flippedCards.has(category.id)}
+              onFlip={() => toggleFlip(category.id)}
+              expandedSkill={expandedSkill}
+              onSkillToggle={toggleSkill}
+            />
+          ))}
         </div>
 
         {/* Experience Highlights */}
