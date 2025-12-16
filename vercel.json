@@ -4,5 +4,12 @@
       "source": "/(.*)",
       "destination": "/index.html"
     }
+  ],
+  "redirects": [
+    {
+      "source": "/favicon.ico",
+      "destination": "/images/favicon/favicon.png",
+      "permanent": true
+    }
   ]
 }

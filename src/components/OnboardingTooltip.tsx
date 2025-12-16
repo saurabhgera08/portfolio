@@ -15,10 +15,18 @@ const onboardingSteps: TooltipStep[] = [
   {
     id: "navbar",
     target: "nav",
-    title: "Navigation Bar",
+    title: "Top Navigation Bar",
     description: "Use this to quickly jump to any section. Hover over items to see what they contain.",
     position: "bottom",
     arrow: "down"
+  },
+  {
+    id: "floating-nav",
+    target: "[class*='fixed right'] nav, nav.fixed.right",
+    title: "Floating Navigation",
+    description: "This floating navigation bar on the right lets you quickly jump between sections as you scroll. Click any icon to navigate.",
+    position: "left",
+    arrow: "right"
   },
   {
     id: "quick-nav",
@@ -34,6 +42,8 @@ export const OnboardingTooltip = () => {
   const [currentStep, setCurrentStep] = useState<number | null>(null);
   const [isDismissed, setIsDismissed] = useState(false);
   const [tooltipPosition, setTooltipPosition] = useState({ top: 0, left: 0 });
+  const [highlightRect, setHighlightRect] = useState<DOMRect | null>(null);
+  const highlightedElementRef = useRef<HTMLElement | null>(null);
   const tooltipRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -48,14 +58,77 @@ export const OnboardingTooltip = () => {
   }, []);
 
   useEffect(() => {
-    if (currentStep === null) return;
+    if (currentStep === null) {
+      // Remove highlight when no step is active
+      if (highlightedElementRef.current) {
+        highlightedElementRef.current.style.filter = '';
+        highlightedElementRef.current.style.transition = '';
+        highlightedElementRef.current.style.zIndex = '';
+        highlightedElementRef.current.style.position = '';
+        highlightedElementRef.current.style.transform = '';
+        highlightedElementRef.current.style.boxShadow = '';
+        highlightedElementRef.current = null;
+        setHighlightRect(null);
+      }
+      return;
+    }
 
     const step = onboardingSteps[currentStep];
+    
+    // Remove previous highlight
+    if (highlightedElementRef.current) {
+      highlightedElementRef.current.style.filter = '';
+      highlightedElementRef.current.style.transition = '';
+      highlightedElementRef.current.style.zIndex = '';
+      highlightedElementRef.current.style.position = '';
+      highlightedElementRef.current.style.transform = '';
+      highlightedElementRef.current.style.boxShadow = '';
+    }
+
     const updatePosition = () => {
-      const targetElement = document.querySelector(step.target);
+      // Try multiple selectors for floating nav
+      let targetElement: Element | null = null;
+      
+      if (step.id === "floating-nav") {
+        // Try to find the floating nav by class name first
+        targetElement = document.querySelector('nav.floating-nav');
+        
+        // Fallback: try to find by checking for fixed right positioning
+        if (!targetElement) {
+          const allNavs = document.querySelectorAll('nav');
+          for (const nav of allNavs) {
+            const styles = window.getComputedStyle(nav);
+            if (styles.position === 'fixed' && styles.right !== 'auto' && parseFloat(styles.right) > 0) {
+              targetElement = nav;
+              break;
+            }
+          }
+        }
+        
+        // Another fallback: look for nav with specific classes
+        if (!targetElement) {
+          targetElement = document.querySelector('nav[class*="fixed"][class*="right"]');
+        }
+      } else {
+        targetElement = document.querySelector(step.target);
+      }
       
       if (targetElement && tooltipRef.current) {
-        const rect = targetElement.getBoundingClientRect();
+        const element = targetElement as HTMLElement;
+        
+        // Highlight the target element - ensure it's visible and clickable
+        element.style.filter = 'blur(0px)';
+        element.style.transition = 'filter 0.3s ease, transform 0.3s ease';
+        element.style.zIndex = '103';
+        element.style.transform = 'scale(1.02)';
+        element.style.boxShadow = '0 0 0 4px rgba(245, 158, 11, 0.3), 0 0 20px rgba(245, 158, 11, 0.2)';
+        if (window.getComputedStyle(element).position === 'static') {
+          element.style.position = 'relative';
+        }
+        highlightedElementRef.current = element;
+        
+        const rect = element.getBoundingClientRect();
+        setHighlightRect(rect);
         const tooltipRect = tooltipRef.current.getBoundingClientRect();
         
         let top = 0;
@@ -102,9 +175,32 @@ export const OnboardingTooltip = () => {
     window.addEventListener('scroll', updatePosition);
     window.addEventListener('resize', updatePosition);
     
+    // Update highlight rect on scroll/resize
+    const updateHighlightRect = () => {
+      if (highlightedElementRef.current) {
+        setHighlightRect(highlightedElementRef.current.getBoundingClientRect());
+      }
+    };
+    
+    window.addEventListener('scroll', updateHighlightRect);
+    window.addEventListener('resize', updateHighlightRect);
+    
     return () => {
       window.removeEventListener('scroll', updatePosition);
       window.removeEventListener('resize', updatePosition);
+      window.removeEventListener('scroll', updateHighlightRect);
+      window.removeEventListener('resize', updateHighlightRect);
+      // Clean up highlight on unmount
+      if (highlightedElementRef.current) {
+        highlightedElementRef.current.style.filter = '';
+        highlightedElementRef.current.style.transition = '';
+        highlightedElementRef.current.style.zIndex = '';
+        highlightedElementRef.current.style.position = '';
+        highlightedElementRef.current.style.transform = '';
+        highlightedElementRef.current.style.boxShadow = '';
+        highlightedElementRef.current = null;
+      }
+      setHighlightRect(null);
     };
   }, [currentStep]);
 
@@ -117,6 +213,17 @@ export const OnboardingTooltip = () => {
   };
 
   const handleDismiss = () => {
+    // Clean up highlight
+    if (highlightedElementRef.current) {
+      highlightedElementRef.current.style.filter = '';
+      highlightedElementRef.current.style.transition = '';
+      highlightedElementRef.current.style.zIndex = '';
+      highlightedElementRef.current.style.position = '';
+      highlightedElementRef.current.style.transform = '';
+      highlightedElementRef.current.style.boxShadow = '';
+      highlightedElementRef.current = null;
+    }
+    setHighlightRect(null);
     setCurrentStep(null);
     setIsDismissed(true);
     localStorage.setItem("hasSeenOnboarding", "true");
@@ -133,11 +240,26 @@ export const OnboardingTooltip = () => {
 
   return (
     <>
-      {/* Overlay */}
+      {/* Overlay with blur effect - but not on highlighted element */}
       <div 
-        className="fixed inset-0 bg-black/50 z-[100] backdrop-blur-sm"
+        className="fixed inset-0 bg-black/50 z-[100] backdrop-blur-md"
         onClick={handleNext}
+        style={{
+          backdropFilter: 'blur(8px)',
+          WebkitBackdropFilter: 'blur(8px)',
+        }}
       />
+      
+      {/* Spotlight effect - cutout for highlighted element */}
+      {highlightRect && (
+        <div
+          className="fixed inset-0 z-[99] pointer-events-none"
+          style={{
+            background: `radial-gradient(circle ${Math.max(highlightRect.width, highlightRect.height) / 2 + 40}px at ${highlightRect.left + highlightRect.width / 2}px ${highlightRect.top + highlightRect.height / 2}px, transparent 0%, rgba(0, 0, 0, 0.6) ${Math.max(highlightRect.width, highlightRect.height) / 2 + 80}px)`,
+            transition: 'background 0.3s ease',
+          }}
+        />
+      )}
       
       {/* Tooltip */}
       <div

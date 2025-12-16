@@ -51,7 +51,7 @@ export const FloatingNav = () => {
   if (!isVisible) return null;
 
   return (
-    <nav className="fixed right-2 sm:right-4 lg:right-6 z-40" style={{ 
+    <nav className="fixed right-2 sm:right-4 lg:right-6 z-40 floating-nav" style={{ 
       // Position nav in upper-middle area, leaving bottom space for ScrollToTop
       top: '50%',
       transform: 'translateY(-50%)',
