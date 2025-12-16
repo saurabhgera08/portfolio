@@ -310,18 +310,6 @@ export const WorkExperience = ({ skipSectionWrapper = false }: { skipSectionWrap
 
   const content = (
     <div className="max-w-6xl mx-auto">
-      <div className="text-center mb-16 sm:mb-20">
-        <h2 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold text-foreground mb-6">
-          My Career Timeline
-        </h2>
-        <div className="w-24 h-1.5 bg-accent mx-auto rounded-full mb-8" />
-        <p className="text-xl sm:text-2xl text-muted-foreground max-w-3xl mx-auto leading-relaxed">
-          A chronological view of my professional journey and the impact I've created
-        </p>
-        <p className="text-sm text-muted-foreground/70 mt-4 italic">
-          Tap any card to explore deeper
-        </p>
-      </div>
       
       {/* Timeline layout */}
       <div className="relative">

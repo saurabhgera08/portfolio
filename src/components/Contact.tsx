@@ -37,12 +37,8 @@ export const Contact = ({ skipSectionWrapper = false }: { skipSectionWrapper?: b
   
   const content = (
     <div className="max-w-4xl mx-auto">
-        <div className="text-center mb-20 sm:mb-24">
-          <h2 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold text-foreground mb-6">
-            Let's Connect
-          </h2>
-          <div className="w-24 h-1.5 bg-accent mx-auto rounded-full mb-8" />
-          <div className="mt-8 max-w-3xl mx-auto space-y-8">
+        <div className="mb-20 sm:mb-24">
+          <div className="max-w-3xl mx-auto space-y-8">
             <div className="text-left">
               <h3 className="text-2xl sm:text-3xl font-bold text-foreground mb-4">
                 What I Am Looking For

@@ -316,15 +316,6 @@ export const Skills = ({ skipSectionWrapper = false }: { skipSectionWrapper?: bo
 
   const content = (
     <div className="max-w-7xl mx-auto">
-        <div className="text-center mb-20 sm:mb-24">
-          <h2 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold text-foreground mb-6">
-            Skills and Capabilities
-          </h2>
-          <div className="w-24 h-1.5 bg-accent mx-auto rounded-full mb-4" />
-          <p className="text-xl sm:text-2xl text-muted-foreground max-w-3xl mx-auto leading-relaxed">
-            Strategic thinking, execution discipline, and the technical tools to make it real
-          </p>
-        </div>
 
         {/* Category Flip Cards */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-16">

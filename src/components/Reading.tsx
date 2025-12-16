@@ -398,16 +398,6 @@ export const Reading = ({ skipSectionWrapper = false }: { skipSectionWrapper?: b
 
   const content = (
     <div className="max-w-7xl mx-auto">
-        {/* Compact Header */}
-        <div className="text-center mb-16 sm:mb-20">
-          <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-foreground mb-4">
-            My Reading List
-          </h2>
-          <p className="text-lg text-foreground/70 max-w-2xl mx-auto">
-            Books that shaped how I think. Tap any category to explore.
-          </p>
-        </div>
-
         {/* Currently Reading - Expandable */}
         <div className="mb-16 max-w-2xl mx-auto">
           <Card 
