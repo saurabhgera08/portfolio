@@ -286,7 +286,7 @@ const FlipCard = ({
   );
 };
 
-export const Reading = () => {
+export const Reading = ({ skipSectionWrapper = false }: { skipSectionWrapper?: boolean }) => {
   const [flippedCards, setFlippedCards] = useState<Set<string>>(new Set());
   const [expandedBook, setExpandedBook] = useState<string | null>(null);
   const [isCurrentlyReadingExpanded, setIsCurrentlyReadingExpanded] = useState(false);
@@ -396,9 +396,8 @@ export const Reading = () => {
     fiction
   };
 
-  return (
-    <section id="reading" className="py-24 sm:py-36 md:py-48 px-4 sm:px-6 lg:px-8 bg-background">
-      <div className="max-w-7xl mx-auto">
+  const content = (
+    <div className="max-w-7xl mx-auto">
         {/* Compact Header */}
         <div className="text-center mb-16 sm:mb-20">
           <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-foreground mb-4">
@@ -502,6 +501,15 @@ export const Reading = () => {
           </Card>
         </div>
       </div>
+  );
+
+  if (skipSectionWrapper) {
+    return content;
+  }
+
+  return (
+    <section id="reading" className="py-24 sm:py-36 md:py-48 px-4 sm:px-6 lg:px-8 bg-background">
+      {content}
     </section>
   );
 };

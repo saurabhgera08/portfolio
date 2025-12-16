@@ -17,7 +17,7 @@ const fallbackContact = {
   letsTalkIf: "You're solving a problem that matters and you want a partner who thinks clearly, executes relentlessly, and isn't afraid to ask hard questions."
 };
 
-export const Contact = () => {
+export const Contact = ({ skipSectionWrapper = false }: { skipSectionWrapper?: boolean }) => {
   const { data: contactData = fallbackContact } = useQuery({
     queryKey: ['contact'],
     queryFn: async () => {
@@ -35,9 +35,8 @@ export const Contact = () => {
 
   const contact = { ...fallbackContact, ...contactData };
   
-  return (
-    <section id="contact" className="py-24 sm:py-36 md:py-48 px-4 sm:px-6 lg:px-8 bg-background">
-      <div className="max-w-4xl mx-auto">
+  const content = (
+    <div className="max-w-4xl mx-auto">
         <div className="text-center mb-20 sm:mb-24">
           <h2 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold text-foreground mb-6">
             Let's Connect
@@ -154,6 +153,15 @@ export const Contact = () => {
           </div>
         </Card>
       </div>
+  );
+
+  if (skipSectionWrapper) {
+    return content;
+  }
+
+  return (
+    <section id="contact" className="py-24 sm:py-36 md:py-48 px-4 sm:px-6 lg:px-8 bg-background">
+      {content}
     </section>
   );
 };

@@ -275,7 +275,7 @@ const ExperienceFlipCard = ({
   );
 };
 
-export const WorkExperience = () => {
+export const WorkExperience = ({ skipSectionWrapper = false }: { skipSectionWrapper?: boolean }) => {
   const [flippedCards, setFlippedCards] = useState<Set<number>>(new Set());
 
   const { data: experiences = fallbackExperiences } = useQuery({
@@ -308,61 +308,69 @@ export const WorkExperience = () => {
     });
   };
 
-  return (
-    <section id="experience" className="py-24 sm:py-36 md:py-48 px-4 sm:px-6 lg:px-8 bg-background">
-      <div className="max-w-6xl mx-auto">
-        <div className="text-center mb-16 sm:mb-20">
-          <h2 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold text-foreground mb-6">
-            How I've Solved Problems
-          </h2>
-          <div className="w-24 h-1.5 bg-accent mx-auto rounded-full mb-8" />
-          <p className="text-xl sm:text-2xl text-muted-foreground max-w-3xl mx-auto leading-relaxed">
-            Not just what I did, how I thought about the problems and what it produced
-          </p>
-          <p className="text-sm text-muted-foreground/70 mt-4 italic">
-            Tap any card to explore deeper
-          </p>
-        </div>
+  const content = (
+    <div className="max-w-6xl mx-auto">
+      <div className="text-center mb-16 sm:mb-20">
+        <h2 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold text-foreground mb-6">
+          My Career Timeline
+        </h2>
+        <div className="w-24 h-1.5 bg-accent mx-auto rounded-full mb-8" />
+        <p className="text-xl sm:text-2xl text-muted-foreground max-w-3xl mx-auto leading-relaxed">
+          A chronological view of my professional journey and the impact I've created
+        </p>
+        <p className="text-sm text-muted-foreground/70 mt-4 italic">
+          Tap any card to explore deeper
+        </p>
+      </div>
+      
+      {/* Timeline layout */}
+      <div className="relative">
+        {/* Timeline line - visible on larger screens */}
+        <div className="hidden lg:block absolute left-1/2 transform -translate-x-1/2 w-0.5 h-full bg-gradient-to-b from-accent via-border to-accent" 
+             style={{ top: '40px', bottom: '40px' }} />
         
-        {/* Timeline layout */}
-        <div className="relative">
-          {/* Timeline line - visible on larger screens */}
-          <div className="hidden lg:block absolute left-1/2 transform -translate-x-1/2 w-0.5 h-full bg-gradient-to-b from-accent via-border to-accent" 
-               style={{ top: '40px', bottom: '40px' }} />
-          
-          {/* Timeline items */}
-          <div className="space-y-8 sm:space-y-12">
-            {displayExperiences.map((exp: any, index: number) => (
-              <div 
-                key={index}
-                className={`relative flex items-center ${
-                  index % 2 === 0 
-                    ? 'lg:flex-row' 
-                    : 'lg:flex-row-reverse'
-                }`}
-              >
-                {/* Timeline dot - visible on larger screens */}
-                <div className="hidden lg:block absolute left-1/2 transform -translate-x-1/2 w-5 h-5 rounded-full bg-accent border-4 border-background shadow-lg z-10" />
-                
-                {/* Card container - takes up space on opposite side */}
-                <div className={`w-full lg:w-[calc(50%-40px)] ${
-                  index % 2 === 0 ? 'lg:pr-12' : 'lg:pl-12'
-                }`}>
-                  <ExperienceFlipCard
-                    exp={exp}
-                    index={index}
-                    isFlipped={flippedCards.has(index)}
-                    onFlip={() => toggleFlip(index)}
-                  />
-                </div>
-                
-                {/* Spacer for timeline dot on larger screens */}
-                <div className="hidden lg:block w-[80px] flex-shrink-0" />
+        {/* Timeline items */}
+        <div className="space-y-8 sm:space-y-12">
+          {displayExperiences.map((exp: any, index: number) => (
+            <div 
+              key={index}
+              className={`relative flex items-center ${
+                index % 2 === 0 
+                  ? 'lg:flex-row' 
+                  : 'lg:flex-row-reverse'
+              }`}
+            >
+              {/* Timeline dot - visible on larger screens */}
+              <div className="hidden lg:block absolute left-1/2 transform -translate-x-1/2 w-5 h-5 rounded-full bg-accent border-4 border-background shadow-lg z-10" />
+              
+              {/* Card container - takes up space on opposite side */}
+              <div className={`w-full lg:w-[calc(50%-40px)] ${
+                index % 2 === 0 ? 'lg:pr-12' : 'lg:pl-12'
+              }`}>
+                <ExperienceFlipCard
+                  exp={exp}
+                  index={index}
+                  isFlipped={flippedCards.has(index)}
+                  onFlip={() => toggleFlip(index)}
+                />
               </div>
-            ))}
-          </div>
+              
+              {/* Spacer for timeline dot on larger screens */}
+              <div className="hidden lg:block w-[80px] flex-shrink-0" />
+            </div>
+          ))}
         </div>
       </div>
+    </div>
+  );
+
+  if (skipSectionWrapper) {
+    return content;
+  }
+
+  return (
+    <section id="experience" className="py-24 sm:py-36 md:py-48 px-4 sm:px-6 lg:px-8 bg-background">
+      {content}
     </section>
   );
 };

@@ -3,17 +3,19 @@ import { Button } from "@/components/ui/button";
 import { Menu, X } from "lucide-react";
 
 const navLinks = [
-  { href: "#about", label: "About" },
-  { href: "#experience", label: "Experience" },
-  { href: "#projects", label: "Projects" },
-  { href: "#reading", label: "Reading" },
-  { href: "#skills", label: "Skills" },
-  { href: "#contact", label: "Contact" }
+  { href: "#about", label: "About", description: "Who I Am - My background and thinking principles" },
+  { href: "#experience", label: "Experience", description: "How I've Solved Problems - Work history and impact" },
+  { href: "#projects", label: "Projects", description: "What I've Built - Projects across different categories" },
+  { href: "#reading", label: "Reading", description: "My Reading List - Books that shaped my thinking" },
+  { href: "#skills", label: "Skills", description: "How I Approach Problems - Skills and capabilities" },
+  { href: "#contact", label: "Contact", description: "Let's Connect - Get in touch" }
 ];
 
 export const Navigation = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [hoveredLink, setHoveredLink] = useState<string | null>(null);
+  const [tooltipPosition, setTooltipPosition] = useState({ top: 0, left: 0 });
 
   useEffect(() => {
     const handleScroll = () => {
@@ -50,13 +52,41 @@ export const Navigation = () => {
             {/* Desktop Navigation */}
             <div className="hidden md:flex items-center space-x-8">
               {navLinks.map((link) => (
-                <button
+                <div
                   key={link.href}
-                  onClick={() => scrollToSection(link.href)}
-                  className="text-foreground/80 hover:text-accent transition-colors font-medium"
+                  className="relative"
+                  onMouseEnter={(e) => {
+                    setHoveredLink(link.href);
+                    const rect = e.currentTarget.getBoundingClientRect();
+                    setTooltipPosition({
+                      top: rect.bottom + 8,
+                      left: rect.left + (rect.width / 2)
+                    });
+                  }}
+                  onMouseLeave={() => setHoveredLink(null)}
                 >
-                  {link.label}
-                </button>
+                  <button
+                    onClick={() => scrollToSection(link.href)}
+                    className="text-foreground/80 hover:text-accent transition-colors font-medium"
+                  >
+                    {link.label}
+                  </button>
+                  
+                  {/* Progressive Disclosure Tooltip */}
+                  {hoveredLink === link.href && (
+                    <div
+                      className="absolute z-50 mt-2 px-3 py-2 bg-background border border-border rounded-lg shadow-lg text-xs text-foreground/80 whitespace-nowrap animate-in fade-in slide-in-from-top-2"
+                      style={{
+                        top: `${tooltipPosition.top}px`,
+                        left: `${tooltipPosition.left}px`,
+                        transform: 'translateX(-50%)'
+                      }}
+                    >
+                      {link.description}
+                      <div className="absolute -top-1 left-1/2 -translate-x-1/2 w-2 h-2 bg-background border-l border-t border-border rotate-45" />
+                    </div>
+                  )}
+                </div>
               ))}
             </div>
             

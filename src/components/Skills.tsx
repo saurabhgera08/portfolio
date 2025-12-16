@@ -5,48 +5,16 @@ import { useState } from "react";
 import { 
   Target, 
   Rocket, 
-  Database,
   Code,
-  TrendingUp,
-  BarChart3,
-  ShoppingCart,
-  Award,
-  CheckCircle2,
   Mail,
   ChevronDown,
-  Sparkles,
-  Zap,
-  Layers,
   Workflow
 } from "lucide-react";
-
-const fallbackCertifications = [
-  {
-    name: "Private Equity & Venture Capital - Bocconi University",
-    link: "https://www.coursera.org/account/accomplishments/verify/W8HMWQD7A542?utm_source=link&utm_medium=certificate&utm_content=cert_image&utm_campaign=sharing_cta&utm_product=course"
-  },
-  {
-    name: "PGP in Product Management - Accredian",
-    link: "https://drive.google.com/file/d/1dPHnss5gW_8SHdk65qEnu90HNY0UsLl0/view?usp=sharing"
-  },
-  {
-    name: "Financial Modelling & Valuation - Udemy",
-    link: "https://www.udemy.com/certificate/UC-42de8f8b-9da1-4667-8f2e-180d714259d1/"
-  },
-  {
-    name: "Digital Product Design - Udemy",
-    link: "https://www.udemy.com/certificate/UC-244ffc74-9bbc-4b5d-ac45-eecb6ba01d5e/"
-  },
-  {
-    name: "Facebook & Instagram Ads - Young Urban Project",
-    link: "https://drive.google.com/file/d/1nRACyenyXkdZQtkvcIJyLGG9V5Tgy8r-/view?usp=sharing"
-  }
-];
 
 const skillCategories = [
   {
     id: 'strategic',
-    title: 'Strategic Thinking & Analysis',
+    title: 'Strategy',
     icon: Target,
     gradient: 'from-blue-500/20 via-purple-500/20 to-pink-500/20',
     borderGradient: 'from-blue-500/50 to-pink-500/50',
@@ -68,12 +36,30 @@ const skillCategories = [
   },
   {
     id: 'gtm',
-    title: 'Go-to-Market Execution',
+    title: 'Marketing & Sales',
     icon: Rocket,
     gradient: 'from-orange-500/20 via-amber-500/20 to-yellow-500/20',
     borderGradient: 'from-orange-500/50 to-yellow-500/50',
     summary: 'Design and execute customer acquisition strategies, optimize revenue and unit economics',
     skills: [
+      {
+        name: 'Strategic Alliances',
+        description: 'Building partnerships that create mutual value and open new markets.',
+        subsumes: 'Partner Identification & Negotiation, Ecosystem Development, Co-go-to-market Strategy',
+        example: 'At CityMall, I onboarded 130+ vendors by understanding their pain points rather than pushing adoption. Instead of compliance, I built relationships. Vendors became advocates because the platform solved their real problems. This transformed a struggling category into a growth engine where supply-side momentum pulled demand.'
+      },
+      {
+        name: 'Enterprise Account Strategy & Deal-Making',
+        description: 'Protecting and expanding territory by understanding competitive dynamics and customer psychology better than competitors.',
+        subsumes: 'Competitive Strategy, Pricing Strategy, Customer Positioning',
+        example: 'At Dell, I orchestrated 860K dollars in competitive wins by studying how customers evaluated options, not just by quoting lower. I mapped decision influencers, timelines, and actual pain points. Then I positioned our offerings to solve their constraints, not ours. This turned commodity sales into strategic conversations where price became secondary to fit.'
+      },
+      {
+        name: 'Go-to-Market Design for Emerging Categories',
+        description: 'Creating demand and defining market narratives when the category itself is still being shaped.',
+        subsumes: 'Segmentation & Targeting, Channel Strategy, Brand Narrative',
+        example: 'At Amazon, I managed the go-to-market for Microsoft\'s premium laptop line in a market dominated by price-driven competition. I identified underserved segments (creators, professionals), designed messaging around workflow, not specs, and orchestrated events like Comic Con (80K footfall) to reach them where they gathered. Market share grew 3% QoQ by repositioning the category conversation.'
+      },
       {
         name: 'Market Entry & Growth Strategy',
         description: 'Designing how a product reaches customers—from positioning to channels to customer acquisition mechanics.',
@@ -85,12 +71,19 @@ const skillCategories = [
         description: 'Finding leverage points to improve profitability—pricing, unit economics, cost structure, customer quality.',
         example: 'Built financial models for different Zipowatt pricing strategies, delivery radius economics, and customer lifetime value scenarios. Identified that B2B corporate contracts had 3x better margins than direct B2C.',
         subsumes: 'P&L Optimization, Unit Economics Analysis'
+      },
+      {
+        name: 'Brand Identity Creation',
+        description: 'Designing brand identity, visual systems, and brand voice that resonate with target audiences.',
+        tools: 'Figma, Brand Strategy, Visual Design',
+        example: 'Created complete brand identity for Zipowatt—from logo and color palette to brand guidelines and visual language. Established brand voice for tech-forward energy solutions that appeals to both technical and consumer audiences.',
+        subsumes: 'Brand Design, Visual Identity, Brand Strategy'
       }
     ]
   },
   {
     id: 'operations',
-    title: 'Operations & Systems Building',
+    title: 'Operations & Scaling',
     icon: Workflow,
     gradient: 'from-green-500/20 via-emerald-500/20 to-teal-500/20',
     borderGradient: 'from-green-500/50 to-teal-500/50',
@@ -112,7 +105,7 @@ const skillCategories = [
   },
   {
     id: 'technical',
-    title: 'Technical Execution & Tools',
+    title: 'Tech',
     icon: Code,
     gradient: 'from-indigo-500/20 via-purple-500/20 to-pink-500/20',
     borderGradient: 'from-indigo-500/50 to-pink-500/50',
@@ -136,15 +129,8 @@ const skillCategories = [
         name: 'Product & Platform Operations',
         description: 'Managing e-commerce or marketplace platforms—from optimization to custom integrations.',
         tools: 'Shopify, Amazon Seller Central, Figma (for prototyping flows)',
-        example: 'Managed Amazon seller account with ₹X revenue, optimized listing performance, A/B tested pricing and positioning, managed vendor relationships. Parallel: built Shopify store with custom integrations for order management and analytics.',
+        example: 'Managed the Amazon Account and Go-To-Market platform strategy for Microsoft, a leading ecosystem partner in the Personal Computing category. Optimized listing performance, A/B tested pricing and positioning, managed vendor relationships. Parallel: built Shopify store with custom integrations for order management and analytics.',
         subsumes: 'E-commerce Management, Platform Optimization'
-      },
-      {
-        name: 'Brand Identity Creation',
-        description: 'Designing brand identity, visual systems, and brand voice that resonate with target audiences.',
-        tools: 'Figma, Brand Strategy, Visual Design',
-        example: 'Created complete brand identity for Zipowatt—from logo and color palette to brand guidelines and visual language. Established brand voice for tech-forward energy solutions that appeals to both technical and consumer audiences.',
-        subsumes: 'Brand Design, Visual Identity, Brand Strategy'
       }
     ]
   }
@@ -291,7 +277,7 @@ const SkillFlipCard = ({
   );
 };
 
-export const Skills = () => {
+export const Skills = ({ skipSectionWrapper = false }: { skipSectionWrapper?: boolean }) => {
   const [flippedCards, setFlippedCards] = useState<Set<string>>(new Set());
   const [expandedSkill, setExpandedSkill] = useState<string | null>(null);
 
@@ -310,7 +296,6 @@ export const Skills = () => {
     refetchOnWindowFocus: false,
   });
 
-  const certifications = skillsData?.certifications || fallbackCertifications;
 
   const toggleFlip = (categoryId: string) => {
     setFlippedCards(prev => {
@@ -329,17 +314,13 @@ export const Skills = () => {
     setExpandedSkill(prev => (prev === skillId ? null : skillId));
   };
 
-  return (
-    <section id="skills" className="py-24 sm:py-36 md:py-48 px-4 sm:px-6 lg:px-8 bg-gradient-to-b from-background via-secondary/20 to-background">
-      <div className="max-w-7xl mx-auto">
+  const content = (
+    <div className="max-w-7xl mx-auto">
         <div className="text-center mb-20 sm:mb-24">
           <h2 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold text-foreground mb-6">
-            How I Approach Problems
+            Skills and Capabilities
           </h2>
           <div className="w-24 h-1.5 bg-accent mx-auto rounded-full mb-4" />
-          <p className="text-sm sm:text-base text-accent font-semibold mb-4">
-            My Skills & Capabilities
-          </p>
           <p className="text-xl sm:text-2xl text-muted-foreground max-w-3xl mx-auto leading-relaxed">
             Strategic thinking, execution discipline, and the technical tools to make it real
           </p>
@@ -360,95 +341,6 @@ export const Skills = () => {
           ))}
         </div>
 
-        {/* Experience Highlights */}
-        <div className="mt-20 mb-20">
-          <h3 className="text-3xl sm:text-4xl font-bold text-foreground mb-12 text-center">
-            Impact in Practice
-          </h3>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-            <Card className="p-6 border-0 shadow-lg hover:shadow-xl transition-all hover:scale-105 bg-gradient-to-br from-blue-500/10 to-purple-500/10">
-              <div className="flex items-center gap-3 mb-3">
-                <TrendingUp className="w-6 h-6 text-accent" />
-                <h4 className="font-bold text-foreground">50%+ MoM Growth</h4>
-              </div>
-              <p className="text-sm text-foreground/70">Scaled marketplace category through user obsession and vendor strategy</p>
-            </Card>
-            
-            <Card className="p-6 border-0 shadow-lg hover:shadow-xl transition-all hover:scale-105 bg-gradient-to-br from-green-500/10 to-teal-500/10">
-              <div className="flex items-center gap-3 mb-3">
-                <BarChart3 className="w-6 h-6 text-teal" />
-                <h4 className="font-bold text-foreground">6pps CM1 Improvement</h4>
-              </div>
-              <p className="text-sm text-foreground/70">Optimized supply cluster operations for profitability</p>
-            </Card>
-            
-            <Card className="p-6 border-0 shadow-lg hover:shadow-xl transition-all hover:scale-105 bg-gradient-to-br from-orange-500/10 to-amber-500/10">
-              <div className="flex items-center gap-3 mb-3">
-                <ShoppingCart className="w-6 h-6 text-accent" />
-                <h4 className="font-bold text-foreground">Multi-Channel Launch</h4>
-              </div>
-              <p className="text-sm text-foreground/70">Built and scaled across DTC, Amazon, Flipkart simultaneously</p>
-            </Card>
-            
-            <Card className="p-6 border-0 shadow-lg hover:shadow-xl transition-all hover:scale-105 bg-gradient-to-br from-pink-500/10 to-rose-500/10">
-              <div className="flex items-center gap-3 mb-3">
-                <Layers className="w-6 h-6 text-accent" />
-                <h4 className="font-bold text-foreground">90% Automation</h4>
-              </div>
-              <p className="text-sm text-foreground/70">Eliminated manual work through system integration and automation</p>
-            </Card>
-          </div>
-        </div>
-        
-        {/* Certifications */}
-        {certifications && certifications.length > 0 && (
-          <div>
-            <div className="flex items-center justify-center gap-3 mb-12">
-              <Award className="w-8 h-8 text-accent" />
-              <h3 className="text-3xl sm:text-4xl font-bold text-foreground">
-                Certifications & Learning
-              </h3>
-            </div>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-              {certifications.map((cert: any, index: number) => {
-                const certName = typeof cert === 'string' ? cert : cert.name;
-                const certLink = typeof cert === 'string' ? null : cert.link;
-                
-                const cardContent = (
-                  <div className="flex items-start gap-3">
-                    <CheckCircle2 className="w-5 h-5 text-accent flex-shrink-0 mt-0.5" />
-                    <p className="text-foreground font-medium leading-relaxed">{certName}</p>
-                  </div>
-                );
-                
-                if (certLink) {
-                  return (
-                    <a
-                      key={index}
-                      href={certLink}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="block"
-                    >
-                      <Card className="p-6 border-0 shadow-lg hover:shadow-xl transition-all hover:scale-105 bg-gradient-to-br from-background to-secondary/30 cursor-pointer">
-                        {cardContent}
-                      </Card>
-                    </a>
-                  );
-                }
-                
-                return (
-                  <Card 
-                    key={index} 
-                    className="p-6 border-0 shadow-lg hover:shadow-xl transition-all hover:scale-105 bg-gradient-to-br from-background to-secondary/30"
-                  >
-                    {cardContent}
-                  </Card>
-                );
-              })}
-            </div>
-          </div>
-        )}
 
         {/* Freelance CTA */}
         <div className="mt-20">
@@ -471,6 +363,15 @@ export const Skills = () => {
           </Card>
         </div>
       </div>
+  );
+
+  if (skipSectionWrapper) {
+    return content;
+  }
+
+  return (
+    <section id="skills" className="py-24 sm:py-36 md:py-48 px-4 sm:px-6 lg:px-8 bg-gradient-to-b from-background via-secondary/20 to-background">
+      {content}
     </section>
   );
 };

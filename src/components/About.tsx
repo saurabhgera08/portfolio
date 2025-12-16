@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Brain, Users, TrendingUp, Target, Zap, BookOpen, ChevronDown, ChevronUp } from "lucide-react";
+import { Brain, Users, TrendingUp, Target, Zap, ChevronDown, ChevronUp } from "lucide-react";
 import { Card } from "@/components/ui/card";
 import { useQuery } from "@tanstack/react-query";
 import { getAboutData } from "@/lib/sanity-queries";
@@ -18,15 +18,19 @@ const fallbackData = {
   personalStatement: [
     {
       _type: 'block',
-      children: [{ _type: 'span', text: "I operate at the intersection of business, human behaviour, and systems.", marks: [] }]
+      children: [{ _type: 'span', text: "I am a builder who thinks in three languages: business, human behavior, and systems.", marks: [] }]
     },
     {
       _type: 'block',
-      children: [{ _type: 'span', text: "I break problems down to what the numbers say, what users are actually trying to do, and what the business can sustainably support. The result is a solution that solves for all three.", marks: [] }]
+      children: [{ _type: 'span', text: "I start with numbers—P&L, conversion funnels, unit economics—because the math tells you what is actually happening. But numbers alone are not enough. I then sit with the human side: what people are trying to accomplish, what frustrates them, what they are willing to pay for, and what they are not. Finally, I translate both into something that can be built, scaled, and operated.", marks: [] }]
     },
     {
       _type: 'block',
-      children: [{ _type: 'span', text: "I move comfortably between strategic thinking and hands-on execution. All of my skills—financial modelling, SQL, negotiation, wireframing, and process design—have been learned only when a real problem required them.", marks: [] }]
+      children: [{ _type: 'span', text: "I do not fit neatly into one box, and I have learned that is an advantage. I have done the unglamorous work: negotiating MOQs with suppliers, fixing cash flow cycles, writing SQL to understand why users drop off, and coaching a team member through their first vendor negotiation. I learn what each problem requires—sometimes from books, more often from people who have lived the problem, and most reliably from asking the right questions until the constraint reveals itself.", marks: [] }]
+    },
+    {
+      _type: 'block',
+      children: [{ _type: 'span', text: "I am comfortable moving between insight and execution, between spreadsheets and user interviews, between high-level strategy and the unglamorous work of making operations run.", marks: [] }]
     }
   ],
   thinkingPrinciples: [
@@ -222,11 +226,11 @@ export const About = () => {
             </div>
           )}
           
-          {/* What I Have Done */}
+          {/* My Career at a Glance */}
           {about.achievements && (
             <div className="mt-20 sm:mt-24 max-w-4xl mx-auto">
               <h3 className="text-3xl sm:text-4xl md:text-5xl font-bold text-foreground text-center mb-12">
-                What I Have Done
+                My Career at a Glance
               </h3>
               <Card className="p-10 sm:p-12 shadow-card border-0">
                 <PortableTextBlock content={about.achievements || fallbackData.achievements} />
@@ -245,27 +249,6 @@ export const About = () => {
               </Card>
             </div>
           )}
-          
-          {/* Personal Interests */}
-          <div className="text-center mt-20 sm:mt-24 max-w-3xl mx-auto">
-            <h3 className="text-2xl sm:text-3xl md:text-4xl font-semibold text-foreground mb-8">
-              Outside of Work
-            </h3>
-            <div className="space-y-6 text-foreground/80 leading-relaxed text-lg sm:text-xl">
-              <p>
-                I read widely across history, science, biographies and fiction to sharpen judgement and understand how people make decisions under pressure. I also train and play football regularly to stay mentally sharp and competitive.
-              </p>
-            </div>
-            <div className="mt-10">
-              <button
-                onClick={() => document.getElementById('reading')?.scrollIntoView({ behavior: 'smooth' })}
-                className="inline-flex items-center gap-2 px-8 py-4 bg-accent text-accent-foreground rounded-full font-semibold hover:bg-accent/90 shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105"
-              >
-                <BookOpen className="w-5 h-5" />
-                Explore My Reading List
-              </button>
-            </div>
-          </div>
         </div>
       </div>
     </section>;

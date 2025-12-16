@@ -5,8 +5,8 @@ import { getHeroData } from "@/lib/sanity-queries";
 
 // Fallback data if Sanity isn't configured
 const fallbackData = {
-  headline: "Building clarity.\nExecuting with discipline.",
-  headlineHighlight: "Executing with discipline",
+  headline: "Building clarity.\nExecuting relentlessly.",
+  headlineHighlight: "Executing relentlessly",
   subheadline: "I have scaled marketplace categories, improved unit economics across retail and hardware, and managed high-stakes portfolios across enterprise sales and e-commerce. The common thread in my work is finding the real constraint in a business and acting precisely on it.",
   ctaPrimary: "Explore My Work",
   ctaSecondary: "Get in Touch",
@@ -41,9 +41,17 @@ export const Hero = () => {
     refetchOnWindowFocus: false,
   });
 
-  // Parse headline - split by newlines or use as-is
-  const headlineText = heroData.headline || fallbackData.headline;
-  const headlineParts = headlineText.split('\n').filter(p => p.trim());
+  // Parse headline - split by newlines or use as-is, ensuring periods stay with their words
+  const headlineText = (heroData.headline || fallbackData.headline).trim();
+  const headlineParts = headlineText.split('\n')
+    .map(p => p.trim())
+    .filter(p => p.length > 0)
+    .map(p => {
+      // Ensure periods stay with their words (remove any standalone periods)
+      if (p === '.' || p === '。') return null;
+      return p;
+    })
+    .filter((p): p is string => p !== null);
   const highlightText = heroData.headlineHighlight || fallbackData.headlineHighlight;
   
   // Use fallback stats if Sanity has old data (checking for "Profitable" or old CM1 label without supply cluster optimization)
@@ -101,28 +109,28 @@ export const Hero = () => {
       {/* Content */}
       <div className="relative z-10 max-w-5xl mx-auto text-center space-y-10 fade-in pt-20 pb-32 sm:pb-40 md:pb-48">
         {/* Main Headline */}
-        <h1 className="font-display text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-bold text-white leading-[1.1] tracking-tight px-4">
+        <h1 className="font-display text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-bold text-white leading-[1.1] tracking-tight px-4" style={{ whiteSpace: 'pre-line' }}>
           {headlineParts.map((part, index) => {
             const isHighlight = part.includes(highlightText);
             if (isHighlight) {
               const parts = part.split(highlightText);
               return (
-                <span key={index}>
-                  <span className="whitespace-nowrap">{parts[0]}</span>
-                  <span className="relative inline-block mt-2">
+                <span key={index} className="inline-block">
+                  <span className="whitespace-nowrap inline-block">{parts[0]?.trim() || ''}</span>
+                  <span className="relative inline-block mt-2 whitespace-nowrap">
                     <span className="relative z-10 text-transparent bg-clip-text bg-gradient-to-r from-[#F59E0B] via-[#FBBF24] to-[#F59E0B] animate-shimmer bg-[length:200%_auto]">
                       {highlightText}
                     </span>
                   </span>
-                  {parts[1] && <span className="whitespace-nowrap">{parts[1]}</span>}
-                  {index < headlineParts.length - 1 && <br />}
+                  {parts[1] && <span className="whitespace-nowrap inline-block">{parts[1].trim()}</span>}
+                  {index < headlineParts.length - 1 && <br className="block" />}
                 </span>
               );
             }
             return (
-              <span key={index} className="whitespace-nowrap">
-                {part}
-                {index < headlineParts.length - 1 && <br />}
+              <span key={index} className="whitespace-nowrap inline-block">
+                {part.trim()}
+                {index < headlineParts.length - 1 && <br className="block" />}
               </span>
             );
           })}
@@ -134,7 +142,7 @@ export const Hero = () => {
         </p>
         
         {/* CTA Buttons */}
-        <div className="flex flex-col sm:flex-row gap-5 justify-center pt-6 stagger-1 px-4">
+        <div className="flex flex-col sm:flex-row gap-5 justify-center pt-4 stagger-1 px-4">
           <Button 
             onClick={scrollToProjects}
             size="lg"
@@ -150,6 +158,58 @@ export const Hero = () => {
             className="text-white border-2 border-white/30 hover:bg-white/10 hover:border-white/50 font-medium px-10 py-7 text-lg rounded-full transition-all duration-300"
           >
             {heroData.ctaSecondary || fallbackData.ctaSecondary}
+          </Button>
+        </div>
+        
+        {/* Quick Navigation Buttons */}
+        <div className="quick-nav-buttons flex flex-wrap justify-center gap-3 pt-6 px-4 stagger-2">
+          <Button
+            onClick={() => document.getElementById('about')?.scrollIntoView({ behavior: 'smooth' })}
+            variant="ghost"
+            size="sm"
+            className="text-white/70 hover:text-white hover:bg-white/10 text-sm px-4 py-2 rounded-full border border-white/20"
+          >
+            Who I Am
+          </Button>
+          <Button
+            onClick={() => document.getElementById('experience')?.scrollIntoView({ behavior: 'smooth' })}
+            variant="ghost"
+            size="sm"
+            className="text-white/70 hover:text-white hover:bg-white/10 text-sm px-4 py-2 rounded-full border border-white/20"
+          >
+            Experience
+          </Button>
+          <Button
+            onClick={() => document.getElementById('projects')?.scrollIntoView({ behavior: 'smooth' })}
+            variant="ghost"
+            size="sm"
+            className="text-white/70 hover:text-white hover:bg-white/10 text-sm px-4 py-2 rounded-full border border-white/20"
+          >
+            Projects
+          </Button>
+          <Button
+            onClick={() => document.getElementById('skills')?.scrollIntoView({ behavior: 'smooth' })}
+            variant="ghost"
+            size="sm"
+            className="text-white/70 hover:text-white hover:bg-white/10 text-sm px-4 py-2 rounded-full border border-white/20"
+          >
+            Skills
+          </Button>
+          <Button
+            onClick={() => document.getElementById('reading')?.scrollIntoView({ behavior: 'smooth' })}
+            variant="ghost"
+            size="sm"
+            className="text-white/70 hover:text-white hover:bg-white/10 text-sm px-4 py-2 rounded-full border border-white/20"
+          >
+            Reading
+          </Button>
+          <Button
+            onClick={() => document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' })}
+            variant="ghost"
+            size="sm"
+            className="text-white/70 hover:text-white hover:bg-white/10 text-sm px-4 py-2 rounded-full border border-white/20"
+          >
+            Contact
           </Button>
         </div>
         
