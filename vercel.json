@@ -8,7 +8,7 @@
   "redirects": [
     {
       "source": "/favicon.ico",
-      "destination": "/images/favicon/favicon.png",
+      "destination": "/images/favicon/favicon.ico",
       "permanent": true
     }
   ]

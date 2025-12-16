@@ -33,6 +33,14 @@ const Index = () => {
         <Projects />
         <OutsideOfWork />
         <CollapsibleSection 
+          id="skills" 
+          title="Skills and Capabilities"
+          description="Strategic thinking, execution discipline, and the technical tools to make it real"
+          defaultExpanded={true}
+        >
+          <Skills skipSectionWrapper={true} />
+        </CollapsibleSection>
+        <CollapsibleSection 
           id="reading" 
           title="My Reading List"
           description="Books that shaped how I think. Tap any category to explore."
@@ -40,16 +48,10 @@ const Index = () => {
           <Reading skipSectionWrapper={true} />
         </CollapsibleSection>
         <CollapsibleSection 
-          id="skills" 
-          title="Skills and Capabilities"
-          description="Strategic thinking, execution discipline, and the technical tools to make it real"
-        >
-          <Skills skipSectionWrapper={true} />
-        </CollapsibleSection>
-        <CollapsibleSection 
           id="contact" 
           title="Let's Connect"
           description="Roles that combine ownership with business outcomes"
+          defaultExpanded={true}
         >
           <Contact skipSectionWrapper={true} />
         </CollapsibleSection>

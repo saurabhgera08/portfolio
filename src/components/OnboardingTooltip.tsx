@@ -16,7 +16,7 @@ const onboardingSteps: TooltipStep[] = [
     id: "navbar",
     target: "nav",
     title: "Top Navigation Bar",
-    description: "Use this to quickly jump to any section. Hover over items to see what they contain.",
+    description: "Use this to quickly jump to any section. Tap the menu icon on mobile to see all sections.",
     position: "bottom",
     arrow: "down"
   },
@@ -43,19 +43,64 @@ export const OnboardingTooltip = () => {
   const [isDismissed, setIsDismissed] = useState(false);
   const [tooltipPosition, setTooltipPosition] = useState({ top: 0, left: 0 });
   const [highlightRect, setHighlightRect] = useState<DOMRect | null>(null);
+  const [isMobile, setIsMobile] = useState(false);
   const highlightedElementRef = useRef<HTMLElement | null>(null);
   const tooltipRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     // Check if user has seen onboarding before
     const hasSeenOnboarding = localStorage.getItem("hasSeenOnboarding");
+    
+    // Detect mobile
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    
     if (!hasSeenOnboarding) {
       // Start onboarding after a short delay
       setTimeout(() => {
         setCurrentStep(0);
       }, 2000);
     }
+    
+    return () => {
+      window.removeEventListener('resize', checkMobile);
+    };
   }, []);
+
+  const handleDismiss = () => {
+    // Clean up highlight
+    if (highlightedElementRef.current) {
+      highlightedElementRef.current.style.filter = '';
+      highlightedElementRef.current.style.transition = '';
+      highlightedElementRef.current.style.zIndex = '';
+      highlightedElementRef.current.style.position = '';
+      highlightedElementRef.current.style.transform = '';
+      highlightedElementRef.current.style.boxShadow = '';
+      highlightedElementRef.current = null;
+    }
+    setHighlightRect(null);
+    setCurrentStep(null);
+    setIsDismissed(true);
+    localStorage.setItem("hasSeenOnboarding", "true");
+  };
+
+  // Skip floating nav step on mobile
+  useEffect(() => {
+    if (currentStep === null) return;
+    
+    const step = onboardingSteps[currentStep];
+    if (step.id === "floating-nav" && isMobile) {
+      // Skip to next step on mobile
+      if (currentStep < onboardingSteps.length - 1) {
+        setTimeout(() => setCurrentStep(currentStep + 1), 100);
+      } else {
+        handleDismiss();
+      }
+    }
+  }, [currentStep, isMobile]);
 
   useEffect(() => {
     if (currentStep === null) {
@@ -75,6 +120,11 @@ export const OnboardingTooltip = () => {
 
     const step = onboardingSteps[currentStep];
     
+    // Skip if this is floating-nav on mobile (will be handled by other effect)
+    if (step.id === "floating-nav" && isMobile) {
+      return;
+    }
+    
     // Remove previous highlight
     if (highlightedElementRef.current) {
       highlightedElementRef.current.style.filter = '';
@@ -86,6 +136,7 @@ export const OnboardingTooltip = () => {
     }
 
     const updatePosition = () => {
+      
       // Try multiple selectors for floating nav
       let targetElement: Element | null = null;
       
@@ -153,15 +204,27 @@ export const OnboardingTooltip = () => {
             break;
         }
 
-        // Ensure tooltip stays within viewport
-        const padding = 20;
-        if (left < padding) left = padding;
-        if (left + tooltipRect.width > window.innerWidth - padding) {
-          left = window.innerWidth - tooltipRect.width - padding;
+        // Ensure tooltip stays within viewport - adjust for mobile
+        const mobileCheck = window.innerWidth < 768;
+        const padding = mobileCheck ? 16 : 20;
+        
+        // Adjust horizontal position for mobile
+        if (mobileCheck) {
+          // Center tooltip on mobile
+          left = window.innerWidth / 2;
+        } else {
+          if (left < padding) left = padding;
+          if (left + tooltipRect.width > window.innerWidth - padding) {
+            left = window.innerWidth - tooltipRect.width - padding;
+          }
         }
-        if (top < padding) top = padding;
+        
+        // Adjust vertical position - ensure tooltip is visible
+        if (top < padding) {
+          top = rect.bottom + 20; // Show below element if too close to top
+        }
         if (top + tooltipRect.height > window.innerHeight - padding) {
-          top = window.innerHeight - tooltipRect.height - padding;
+          top = Math.max(padding, rect.top - tooltipRect.height - 20); // Show above if too close to bottom
         }
 
         setTooltipPosition({ top, left });
@@ -202,7 +265,7 @@ export const OnboardingTooltip = () => {
       }
       setHighlightRect(null);
     };
-  }, [currentStep]);
+  }, [currentStep, isMobile]);
 
   const handleNext = () => {
     if (currentStep !== null && currentStep < onboardingSteps.length - 1) {
@@ -210,23 +273,6 @@ export const OnboardingTooltip = () => {
     } else {
       handleDismiss();
     }
-  };
-
-  const handleDismiss = () => {
-    // Clean up highlight
-    if (highlightedElementRef.current) {
-      highlightedElementRef.current.style.filter = '';
-      highlightedElementRef.current.style.transition = '';
-      highlightedElementRef.current.style.zIndex = '';
-      highlightedElementRef.current.style.position = '';
-      highlightedElementRef.current.style.transform = '';
-      highlightedElementRef.current.style.boxShadow = '';
-      highlightedElementRef.current = null;
-    }
-    setHighlightRect(null);
-    setCurrentStep(null);
-    setIsDismissed(true);
-    localStorage.setItem("hasSeenOnboarding", "true");
   };
 
   const handleSkip = () => {
@@ -240,35 +286,23 @@ export const OnboardingTooltip = () => {
 
   return (
     <>
-      {/* Overlay with blur effect - but not on highlighted element */}
+      {/* Transparent overlay - no blur, just for click handling */}
       <div 
-        className="fixed inset-0 bg-black/50 z-[100] backdrop-blur-md"
+        className="fixed inset-0 z-[100] bg-transparent"
         onClick={handleNext}
-        style={{
-          backdropFilter: 'blur(8px)',
-          WebkitBackdropFilter: 'blur(8px)',
-        }}
       />
-      
-      {/* Spotlight effect - cutout for highlighted element */}
-      {highlightRect && (
-        <div
-          className="fixed inset-0 z-[99] pointer-events-none"
-          style={{
-            background: `radial-gradient(circle ${Math.max(highlightRect.width, highlightRect.height) / 2 + 40}px at ${highlightRect.left + highlightRect.width / 2}px ${highlightRect.top + highlightRect.height / 2}px, transparent 0%, rgba(0, 0, 0, 0.6) ${Math.max(highlightRect.width, highlightRect.height) / 2 + 80}px)`,
-            transition: 'background 0.3s ease',
-          }}
-        />
-      )}
       
       {/* Tooltip */}
       <div
         ref={tooltipRef}
-        className="fixed z-[101] bg-white rounded-lg shadow-2xl p-6 max-w-sm animate-in fade-in slide-in-from-bottom-4"
+        className="fixed z-[101] bg-white rounded-lg shadow-2xl p-4 sm:p-6 max-w-[calc(100vw-32px)] sm:max-w-sm animate-in fade-in slide-in-from-bottom-4"
         style={{
           top: `${tooltipPosition.top}px`,
           left: `${tooltipPosition.left}px`,
-          transform: step.position === "bottom" || step.position === "top" ? 'translateX(-50%)' : 'translateY(-50%)'
+          transform: isMobile 
+            ? 'translateX(-50%)' 
+            : (step.position === "bottom" || step.position === "top" ? 'translateX(-50%)' : 'translateY(-50%)'),
+          maxWidth: isMobile ? `${window.innerWidth - 32}px` : '384px'
         }}
       >
         {/* Arrow */}
