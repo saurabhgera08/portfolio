@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from "react";
-import { X, ArrowRight, ArrowDown, ArrowUp } from "lucide-react";
+import { X, ArrowRight, ArrowDown, ArrowUp, ArrowLeft } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 interface TooltipStep {
@@ -14,7 +14,7 @@ interface TooltipStep {
 const onboardingSteps: TooltipStep[] = [
   {
     id: "navbar",
-    target: "nav",
+    target: "nav.fixed.top-0, nav[class*='fixed'][class*='top-0']",
     title: "Top Navigation Bar",
     description: "Use this to quickly jump to any section. Tap the menu icon on mobile to see all sections.",
     position: "bottom",
@@ -22,7 +22,7 @@ const onboardingSteps: TooltipStep[] = [
   },
   {
     id: "floating-nav",
-    target: "[class*='fixed right'] nav, nav.fixed.right",
+    target: "nav.floating-nav",
     title: "Floating Navigation",
     description: "This floating navigation bar on the right lets you quickly jump between sections as you scroll. Click any icon to navigate.",
     position: "left",
@@ -44,6 +44,7 @@ export const OnboardingTooltip = () => {
   const [tooltipPosition, setTooltipPosition] = useState({ top: 0, left: 0 });
   const [highlightRect, setHighlightRect] = useState<DOMRect | null>(null);
   const [isMobile, setIsMobile] = useState(false);
+  const [calculatedPosition, setCalculatedPosition] = useState<{ position: "top" | "bottom" | "left" | "right", arrow: "right" | "down" | "up" | "left" } | null>(null);
   const highlightedElementRef = useRef<HTMLElement | null>(null);
   const tooltipRef = useRef<HTMLDivElement>(null);
 
@@ -136,99 +137,184 @@ export const OnboardingTooltip = () => {
     }
 
     const updatePosition = () => {
+      if (!tooltipRef.current) return;
       
-      // Try multiple selectors for floating nav
+      // Find target element with improved selectors
       let targetElement: Element | null = null;
       
-      if (step.id === "floating-nav") {
-        // Try to find the floating nav by class name first
+      if (step.id === "navbar") {
+        // Find top navigation - more specific selector
+        const allNavs = document.querySelectorAll('nav');
+        for (const nav of allNavs) {
+          const styles = window.getComputedStyle(nav);
+          const rect = nav.getBoundingClientRect();
+          // Check if it's fixed at the top
+          if (styles.position === 'fixed' && rect.top <= 100) {
+            targetElement = nav;
+            break;
+          }
+        }
+        // Fallback to first nav if none found
+        if (!targetElement) {
+          targetElement = document.querySelector('nav');
+        }
+      } else if (step.id === "floating-nav") {
+        // Find floating nav by class
         targetElement = document.querySelector('nav.floating-nav');
-        
-        // Fallback: try to find by checking for fixed right positioning
+        // Fallback: find nav fixed on the right side
         if (!targetElement) {
           const allNavs = document.querySelectorAll('nav');
           for (const nav of allNavs) {
             const styles = window.getComputedStyle(nav);
-            if (styles.position === 'fixed' && styles.right !== 'auto' && parseFloat(styles.right) > 0) {
+            const rect = nav.getBoundingClientRect();
+            if (styles.position === 'fixed' && 
+                rect.right > window.innerWidth - 100 && 
+                rect.top > 100) {
               targetElement = nav;
               break;
             }
           }
         }
-        
-        // Another fallback: look for nav with specific classes
-        if (!targetElement) {
-          targetElement = document.querySelector('nav[class*="fixed"][class*="right"]');
-        }
       } else {
+        // Use the provided selector
         targetElement = document.querySelector(step.target);
       }
       
-      if (targetElement && tooltipRef.current) {
-        const element = targetElement as HTMLElement;
-        
-        // Highlight the target element - ensure it's visible and clickable
-        element.style.filter = 'blur(0px)';
-        element.style.transition = 'filter 0.3s ease, transform 0.3s ease';
-        element.style.zIndex = '103';
-        element.style.transform = 'scale(1.02)';
-        element.style.boxShadow = '0 0 0 4px rgba(245, 158, 11, 0.3), 0 0 20px rgba(245, 158, 11, 0.2)';
-        if (window.getComputedStyle(element).position === 'static') {
-          element.style.position = 'relative';
+      if (!targetElement) {
+        // If floating nav not found, skip to next step
+        if (step.id === "floating-nav" && currentStep !== null && currentStep < onboardingSteps.length - 1) {
+          setTimeout(() => setCurrentStep(currentStep + 1), 100);
         }
-        highlightedElementRef.current = element;
+        return;
+      }
+      
+      const element = targetElement as HTMLElement;
+      
+      // Highlight the target element
+      element.style.filter = 'blur(0px)';
+      element.style.transition = 'filter 0.3s ease, transform 0.3s ease';
+      element.style.zIndex = '103';
+      element.style.transform = 'scale(1.02)';
+      element.style.boxShadow = '0 0 0 4px rgba(245, 158, 11, 0.3), 0 0 20px rgba(245, 158, 11, 0.2)';
+      if (window.getComputedStyle(element).position === 'static') {
+        element.style.position = 'relative';
+      }
+      highlightedElementRef.current = element;
+      
+      const rect = element.getBoundingClientRect();
+      setHighlightRect(rect);
+      
+      // Wait for tooltip to render and measure its actual size
+      requestAnimationFrame(() => {
+        if (!tooltipRef.current) return;
         
-        const rect = element.getBoundingClientRect();
-        setHighlightRect(rect);
         const tooltipRect = tooltipRef.current.getBoundingClientRect();
+        const viewportWidth = window.innerWidth;
+        const viewportHeight = window.innerHeight;
+        const padding = isMobile ? 16 : 20;
+        const arrowOffset = 12; // Space for arrow
         
         let top = 0;
         let left = 0;
+        let finalPosition: "top" | "bottom" | "left" | "right" = step.position;
+        let finalArrow: "right" | "down" | "up" | "left" = step.arrow || "down";
 
+        // Helper function to get arrow for a position
+        const getArrowForPosition = (pos: "top" | "bottom" | "left" | "right"): "right" | "down" | "up" | "left" => {
+          switch (pos) {
+            case "top": return "down";
+            case "bottom": return "up";
+            case "left": return "right";
+            case "right": return "left";
+          }
+        };
+
+        // Calculate initial position based on preferred position
         switch (step.position) {
           case "bottom":
-            top = rect.bottom + 20;
+            top = rect.bottom + 20 + arrowOffset;
             left = rect.left + (rect.width / 2);
             break;
           case "top":
-            top = rect.top - tooltipRect.height - 20;
+            top = rect.top - tooltipRect.height - 20 - arrowOffset;
             left = rect.left + (rect.width / 2);
             break;
           case "left":
             top = rect.top + (rect.height / 2);
-            left = rect.left - tooltipRect.width - 20;
+            left = rect.left - tooltipRect.width - 20 - arrowOffset;
             break;
           case "right":
             top = rect.top + (rect.height / 2);
-            left = rect.right + 20;
+            left = rect.right + 20 + arrowOffset;
             break;
         }
 
-        // Ensure tooltip stays within viewport - adjust for mobile
-        const mobileCheck = window.innerWidth < 768;
-        const padding = mobileCheck ? 16 : 20;
-        
-        // Adjust horizontal position for mobile
-        if (mobileCheck) {
-          // Center tooltip on mobile
-          left = window.innerWidth / 2;
+        // Adjust for mobile - center horizontally and prefer bottom
+        if (isMobile) {
+          left = viewportWidth / 2;
+          // On mobile, prefer bottom position for better visibility
+          if (step.position === "top" || step.position === "left" || step.position === "right") {
+            top = rect.bottom + 20 + arrowOffset;
+            finalPosition = "bottom";
+            finalArrow = getArrowForPosition("bottom");
+          }
         } else {
-          if (left < padding) left = padding;
-          if (left + tooltipRect.width > window.innerWidth - padding) {
-            left = window.innerWidth - tooltipRect.width - padding;
+          // Desktop: Check horizontal bounds and adjust position if needed
+          if (left < padding) {
+            // Too far left - try right side
+            if (rect.right + tooltipRect.width + 20 + arrowOffset < viewportWidth - padding) {
+              left = rect.right + 20 + arrowOffset;
+              finalPosition = "right";
+              finalArrow = getArrowForPosition("right");
+            } else {
+              // Can't fit on right either, center it horizontally but keep vertical position
+              left = Math.max(padding, Math.min(viewportWidth - tooltipRect.width - padding, rect.left + (rect.width / 2)));
+            }
+          } else if (left + tooltipRect.width > viewportWidth - padding) {
+            // Too far right - try left side
+            if (rect.left - tooltipRect.width - 20 - arrowOffset > padding) {
+              left = rect.left - tooltipRect.width - 20 - arrowOffset;
+              finalPosition = "left";
+              finalArrow = getArrowForPosition("left");
+            } else {
+              // Can't fit on left either, center it horizontally but keep vertical position
+              left = Math.max(padding, Math.min(viewportWidth - tooltipRect.width - padding, rect.left + (rect.width / 2)));
+            }
           }
         }
-        
-        // Adjust vertical position - ensure tooltip is visible
+
+        // Check vertical bounds and adjust position if needed
         if (top < padding) {
-          top = rect.bottom + 20; // Show below element if too close to top
-        }
-        if (top + tooltipRect.height > window.innerHeight - padding) {
-          top = Math.max(padding, rect.top - tooltipRect.height - 20); // Show above if too close to bottom
+          // Too close to top - try bottom
+          const bottomSpace = viewportHeight - rect.bottom - 20 - arrowOffset;
+          if (bottomSpace >= tooltipRect.height + padding) {
+            top = rect.bottom + 20 + arrowOffset;
+            finalPosition = "bottom";
+            finalArrow = getArrowForPosition("bottom");
+          } else {
+            // Not enough space below, position at top with padding
+            top = padding;
+          }
+        } else if (top + tooltipRect.height > viewportHeight - padding) {
+          // Too close to bottom - try top
+          const topSpace = rect.top - 20 - arrowOffset;
+          if (topSpace >= tooltipRect.height + padding) {
+            top = rect.top - tooltipRect.height - 20 - arrowOffset;
+            finalPosition = "top";
+            finalArrow = getArrowForPosition("top");
+          } else {
+            // Not enough space above, position at bottom with padding
+            top = viewportHeight - tooltipRect.height - padding;
+          }
         }
 
+        // Ensure final position is within bounds
+        left = Math.max(padding, Math.min(viewportWidth - tooltipRect.width - padding, left));
+        top = Math.max(padding, Math.min(viewportHeight - tooltipRect.height - padding, top));
+
         setTooltipPosition({ top, left });
-      }
+        setCalculatedPosition({ position: finalPosition, arrow: finalArrow });
+      });
     };
 
     // Initial position
@@ -264,6 +350,7 @@ export const OnboardingTooltip = () => {
         highlightedElementRef.current = null;
       }
       setHighlightRect(null);
+      setCalculatedPosition(null);
     };
   }, [currentStep, isMobile]);
 
@@ -282,7 +369,13 @@ export const OnboardingTooltip = () => {
   if (isDismissed || currentStep === null) return null;
 
   const step = onboardingSteps[currentStep];
-  const ArrowIcon = step.arrow === "down" ? ArrowDown : step.arrow === "up" ? ArrowUp : ArrowRight;
+  const displayPosition = calculatedPosition?.position || step.position;
+  const displayArrow = calculatedPosition?.arrow || step.arrow || "down";
+  const ArrowIcon = 
+    displayArrow === "down" ? ArrowDown : 
+    displayArrow === "up" ? ArrowUp : 
+    displayArrow === "left" ? ArrowLeft : 
+    ArrowRight;
 
   return (
     <>
@@ -301,17 +394,17 @@ export const OnboardingTooltip = () => {
           left: `${tooltipPosition.left}px`,
           transform: isMobile 
             ? 'translateX(-50%)' 
-            : (step.position === "bottom" || step.position === "top" ? 'translateX(-50%)' : 'translateY(-50%)'),
+            : (displayPosition === "bottom" || displayPosition === "top" ? 'translateX(-50%)' : 'translateY(-50%)'),
           maxWidth: isMobile ? `${window.innerWidth - 32}px` : '384px'
         }}
       >
         {/* Arrow */}
-        {step.arrow && (
+        {displayArrow && (
           <div 
             className={`absolute ${
-              step.position === "bottom" ? "-top-3 left-1/2 -translate-x-1/2" :
-              step.position === "top" ? "-bottom-3 left-1/2 -translate-x-1/2 rotate-180" :
-              step.position === "left" ? "-right-3 top-1/2 -translate-y-1/2 rotate-90" :
+              displayPosition === "bottom" ? "-top-3 left-1/2 -translate-x-1/2" :
+              displayPosition === "top" ? "-bottom-3 left-1/2 -translate-x-1/2 rotate-180" :
+              displayPosition === "left" ? "-right-3 top-1/2 -translate-y-1/2 rotate-90" :
               "-left-3 top-1/2 -translate-y-1/2 -rotate-90"
             }`}
           >
